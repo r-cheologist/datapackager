@@ -1,0 +1,174 @@
+init <- function(
+  root = getwd(),
+  default_compression_algo = c("xz", "bzip2", "gzip"),
+  default_hashing_algo = c("sha512", "md5", "sha1", "crc32", "sha256",
+                           "xxhash32", "xxhash64", "murmur32"),
+  files_to_include = NULL,
+  file_reading_function = NULL,
+  file_reading_options = NULL,
+  file_reading_package_dependencies = NULL,
+  file_gitignore = FALSE,
+  file_rbuildignore = FALSE
+)
+{
+# Check prerequisites -----------------------------------------------------
+  root %>%
+    assertive.types::assert_is_a_string() %>%
+    assertive.files::assert_all_are_dirs()
+
+  data_catalogue_file <- root %>%
+    file.path("data", "data_catalogue.RData")
+  if(data_catalogue_file %>%
+     file.exists())
+  {
+    stop("'", data_catalogue_file, "' exists. Traces of prior initializations must be manually removed.")
+  }
+
+  default_compression_algo %<>%
+    assertive.types::assert_is_character() %>%
+    match.arg(
+      choices = c("xz", "bzip2", "gzip"),
+      several.ok = FALSE)
+
+  default_hashing_algo %<>%
+    assertive.types::assert_is_character() %>%
+    match.arg(
+      choices = c("sha512", "md5", "sha1", "crc32", "sha256", "xxhash32",
+                  "xxhash64", "murmur32"),
+      several.ok = FALSE)
+
+  if(
+    files_to_include %>%
+      is.null() %>%
+      magrittr::not())
+  {
+    files_to_include %>%
+      assertive.types::assert_is_character() %>%
+      assertive.files::assert_all_are_readable_files()
+
+    file_reading_function %>%
+      assertive.types::assert_is_character() %>%
+      length() %>%
+      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    file_reading_function %>%
+      assert_all_are_function_names()
+
+    if(
+      file_reading_options %>%
+        is.null() %>%
+        magrittr::not())
+    {
+      file_reading_options %>%
+        assertive.types::assert_is_list() %>%
+        length() %>%
+        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    }
+
+    if(
+      file_reading_package_dependencies %>%
+      is.null() %>%
+      magrittr::not())
+    {
+      file_reading_package_dependencies %>%
+        assertive.types::assert_is_character() %>%
+        assertive.sets::assert_is_subset(utils::installed.packages())
+    }
+
+    file_gitignore %>%
+      assertive.types::assert_is_a_bool() %>%
+      length() %>%
+      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+
+    file_rbuildignore %>%
+      assertive.types::assert_is_a_bool() %>%
+      length() %>%
+      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+  }
+
+# Processing --------------------------------------------------------------
+  # Check for/create directory infrastructure
+  check_and_create_directory_infrastructure(root = root)
+
+  # Check for/create file infrastructure
+  check_and_create_file_infrastructure(root = root)
+
+  # Create the data catalogue
+  data_catalogue <- data.frame(
+    File = character(),
+    Hashing.Algo = character(),
+    Hash.Uncompressed = character(),
+    Hash.Compressed = character(),
+    File.Reading.Function = character(),
+    File.Reading.Option = I(list()),
+    File.Reading.Package.Dependencies = I(character()),
+    File.Git.Ignore = logical(),
+    File.R.Buildignore = logical(),
+    stringsAsFactors = FALSE)
+  attr(data_catalogue, "default_compression_algo") <- default_compression_algo
+  attr(data_catalogue, "default_hashing_algo") <- default_hashing_algo
+
+  # If present, iterate over data files to be integrated
+  if(
+    files_to_include %>%
+    is.null() %>%
+    magrittr::not())
+  {
+    for(i in files_to_include %>% seq_along())
+    {
+      ## Extract individual parameters
+      tmp_file_to_include <- files_to_include %>%
+        magrittr::extract2(i)
+      tmp_file_reading_function <- file_reading_function %>%
+        length() %>%
+        switch(
+          "1" = file_reading_function,
+          file_reading_function %>%
+            magrittr::extract2(i))
+      tmp_file_reading_options <- file_reading_options %>%
+        length() %>%
+        switch(
+          "0" = NULL,
+          "1" = file_reading_options,
+          file_reading_options %>%
+            magrittr::extract2(i))
+      tmp_file_gitignore <- file_gitignore %>%
+        length() %>%
+        switch(
+          "1" = file_gitignore,
+          file_gitignore %>%
+            magrittr::extract2(i))
+      tmp_file_rbuildignore <- file_rbuildignore %>%
+        length() %>%
+        switch(
+          "1" = file_rbuildignore,
+          file_rbuildignore %>%
+            magrittr::extract2(i))
+
+      ## Include the files into the infrastructure
+      data_catalogue %<>% include_data_file(
+        #data_catalogue = data_catalogue,
+        root = root,
+        file_to_include = tmp_file_to_include,
+        file_reading_function = tmp_file_reading_function,
+        file_reading_options = tmp_file_reading_options,
+        file_reading_package_dependencies = file_reading_package_dependencies,
+        file_gitignore = tmp_file_gitignore,
+        file_rbuildignore = tmp_file_rbuildignore,
+        compression_algo = NULL,
+        hashing_algo = NULL,
+        save_catalogue = FALSE)
+    }
+  }
+
+  # Write out the catalogue
+  data_catalogue %>%
+    save(
+      file = data_catalogue_file,
+      compress = default_compression_algo)
+
+# Todo --------------------------------------------------------------------
+stop("Implement DESCRIPTION file")
+stop("Implement docmentation for data_catalogue")
+
+}
+

@@ -1,0 +1,251 @@
+PackratFormat: 1.4
+PackratVersion: 0.4.8.1
+RVersion: 3.3.2
+Repos: BioCsoft=https://bioconductor.org/packages/3.2/bioc,
+    BioCann=https://bioconductor.org/packages/3.2/data/annotation,
+    BioCexp=https://bioconductor.org/packages/3.2/data/experiment,
+    BioCextra=https://bioconductor.org/packages/3.2/extra,
+    CRAN=https://cran.rstudio.com/
+
+Package: BH
+Source: CRAN
+Version: 1.62.0-1
+Hash: 14dfb3e8ffe20996118306ff4de1fab2
+
+Package: DBI
+Source: CRAN
+Version: 0.5-1
+Hash: 375869004db963f9915f2b8a49b4a718
+
+Package: R6
+Source: CRAN
+Version: 2.2.0
+Hash: 712773a3439bd32db5c40938e1a9aac2
+
+Package: Rcpp
+Source: CRAN
+Version: 0.12.8
+Hash: 436ad5c23fad4e22224c7ac2fc82b049
+
+Package: assertive.base
+Source: CRAN
+Version: 0.0-6
+Hash: 4f2b9d76eafb1ab85e69004a97c9abf7
+
+Package: assertive.code
+Source: CRAN
+Version: 0.0-1
+Hash: 5be66dee63d534f2d10acf8e1b3fed5e
+Requires: assertive.base, assertive.properties, assertive.types
+
+Package: assertive.files
+Source: CRAN
+Version: 0.0-2
+Hash: c91106ff361810272383048e4bcc9d1d
+Requires: assertive.base, assertive.numbers
+
+Package: assertive.numbers
+Source: CRAN
+Version: 0.0-2
+Hash: 64fe6f9b796ea47a1387ff9dffb41635
+Requires: assertive.base
+
+Package: assertive.properties
+Source: CRAN
+Version: 0.0-3
+Hash: 8ddd68d2acf333fa9cb16efcb98a8ea5
+Requires: assertive.base
+
+Package: assertive.reflection
+Source: CRAN
+Version: 0.0-3
+Hash: 4ea25fcd0bfac9a0115d1c610cffa9f8
+Requires: assertive.base
+
+Package: assertive.sets
+Source: CRAN
+Version: 0.0-2
+Hash: e89daae7af59ea8eb0ab02dc6c8a6bf9
+Requires: assertive.base
+
+Package: assertive.strings
+Source: CRAN
+Version: 0.0-3
+Hash: 870cce2bb3cc3f14d762cba7d77a9ab6
+Requires: assertive.base, assertive.types, stringi
+
+Package: assertive.types
+Source: CRAN
+Version: 0.0-2
+Hash: 89a7d6afbdd5ee9cca9924c62ea77c75
+Requires: assertive.base, assertive.properties
+
+Package: assertthat
+Source: CRAN
+Version: 0.1
+Hash: 0afb92b59b02593c70ff8046700ba9d3
+
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 931f9972deae0f205e1c78a51f33149b
+
+Package: crayon
+Source: CRAN
+Version: 1.3.2
+Hash: 576a9d297a567d6a5ebd164ca5221590
+
+Package: curl
+Source: CRAN
+Version: 2.3
+Hash: 9a0b969942c61511002e103f7b047b98
+
+Package: devtools
+Source: CRAN
+Version: 1.12.0
+Hash: bbad95109ae75cbb14099281cda43af2
+Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
+    withr
+
+Package: digest
+Source: CRAN
+Version: 0.6.10
+Hash: 87165608ca8aeb0958835c3c5b52b6b7
+
+Package: evaluate
+Source: CRAN
+Version: 0.10
+Hash: c3601a10c987d439e0c63ec635234a76
+Requires: stringr
+
+Package: git2r
+Source: CRAN
+Version: 0.16.0
+Hash: 8022c40f316e7b99258eb19969e2a11c
+
+Package: highr
+Source: CRAN
+Version: 0.6
+Hash: aa3d5b7912b5fed4b546ed5cd2a1760b
+
+Package: httr
+Source: CRAN
+Version: 1.2.1
+Hash: 7de1f8f760441881804af7c1ff324340
+Requires: R6, curl, jsonlite, mime, openssl
+
+Package: jsonlite
+Source: CRAN
+Version: 1.1
+Hash: 86d4b85b84421a4815f1bb4872e30ef4
+
+Package: knitr
+Source: CRAN
+Version: 1.15.1
+Hash: eed7437e2b614c9e3923b7932b16ac97
+Requires: digest, evaluate, highr, markdown, stringr, yaml
+
+Package: lazyeval
+Source: CRAN
+Version: 0.2.0
+Hash: 3d6e7608e65bbf5cb170dab1e3c9ed8b
+
+Package: magrittr
+Source: CRAN
+Version: 1.5
+Hash: bdc4d48c3135e8f3b399536ddf160df4
+
+Package: markdown
+Source: CRAN
+Version: 0.7.7
+Hash: fea2343a1119d61b0cc5c0a950d103a3
+Requires: mime
+
+Package: memoise
+Source: CRAN
+Version: 1.0.0
+Hash: 56e7087c3559eb7ba72a9afb349bf896
+Requires: digest
+
+Package: mime
+Source: CRAN
+Version: 0.5
+Hash: 463550cf44fb6f0a2359368f42eebe62
+
+Package: openssl
+Source: CRAN
+Version: 0.9.5
+Hash: 26776a287eaffb2331c9a449c1d2a791
+
+Package: packrat
+Source: CRAN
+Version: 0.4.8-1
+Hash: 6ad605ba7b4b476d84be6632393f5765
+
+Package: pathological
+Source: CRAN
+Version: 0.1-1
+Hash: c312b30ae21c2da9f5bb34185b21942a
+Requires: assertive.base, assertive.files, assertive.numbers,
+    assertive.properties, assertive.reflection, assertive.strings,
+    assertive.types, magrittr, plyr, stringi
+
+Package: plyr
+Source: CRAN
+Version: 1.8.4
+Hash: fee2f470d73a85f4db7e89d771427e57
+Requires: Rcpp
+
+Package: praise
+Source: CRAN
+Version: 1.0.0
+Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
+
+Package: roxygen2
+Source: CRAN
+Version: 5.0.1
+Hash: fd554bf7b028b1e8a65f2b9adcafa4f6
+Requires: Rcpp, brew, digest, stringi, stringr
+
+Package: rstudioapi
+Source: CRAN
+Version: 0.6
+Hash: fd256f8bfb9a64cc35f98b0decb1a79f
+
+Package: stringi
+Source: CRAN
+Version: 1.1.2
+Hash: 1ad6b1cc11d982ac233bf2fa2f7c9684
+
+Package: stringr
+Source: CRAN
+Version: 1.1.0
+Hash: 4d21d0063b37a17ea18eaec6acd29bf3
+Requires: magrittr, stringi
+
+Package: testthat
+Source: CRAN
+Version: 1.0.2
+Hash: 88d5291104227f9dc2e7c7c1d0eb6c74
+Requires: R6, crayon, digest, magrittr, praise
+
+Package: tibble
+Source: CRAN
+Version: 1.2
+Hash: ee28ae66deec042f19aff6fa10f5f8d5
+Requires: Rcpp, assertthat, lazyeval
+
+Package: whisker
+Source: CRAN
+Version: 0.3-2
+Hash: 803d662762e532705c2c066a82d066e7
+
+Package: withr
+Source: CRAN
+Version: 1.0.2
+Hash: 774eb7be9087cdc24b53b74e5359cfac
+
+Package: yaml
+Source: CRAN
+Version: 2.1.14
+Hash: c81230c3a7d9ba20607ad6b4331173d1

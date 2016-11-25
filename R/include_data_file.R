@@ -1,0 +1,175 @@
+include_data_file <- function(
+  data_catalogue,
+  root,
+  file_to_include,
+  file_reading_function,
+  file_reading_options = NULL,
+  file_reading_package_dependencies = NULL,
+  file_gitignore = FALSE,
+  file_rbuildignore = FALSE,
+  compression_algo = NULL,
+  hashing_algo = NULL,
+  save_catalogue = TRUE)
+{
+# Check prerequisites -----------------------------------------------------
+  data_catalogue %>%
+    assertive.types::assert_is_data.frame() %>%
+    assertive.properties::assert_has_all_attributes(
+      c("default_compression_algo", "default_hashing_algo")) %>%
+    colnames() %>%
+    assertive.sets::assert_are_set_equal(c("File", "Hashing.Algo",
+      "Hash.Uncompressed", "Hash.Compressed", "File.Reading.Function",
+      "File.Reading.Option", "File.Git.Ignore", "File.R.Buildignore"))
+
+  root %>%
+    assertive.types::assert_is_a_string() %>%
+    assertive.files::assert_all_are_dirs()
+
+  file_to_include %>%
+    assertive.types::assert_is_a_string() %>%
+    assertive.files::assert_all_are_readable_files()
+
+  raw_data_target_path <- root %>%
+    file.path(
+      "inst",
+      "extdata",
+      file_to_include %>%
+        basename() %>%
+        pathological::replace_extension("zip")) %>%
+    assertive.files::assert_any_are_existing_files()
+
+  r_object_target_path <- root %>%
+    file.path(
+      "data",
+      file_to_include %>%
+        basename() %>%
+        paste0(".RData")) %>%
+    assertive.files::assert_any_are_readable_files()
+
+  file_reading_function %>%
+    assertive.types::assert_is_a_string() %>%
+    assert_all_are_function_names()
+
+  if(
+    file_reading_options %>%
+      is.null() %>%
+      magrittr::not())
+  {
+    file_reading_options %>%
+      assertive.types::assert_is_list()
+  }
+
+  if(
+    file_reading_package_dependencies %>%
+    is.null() %>%
+    magrittr::not())
+  {
+    file_reading_package_dependencies %>%
+      assertive.types::assert_is_character() %>%
+      assertive.sets::assert_is_subset(utils::installed.packages())
+  }
+
+  file_gitignore %>%
+    assertive.types::assert_is_a_bool()
+
+  file_rbuildignore %>%
+    assertive.types::assert_is_a_bool()
+
+  if(
+    compression_algo %>%
+      is.null())
+  {
+    compression_algo <- attr(
+      data_catalogue,
+      "default_compression_algo")
+  } else {
+    compression_algo %<>%
+      assertive.types::assert_is_character() %>%
+      match.arg(
+        choices = c("xz", "bzip2", "gzip"),
+        several.ok = FALSE)
+  }
+
+  if(
+    hashing_algo %>%
+    is.null())
+  {
+    hashing_algo <- attr(
+      data_catalogue,
+      "default_hashing_algo")
+  } else {
+    hashing_algo %<>%
+      assertive.types::assert_is_character() %>%
+      match.arg(
+        choices = c("sha512", "md5", "sha1", "crc32", "sha256", "xxhash32",
+                    "xxhash64", "murmur32"),
+        several.ok = FALSE)
+  }
+
+  save_catalogue %>%
+    assertive.types::assert_is_a_bool()
+
+# Processing --------------------------------------------------------------
+  # Insert compressed version of file into package infrastructure
+  utils::zip(
+    zipfile = raw_data_target_path,
+    files = file_to_include)
+
+  # Capture hashes
+  hash_uncompressed <- file_to_include %>%
+    digest::digest(
+      algo = hashing_algo,
+      file = TRUE)
+  hash_compressed <- raw_data_target_path %>%
+    digest::digest(
+      algo = hashing_algo,
+      file = TRUE)
+
+  # Parse the data
+  tmp_object <- file_reading_function %>%
+    do.call(
+      c(file_to_include, file_reading_options) %>%
+        as.list())
+
+  # Rename the object and write it out
+  assign(
+      file_to_include %>%
+        basename(),
+      tmp_object) %>%
+    save(
+      file = r_object_target_path,
+      compression = compression_algo)
+
+  stop("gitignore")
+  stop("buildignore")
+  stop("DESCRIPTION")
+
+  # Update data_catalogue
+  data_catalogue %<>%
+    tibble::add_row(
+      File = file_to_include %>%
+        basename(),
+      Hashing.Algo = hashing_algo,
+      Hash.Uncompressed = hash_uncompressed,
+      Hash.Compressed = hash_compressed,
+      File.Reading.Function = file_reading_function,
+      File.Reading.Option = I(file_reading_options),
+      File.Reading.Package.Dependencies = I(file_reading_package_dependencies),
+      File.Git.Ignore = file_gitignore,
+      File.R.Buildignore = file_rbuildignore)
+
+  # If requested: save data_catalogue
+  if(save_catalogue){
+    data_catalogue %>%
+      save(
+        file = root %>%
+          file.path(
+            "data",
+            "data_catalogue.RData"),
+        compression = compression_algo)
+  }
+
+  # (Invisibly) return
+  data_catalogue %>%
+    invisible()
+}
