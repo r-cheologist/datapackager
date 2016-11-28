@@ -2,5 +2,9 @@
 
 export("%<>%")
 export("%>%")
+export(include_data_file)
+export(init)
+export(remove_data_file)
+export(templating)
 importFrom(magrittr,"%<>%")
 importFrom(magrittr,"%>%")
