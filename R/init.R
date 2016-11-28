@@ -15,10 +15,13 @@ init <- function(
 # Check prerequisites -----------------------------------------------------
   root %>%
     assertive.types::assert_is_a_string() %>%
-    assertive.files::assert_all_are_dirs()
+    c(
+      root %>%
+        dirname()) %>%
+    assertive.files::assert_any_are_dirs()
 
   data_catalogue_file <- root %>%
-    file.path("data", "data_catalogue.RData")
+    file.path("data", "data_catalogue.rda")
   if(data_catalogue_file %>%
      file.exists())
   {
@@ -93,7 +96,7 @@ init <- function(
   devtools::use_package("testthat", type = "Imports", pkg = root)
   root %>%
     file.path("inst", "extdata") %>%
-    dir.create()
+    dir.create(recursive = TRUE)
 
   # Create the data catalogue
   data_catalogue <- data.frame(

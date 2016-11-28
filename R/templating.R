@@ -32,7 +32,7 @@ templating <- function(
   for(ins in replacements %>% names){
     file_content %<>%
       stringi::stri_replace_all_fixed(
-        replacements = ins %>%
+        pattern = ins %>%
           paste0("<", ., ">"),
         replacement = replacements %>%
           magrittr::extract2(ins))
