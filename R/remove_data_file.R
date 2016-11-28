@@ -29,7 +29,7 @@ remove_data_file <- function(
   relative_raw_data_target_path <- file.path(
     "inst",
     "extdata",
-    file_to_include %>%
+    file_to_remove %>%
       basename() %>%
       paste0(".zip"))
   raw_data_target_path <- root %>%
@@ -38,7 +38,7 @@ remove_data_file <- function(
 
   relative_r_object_target_path <- file.path(
     "data",
-    file_to_include %>%
+    file_to_remove %>%
       basename() %>%
       paste0(".rda"))
   r_object_target_path <- root %>%
@@ -94,7 +94,7 @@ remove_data_file <- function(
         pkg = root,
         internal = FALSE,
         overwrite = TRUE,
-        compress = compression_algo)
+        compress = attr(data_catalogue, "default_compression_algo"))
     invisible(TRUE)
   } else {
     ## (Invisibly) return
