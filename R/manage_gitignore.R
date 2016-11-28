@@ -38,21 +38,14 @@ manage_gitignore <- function(
   # Append/delete path (as appropriate)
   if(state == "present"){
     file_contents %<>%
-      c(relative_path)
+      union(relative_path)
   } else {
-    for(path in relative_path){
-      file_contents %<>%
-        magrittr::extract(
-          file_contents %>%
-            stringi::stri_detect_fixed(
-              pattern = path,
-              negate = TRUE))
-    }
+    file_contents %<>%
+      setdiff(relative_path)
   }
 
-  # Uniquify, sort and write out
+  # Sort and write out
   file_contents %>%
-    unique() %>%
     sort() %>%
     writeLines(
       con = gitignore_file)
