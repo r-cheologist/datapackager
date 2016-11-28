@@ -35,7 +35,7 @@ include_data_file <- function(
     "extdata",
     file_to_include %>%
       basename() %>%
-      pathological::replace_extension("zip"))
+      paste0(".zip"))
   raw_data_target_path <- root %>%
     file.path(relative_raw_data_target_path) %>%
     assertive.files::assert_any_are_existing_files()
