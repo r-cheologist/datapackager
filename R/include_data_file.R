@@ -1,3 +1,4 @@
+#' @export
 include_data_file <- function(
   data_catalogue,
   root,
@@ -29,21 +30,23 @@ include_data_file <- function(
     assertive.types::assert_is_a_string() %>%
     assertive.files::assert_all_are_readable_files()
 
+  relative_raw_data_target_path <- file.path(
+    "inst",
+    "extdata",
+    file_to_include %>%
+      basename() %>%
+      pathological::replace_extension("zip"))
   raw_data_target_path <- root %>%
-    file.path(
-      "inst",
-      "extdata",
-      file_to_include %>%
-        basename() %>%
-        pathological::replace_extension("zip")) %>%
+    file.path(relative_raw_data_target_path) %>%
     assertive.files::assert_any_are_existing_files()
 
+  relative_r_object_target_path <- file.path(
+    "data",
+    file_to_include %>%
+      basename() %>%
+      paste0(".rda"))
   r_object_target_path <- root %>%
-    file.path(
-      "data",
-      file_to_include %>%
-        basename() %>%
-        paste0(".RData")) %>%
+    file.path(relative_r_object_target_path) %>%
     assertive.files::assert_any_are_readable_files()
 
   file_reading_function %>%
@@ -136,13 +139,43 @@ include_data_file <- function(
       file_to_include %>%
         basename(),
       tmp_object) %>%
-    save(
-      file = r_object_target_path,
-      compression = compression_algo)
+    devtools::use_data(
+      pkg = root,
+      internal = FALSE,
+      overwrite = FALSE,
+      compress = compression_algo)
 
-  stop("gitignore")
-  stop("buildignore")
-  stop("DESCRIPTION")
+  # Add package dependencies to DESCRIPTION
+  if(
+    file_reading_package_dependencies %>%
+    is.null() %>%
+    magrittr::not())
+  {
+    for(pk in file_reading_package_dependencies){
+      devtools::use_package(
+        package = pk,
+        type = "Imports",
+        pkg = root)
+    }
+  }
+
+  # Add file to .Rbuildignore (as appropriate)
+  if(file_rbuildignore){
+    devtools::use_build_ignore(
+      files =r_object_target_path,
+      escape = TRUE,
+      pkg = root)
+  }
+
+  # Add
+  if(file_gitignore){
+    manage_gitignore(
+      gitignore_file = file.path(root, ".gitignore"),
+      relative_path = c(
+        relative_raw_data_target_path,
+        relative_r_object_target_path),
+      state = present)
+  }
 
   # Update data_catalogue
   data_catalogue %<>%
@@ -161,12 +194,11 @@ include_data_file <- function(
   # If requested: save data_catalogue
   if(save_catalogue){
     data_catalogue %>%
-      save(
-        file = root %>%
-          file.path(
-            "data",
-            "data_catalogue.RData"),
-        compression = compression_algo)
+      devtools::use_data(
+        pkg = root,
+        internal = FALSE,
+        overwrite = TRUE,
+        compress = compression_algo)
   }
 
   # (Invisibly) return
