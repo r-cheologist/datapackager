@@ -90,6 +90,7 @@ init <- function(
   # Create infrastructure
   devtools::create(path = root,rstudio = TRUE)
   devtools::use_testthat(pkg = root)
+  devtools::use_package("testthat", type = "Imports", pkg = root)
   root %>%
     file.path("inst", "extdata") %>%
     dir.create()
@@ -170,8 +171,20 @@ init <- function(
       overwrite = FALSE,
       compress = default_compression_algo)
 
+  # Install the testthat tests that check the catalogue
+  template_name <- "test-data_catalogue.R"
+  system.file(
+      file.path("templates", template_name),
+      package = "datapackageR",
+      mustWork = TRUE) %>%
+    templating(
+      replacements = list(
+        PACKAGENAME = root %>%
+          basename()),
+      target = root %>%
+        file.path("tests", "testthat", template_name))
+
 # Todo --------------------------------------------------------------------
 stop("Implement docmentation for data_catalogue")
-
 }
 
