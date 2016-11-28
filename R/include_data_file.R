@@ -167,7 +167,7 @@ include_data_file <- function(
       pkg = root)
   }
 
-  # Add
+  # Add file to .gitignore (as appropriate)
   if(file_gitignore){
     manage_gitignore(
       gitignore_file = file.path(root, ".gitignore"),
