@@ -56,4 +56,7 @@ manage_gitignore <- function(
     sort() %>%
     writeLines(
       con = gitignore_file)
+
+  TRUE %>%
+    invisible()
 }

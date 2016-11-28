@@ -46,9 +46,11 @@ templating <- function(
   {
     file_content %>%
       writeLines(target)
+    TRUE %>%
+      invisible()
+  } else {
+    ## Return (invisibly)
+    file_content %>%
+      invisible()
   }
-
-  # Return (invisibly)
-  file_content %>%
-    invisible()
 }
