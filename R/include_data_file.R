@@ -174,7 +174,7 @@ include_data_file <- function(
       relative_path = c(
         relative_raw_data_target_path,
         relative_r_object_target_path),
-      state = present)
+      state = "present")
   }
 
   # Update data_catalogue
