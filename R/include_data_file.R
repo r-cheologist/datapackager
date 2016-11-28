@@ -162,7 +162,9 @@ include_data_file <- function(
   # Add file to .Rbuildignore (as appropriate)
   if(file_rbuildignore){
     devtools::use_build_ignore(
-      files =r_object_target_path,
+      files = c(
+        relative_raw_data_target_path,
+        relative_r_object_target_path),
       escape = TRUE,
       pkg = root)
   }
