@@ -1,3 +1,4 @@
+#' @export
 init <- function(
   root = getwd(),
   default_compression_algo = c("xz", "bzip2", "gzip"),
@@ -86,11 +87,12 @@ init <- function(
   }
 
 # Processing --------------------------------------------------------------
-  # Check for/create directory infrastructure
-  check_and_create_directory_infrastructure(root = root)
-
-  # Check for/create file infrastructure
-  check_and_create_file_infrastructure(root = root)
+  # Create infrastructure
+  devtools::create(path = root,rstudio = TRUE)
+  devtools::use_testthat(pkg = root)
+  root %>%
+    file.path("inst", "extdata") %>%
+    dir.create()
 
   # Create the data catalogue
   data_catalogue <- data.frame(
@@ -162,12 +164,13 @@ init <- function(
 
   # Write out the catalogue
   data_catalogue %>%
-    save(
-      file = data_catalogue_file,
+    devtools::use_data(
+      pkg = root,
+      internal = FALSE,
+      overwrite = FALSE,
       compress = default_compression_algo)
 
 # Todo --------------------------------------------------------------------
-stop("Implement DESCRIPTION file")
 stop("Implement docmentation for data_catalogue")
 
 }
