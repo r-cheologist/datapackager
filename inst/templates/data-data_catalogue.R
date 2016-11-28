@@ -1,0 +1,39 @@
+#' @title data_catalogue
+#' @name data_catalogue
+#' @description \code{\link{data.frame}} representing a collection of metadata
+#' for files/objects in \pkg{<PACKAGENAME>} as a reference for data
+#' verification.
+#' @author <AUTHOR>
+#' @seealso \code{\link{data.frame}} \code{\link[digest]{digest}}
+#' @format \code{\link{data.frame}} with columns the following columns:
+#' \describe{
+#'   \item{\code{File}:}{(Base)names of original data files as
+#'     \code{\link{character}} objects. Giving rise to objects of the same names
+#'     and are stored (zipped and with the corresponding extension) in the
+#'     \code{extdata} directory of the package.}
+#'   \item{\code{Hashing.Algo}:}{Cryptographic hashing algorithms as understood
+#'     by \code{\link[digest]{digest}} and represented by
+#'     \code{\link{character}} objects. Used to test data integrity (see below).}
+#'   \item{\code{Hash.Uncompressed} & \code{Hash.Compressed}:}{
+#'     \code{\link{character}} representations of cryptographic hashes of the
+#'     plain and zip-compressed version of integrated data files. Algorithm used
+#'     depends on \code{Hashing.Algo}.}
+#'   \item{\code{File.Reading.Function}:}{Name (\code{\link{character}}) of the
+#'     \code{R} function used to produce the corresponding \code{R} object from
+#'     its original data file.}
+#'   \item{\code{File.Reading.Option}:}{Options to \code{File.Reading.Function}
+#'     stored as \code{\link{list}} (using \code{\link{I}}).}
+#'   \item{\code{File.Reading.Package.Dependencies}:}{Package dependencies
+#'     required by \code{File.Reading.Function}. Encoded (again using
+#'     \code{\link{I}}) as \code{\link{character}} vectors.}
+#'   \item{\code{File.Git.Ignore}:}{\code{\link{logical}}, indicating whether
+#'     the file is to be listed in \filename{.gitignore} of the top package
+#'     directory. This option is intended for tracking analysis of
+#'     non-distibutable data sets.}
+#'   \item{\code{File.R.Buildgnore}:}{\code{\link{logical}}, indicating whether
+#'     the file is to be listed in \filename{.Rbuildignore} of the top package
+#'     directory. This option is intended for tracking analysis of
+#'     non-distibutable data sets.}}
+#' @keywords datasets
+#' @docType data
+NULL

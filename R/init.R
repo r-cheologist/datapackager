@@ -171,6 +171,19 @@ init <- function(
       overwrite = FALSE,
       compress = default_compression_algo)
 
+  # Provide documentation for the catalogue
+  template_name <- "data-data_catalogue.R"
+  system.file(
+      file.path("templates", template_name),
+      package = "datapackageR",
+      mustWork = TRUE) %>%
+    templating(
+      replacements = list(
+        PACKAGENAME = root %>%
+          basename()),
+      target = root %>%
+        file.path("R", template_name))
+
   # Install the testthat tests that check the catalogue
   template_name <- "test-data_catalogue.R"
   system.file(
@@ -185,6 +198,5 @@ init <- function(
         file.path("tests", "testthat", template_name))
 
 # Todo --------------------------------------------------------------------
-stop("Implement docmentation for data_catalogue")
 }
 
