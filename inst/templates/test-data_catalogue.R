@@ -1,7 +1,7 @@
-context("--> Checking integrity of data referenced in 'data_catalogue' <--")
-
 require(<PACKAGENAME>)
 require(testthat)
+
+context("--> Checking integrity of data referenced in 'data_catalogue' <--")
 
 package_name <- "<PACKAGENAME>"
 
