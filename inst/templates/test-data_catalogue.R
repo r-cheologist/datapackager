@@ -54,7 +54,7 @@ for(entry in seq_along(nrow(data_catalogue))){
           algo = data_catalogue %>%
             magrittr::extract(entry, "Hashing.Algo")),
         data_catalogue %>%
-          magrittr::extract(entry, "Hash.Unompressed"))
+          magrittr::extract(entry, "Hash.Uncompressed"))
     })
 
   file_content_fresh <- data_catalogue %>%
@@ -63,7 +63,7 @@ for(entry in seq_along(nrow(data_catalogue))){
       c(
         file_path,
         data_catalogue %>%
-          magrittr::extract(entry, "File.Reading.Options")) %>%
+          magrittr::extract(entry, "File.Reading.Option")) %>%
           as.list())
 
   test_that(
