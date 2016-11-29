@@ -30,7 +30,7 @@ for(entry in seq(nrow(data_catalogue))){
           algo = data_catalogue %>%
             magrittr::extract(entry, "Hashing.Algo")),
         data_catalogue %>%
-          magrittr::extract(i, "Hash.Compressed"))
+          magrittr::extract(entry, "Hash.Compressed"))
   })
 
   unzip_target_dir <- tempdir()
