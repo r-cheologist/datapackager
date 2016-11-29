@@ -36,7 +36,8 @@ for(entry in seq_along(nrow(data_catalogue))){
   unzip_target_dir <- tempdir()
   utils::unzip(
     zipfile = file_path_compressed,
-    exdir = unzip_target_dir)
+    exdir = unzip_target_dir,
+    junkpaths = TRUE)
   file_path <- unzip_target_dir %>%
     file.path(file_base_name)
 

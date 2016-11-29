@@ -126,7 +126,8 @@ include_data_file <- function(
   # Insert compressed version of file into package infrastructure
   utils::zip(
     zipfile = raw_data_target_path,
-    files = file_to_include)
+    files = file_to_include,
+    flags = "-D")
 
   # Capture hashes
   hash_uncompressed <- file_to_include %>%
