@@ -5,7 +5,7 @@ context("--> Checking integrity of data referenced in 'data_catalogue' <--")
 
 package_name <- "<PACKAGENAME>"
 
-for(entry in seq_along(nrow(data_catalogue))){
+for(entry in seq(nrow(data_catalogue))){
 
   file_base_name <- data_catalogue %>%
     magrittr::extract(entry, "File")
