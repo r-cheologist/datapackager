@@ -1,6 +1,6 @@
 #' @export
 include_data_file <- function(
-  data_catalogue,
+  data_catalogue = NULL,
   root,
   file_to_include,
   file_reading_function,
@@ -61,7 +61,7 @@ include_data_file <- function(
 
   file_reading_function %>%
     assertive.types::assert_is_a_string() %>%
-    assert_all_are_function_names()
+    datapackageR:::assert_all_are_function_names()
 
   if(
     file_reading_options %>%
@@ -214,19 +214,19 @@ include_data_file <- function(
       Hash.Uncompressed = hash_uncompressed,
       Hash.Compressed = hash_compressed,
       File.Reading.Function = file_reading_function,
-      File.Reading.Option = I(file_reading_options),
-      File.Reading.Package.Dependencies = I(file_reading_package_dependencies),
+      File.Reading.Option = ifelse(is.null(file_reading_options),I(NA_character_),I(file_reading_options)),
+      File.Reading.Package.Dependencies = ifelse(is.null(file_reading_package_dependencies),I(NA_character_),I(file_reading_package_dependencies)),
       File.Git.Ignore = file_gitignore,
       File.R.Buildignore = file_rbuildignore)
 
   # If requested: save data_catalogue
   if(save_catalogue){
-    data_catalogue %>%
-      devtools::use_data(
-        pkg = root,
-        internal = FALSE,
-        overwrite = TRUE,
-        compress = compression_algo)
+    devtools::use_data(
+      data_catalogue,
+      pkg = root,
+      internal = FALSE,
+      overwrite = TRUE,
+      compress = compression_algo)
     invisible(TRUE)
   } else {
     ## (Invisibly) return
