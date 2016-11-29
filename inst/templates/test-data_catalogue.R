@@ -8,7 +8,7 @@ package_name <- "<PACKAGENAME>"
 for(entry in seq_along(nrow(data_catalogue))){
 
   file_base_name <- data_catalogue %>%
-    magrittr::extract(i, "File")
+    magrittr::extract(entry, "File")
   file_path_compressed <- system.file(
     file.path(
         "extdata",
@@ -28,7 +28,7 @@ for(entry in seq_along(nrow(data_catalogue))){
         digest(
           file = file_path_compressed,
           algo = data_catalogue %>%
-            magrittr::extract(i, "Hashing.Algo")),
+            magrittr::extract(entry, "Hashing.Algo")),
         data_catalogue %>%
           magrittr::extract(i, "Hash.Compressed"))
   })
@@ -51,18 +51,18 @@ for(entry in seq_along(nrow(data_catalogue))){
         digest(
           file = file_path,
           algo = data_catalogue %>%
-            magrittr::extract(i, "Hashing.Algo")),
+            magrittr::extract(entry, "Hashing.Algo")),
         data_catalogue %>%
-          magrittr::extract(i, "Hash.Unompressed"))
+          magrittr::extract(entry, "Hash.Unompressed"))
     })
 
   file_content_fresh <- data_catalogue %>%
-    magrittr::extract(i, "File.Reading.Function") %>%
+    magrittr::extract(entry, "File.Reading.Function") %>%
     do.call(
       c(
         file_path,
         data_catalogue %>%
-          magrittr::extract(i, "File.Reading.Options")) %>%
+          magrittr::extract(entry, "File.Reading.Options")) %>%
           as.list())
 
   test_that(
