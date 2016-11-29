@@ -27,11 +27,11 @@
 #'     required by \code{File.Reading.Function}. Encoded (again using
 #'     \code{\link{I}}) as \code{\link{character}} vectors.}
 #'   \item{\code{File.Git.Ignore}:}{\code{\link{logical}}, indicating whether
-#'     the file is to be listed in \filename{.gitignore} of the top package
+#'     the file is to be listed in \file{.gitignore} of the top package
 #'     directory. This option is intended for tracking analysis of
 #'     non-distibutable data sets.}
 #'   \item{\code{File.R.Buildgnore}:}{\code{\link{logical}}, indicating whether
-#'     the file is to be listed in \filename{.Rbuildignore} of the top package
+#'     the file is to be listed in \file{.Rbuildignore} of the top package
 #'     directory. This option is intended for tracking analysis of
 #'     non-distibutable data sets.}}
 #' @keywords datasets
