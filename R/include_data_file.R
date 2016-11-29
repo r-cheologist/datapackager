@@ -202,6 +202,10 @@ include_data_file <- function(
   }
 
   # Update data_catalogue
+  tmp_default_compression_algo <- data_catalogue %>%
+    attr("default_compression_algo")
+  tmp_default_hashing_algo <- data_catalogue %>%
+    attr("default_hashing_algo")
   data_catalogue %<>%
     tibble::add_row(
       File = file_to_include %>%
@@ -214,6 +218,8 @@ include_data_file <- function(
       File.Reading.Package.Dependencies = ifelse(is.null(file_reading_package_dependencies),I(NA_character_),I(file_reading_package_dependencies)),
       File.Git.Ignore = file_gitignore,
       File.R.Buildignore = file_rbuildignore)
+  attr(data_catalogue, "default_compression_algo") <- tmp_default_compression_algo
+  attr(data_catalogue, "default_hashing_algo") <- tmp_default_hashing_algo
 
   # If requested: save data_catalogue
   if(save_catalogue){
