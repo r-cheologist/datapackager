@@ -146,14 +146,30 @@ include_data_file <- function(
 
   # Rename the object and write it out
   assign(
-      file_to_include %>%
-        basename(),
-      tmp_object) %>%
-    devtools::use_data(
-      pkg = root,
-      internal = FALSE,
-      overwrite = FALSE,
-      compress = compression_algo)
+    file_to_include %>%
+      basename(),
+    tmp_object)
+  root %>%
+    file.path("data") %>% dir.create()
+  save(
+    list = file_to_include %>%
+      basename(),
+    file = root %>%
+      file.path(
+        "data",
+        file_to_include %>%
+          basename %>%
+          paste0(".rda")),
+    compress = compression_algo)
+
+  # devtools::use_data(
+  #   file_to_include %>%
+  #     basename() %>%
+  #     get0(),
+  #   pkg = root,
+  #   internal = FALSE,
+  #   overwrite = FALSE,
+  #   compress = compression_algo)
 
   # Add package dependencies to DESCRIPTION
   if(
