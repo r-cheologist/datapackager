@@ -1,30 +1,33 @@
 #' @export
 remove_data_file <- function(
-  data_catalogue,
-  root,
   file_to_remove,
+  root,
+  data_catalogue = NULL,
   save_catalogue = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
-  data_catalogue %>%
-    assertive.types::assert_is_data.frame() %>%
-    assertive.properties::assert_has_all_attributes(
-      c("default_compression_algo", "default_hashing_algo")) %>%
-    colnames() %>%
-    assertive.sets::assert_are_set_equal(c("File", "Hashing.Algo",
-      "Hash.Uncompressed", "Hash.Compressed", "File.Reading.Function",
-      "File.Reading.Option", "File.Git.Ignore", "File.R.Buildignore"))
+  file_to_remove %>%
+    assertive.types::assert_is_a_string()
 
   root %>%
     assertive.types::assert_is_a_string() %>%
     assertive.files::assert_all_are_dirs()
 
-  file_to_remove %>%
-    assertive.types::assert_is_a_string() %>%
-    assertive.files::assert_all_are_readable_files() %>%
-    assertive.sets::assert_is_subset(
-      data_catalogue %>%
-        magrittr::extract2("File"))
+  if(
+    data_catalogue %>%
+      is.null())
+  {
+    import_env <- new.env()
+    root %>%
+      file.path("data", "data_catalogue.rda") %>%
+      load(envir = import_env)
+    data_catalogue <- import_env %>%
+      magrittr::extract2("data_catalogue")
+  }
+  data_catalogue %>%
+    assertive.types::assert_is_list() %>%
+    assertive.properties::assert_has_all_attributes(
+      c("default_compression_algo", "default_hashing_algo"))
 
   relative_raw_data_target_path <- file.path(
     "inst",
@@ -33,8 +36,7 @@ remove_data_file <- function(
       basename() %>%
       paste0(".zip"))
   raw_data_target_path <- root %>%
-    file.path(relative_raw_data_target_path) %>%
-    assertive.files::assert_any_are_existing_files()
+    file.path(relative_raw_data_target_path)
 
   relative_r_object_target_path <- file.path(
     "data",
@@ -42,20 +44,21 @@ remove_data_file <- function(
       basename() %>%
       paste0(".rda"))
   r_object_target_path <- root %>%
-    file.path(relative_r_object_target_path) %>%
-    assertive.files::assert_any_are_readable_files()
+    file.path(relative_r_object_target_path)
 
   save_catalogue %>%
     assertive.types::assert_is_a_bool()
 
 # Processing --------------------------------------------------------------
-  # Remove compressed version of file into package infrastructure
+  # Remove compressed version of file from package infrastructure
   raw_data_target_path %>%
     file.remove()
 
-  # Remove R object representation
+  # Remove the on-disk representation of the R object
   r_object_target_path %>%
     file.remove()
+
+  # TODO?: Remove package dependencies from DESCRIPTION
 
   # Remove files from .Rbuildignore (as appropriate)
   remove_from_rbuildignore <- c(
@@ -79,22 +82,16 @@ remove_data_file <- function(
     state = "absent")
 
   # Update data_catalogue
-  data_catalogue %<>%
-    magrittr::extract(
-      data_catalogue %>%
-        magrittr::extract2("File") %>%
-        magrittr::is_in(file_to_remove) %>%
-        magrittr::not(),
-    )
+  data_catalogue[[file_to_remove %>% basename()]] <- NULL
 
   # If requested: save data_catalogue
   if(save_catalogue){
-    data_catalogue %>%
-      devtools::use_data(
-        pkg = root,
-        internal = FALSE,
-        overwrite = TRUE,
-        compress = attr(data_catalogue, "default_compression_algo"))
+    devtools::use_data(
+      data_catalogue,
+      pkg = root,
+      internal = FALSE,
+      overwrite = TRUE,
+      compress = compression_algo)
     invisible(TRUE)
   } else {
     ## (Invisibly) return

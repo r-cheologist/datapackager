@@ -9,8 +9,7 @@ manage_gitignore <- function(
     assertive.types::assert_is_a_string()
 
   relative_path %>%
-    assertive.types::assert_is_character() %>%
-    assertive.files::assert_all_are_readable_files()
+    assertive.types::assert_is_character()
 
   state %>%
     assertive.types::assert_is_character() %>%
