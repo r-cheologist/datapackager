@@ -1,8 +1,8 @@
 #' @export
 include_data_file <- function(
-  data_catalogue = NULL,
-  root,
   file_to_include,
+  root,
+  data_catalogue = NULL,
   file_reading_function,
   file_reading_options = NULL,
   file_reading_package_dependencies = NULL,
@@ -13,6 +13,10 @@ include_data_file <- function(
   save_catalogue = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
+  file_to_include %>%
+    assertive.types::assert_is_a_string() %>%
+    assertive.files::assert_all_are_readable_files()
+
   root %>%
     assertive.types::assert_is_a_string() %>%
     assertive.files::assert_all_are_dirs()
@@ -32,10 +36,6 @@ include_data_file <- function(
     assertive.types::assert_is_list() %>%
     assertive.properties::assert_has_all_attributes(
       c("default_compression_algo", "default_hashing_algo"))
-
-  file_to_include %>%
-    assertive.types::assert_is_a_string() %>%
-    assertive.files::assert_all_are_readable_files()
 
   relative_raw_data_target_path <- file.path(
     "inst",

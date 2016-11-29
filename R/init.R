@@ -143,18 +143,18 @@ init <- function(
             magrittr::extract2(i))
 
       ## Include the files into the infrastructure
-      data_catalogue %<>% include_data_file(
-        #data_catalogue = data_catalogue,
-        root = root,
-        file_to_include = tmp_file_to_include,
-        file_reading_function = tmp_file_reading_function,
-        file_reading_options = tmp_file_reading_options,
-        file_reading_package_dependencies = file_reading_package_dependencies,
-        file_gitignore = tmp_file_gitignore,
-        file_rbuildignore = tmp_file_rbuildignore,
-        compression_algo = NULL,
-        hashing_algo = NULL,
-        save_catalogue = FALSE)
+      data_catalogue <- tmp_file_to_include %>%
+        include_data_file(
+          root = root,
+          data_catalogue = data_catalogue,
+          file_reading_function = tmp_file_reading_function,
+          file_reading_options = tmp_file_reading_options,
+          file_reading_package_dependencies = file_reading_package_dependencies,
+          file_gitignore = tmp_file_gitignore,
+          file_rbuildignore = tmp_file_rbuildignore,
+          compression_algo = NULL,
+          hashing_algo = NULL,
+          save_catalogue = FALSE)
     }
   }
 
