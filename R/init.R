@@ -97,6 +97,9 @@ init <- function(
   root %>%
     file.path("inst", "extdata") %>%
     dir.create(recursive = TRUE)
+  root %>%
+    file.path("data") %>%
+    dir.create()
 
   # Create the data catalogue
   data_catalogue <- data.frame(

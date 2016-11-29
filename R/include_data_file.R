@@ -149,8 +149,6 @@ include_data_file <- function(
     file_to_include %>%
       basename(),
     tmp_object)
-  root %>%
-    file.path("data") %>% dir.create()
   save(
     list = file_to_include %>%
       basename(),
