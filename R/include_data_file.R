@@ -159,11 +159,9 @@ include_data_file <- function(
           basename %>%
           paste0(".rda")),
     compress = compression_algo)
-
   # devtools::use_data(
-  #   file_to_include %>%
-  #     basename() %>%
-  #     get0(),
+  #   as.symbol(file_to_include %>%
+  #     basename()),
   #   pkg = root,
   #   internal = FALSE,
   #   overwrite = FALSE,
