@@ -13,18 +13,30 @@ include_data_file <- function(
   save_catalogue = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
+  root %>%
+    assertive.types::assert_is_a_string() %>%
+    assertive.files::assert_all_are_dirs()
+
+  if(
+    data_catalogue %>%
+      is.null())
+  {
+    import_env <- new.env()
+    root %>%
+      file.path("data", "data_catalogue.rda") %>%
+      load(envir = import_env)
+    data_catalogue <- import_env %>%
+      magrittr::extract2("data_catalogue")
+  }
   data_catalogue %>%
     assertive.types::assert_is_data.frame() %>%
     assertive.properties::assert_has_all_attributes(
       c("default_compression_algo", "default_hashing_algo")) %>%
     colnames() %>%
     assertive.sets::assert_are_set_equal(c("File", "Hashing.Algo",
-      "Hash.Uncompressed", "Hash.Compressed", "File.Reading.Function",
-      "File.Reading.Option", "File.Git.Ignore", "File.R.Buildignore"))
-
-  root %>%
-    assertive.types::assert_is_a_string() %>%
-    assertive.files::assert_all_are_dirs()
+                                           "Hash.Uncompressed", "Hash.Compressed", "File.Reading.Function",
+                                           "File.Reading.Option", "File.Reading.Package.Dependencies",
+                                           "File.Git.Ignore", "File.R.Buildignore"))
 
   file_to_include %>%
     assertive.types::assert_is_a_string() %>%
