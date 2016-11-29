@@ -49,8 +49,7 @@ include_data_file <- function(
       basename() %>%
       paste0(".zip"))
   raw_data_target_path <- root %>%
-    file.path(relative_raw_data_target_path) %>%
-    assertive.files::assert_any_are_existing_files()
+    file.path(relative_raw_data_target_path)
 
   relative_r_object_target_path <- file.path(
     "data",
@@ -58,8 +57,7 @@ include_data_file <- function(
       basename() %>%
       paste0(".rda"))
   r_object_target_path <- root %>%
-    file.path(relative_r_object_target_path) %>%
-    assertive.files::assert_any_are_readable_files()
+    file.path(relative_r_object_target_path)
 
   file_reading_function %>%
     assertive.types::assert_is_a_string() %>%
