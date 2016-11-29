@@ -215,7 +215,7 @@ include_data_file <- function(
       Hash.Uncompressed = hash_uncompressed,
       Hash.Compressed = hash_compressed,
       File.Reading.Function = file_reading_function,
-      File.Reading.Option = ifelse(is.null(file_reading_options),I(NA_character_),I(file_reading_options)),
+      File.Reading.Option = ifelse(is.null(file_reading_options),I(list()),I(file_reading_options)),
       File.Reading.Package.Dependencies = ifelse(is.null(file_reading_package_dependencies),I(NA_character_),I(file_reading_package_dependencies)),
       File.Git.Ignore = file_gitignore,
       File.R.Buildignore = file_rbuildignore)
