@@ -1,11 +1,12 @@
 #' @title data_catalogue
 #' @name data_catalogue
-#' @description \code{\link{data.frame}} representing a collection of metadata
+#' @description \code{\link{list}} representing a collection of metadata
 #' for files/objects in \pkg{<PACKAGENAME>} as a reference for data
 #' verification.
 #' @author <AUTHOR>
-#' @seealso \code{\link{data.frame}} \code{\link[digest]{digest}}
-#' @format \code{\link{data.frame}} with columns the following columns:
+#' @seealso \code{\link{list}} \code{\link[digest]{digest}}
+#' @format \code{\link{list}} with entries named according to filenames. Each
+#' entry is another \code{\link{list}} with the following fields:
 #' \describe{
 #'   \item{\code{File}:}{(Base)names of original data files as
 #'     \code{\link{character}} objects. Giving rise to objects of the same names
@@ -22,10 +23,10 @@
 #'     \code{R} function used to produce the corresponding \code{R} object from
 #'     its original data file.}
 #'   \item{\code{File.Reading.Option}:}{Options to \code{File.Reading.Function}
-#'     stored as \code{\link{list}} (using \code{\link{I}}).}
+#'     stored as a \code{\link{list}}.}
 #'   \item{\code{File.Reading.Package.Dependencies}:}{Package dependencies
-#'     required by \code{File.Reading.Function}. Encoded (again using
-#'     \code{\link{I}}) as \code{\link{character}} vectors.}
+#'     required by \code{File.Reading.Function}. Encoded as a
+#'     \code{\link{character}} vector.}
 #'   \item{\code{File.Git.Ignore}:}{\code{\link{logical}}, indicating whether
 #'     the file is to be listed in \file{.gitignore} of the top package
 #'     directory. This option is intended for tracking analysis of

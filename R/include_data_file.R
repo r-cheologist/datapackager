@@ -29,14 +29,9 @@ include_data_file <- function(
       magrittr::extract2("data_catalogue")
   }
   data_catalogue %>%
-    assertive.types::assert_is_data.frame() %>%
+    assertive.types::assert_is_list() %>%
     assertive.properties::assert_has_all_attributes(
-      c("default_compression_algo", "default_hashing_algo")) %>%
-    colnames() %>%
-    assertive.sets::assert_are_set_equal(c("File", "Hashing.Algo",
-                                           "Hash.Uncompressed", "Hash.Compressed", "File.Reading.Function",
-                                           "File.Reading.Option", "File.Reading.Package.Dependencies",
-                                           "File.Git.Ignore", "File.R.Buildignore"))
+      c("default_compression_algo", "default_hashing_algo"))
 
   file_to_include %>%
     assertive.types::assert_is_a_string() %>%
@@ -203,24 +198,17 @@ include_data_file <- function(
   }
 
   # Update data_catalogue
-  tmp_default_compression_algo <- data_catalogue %>%
-    attr("default_compression_algo")
-  tmp_default_hashing_algo <- data_catalogue %>%
-    attr("default_hashing_algo")
-  data_catalogue %<>%
-    tibble::add_row(
+  data_catalogue[[file_to_include %>% basename()]] <- list(
       File = file_to_include %>%
         basename(),
       Hashing.Algo = hashing_algo,
       Hash.Uncompressed = hash_uncompressed,
       Hash.Compressed = hash_compressed,
       File.Reading.Function = file_reading_function,
-      File.Reading.Option = ifelse(is.null(file_reading_options),I(list()),I(file_reading_options)),
-      File.Reading.Package.Dependencies = ifelse(is.null(file_reading_package_dependencies),I(NA_character_),I(file_reading_package_dependencies)),
+      File.Reading.Option = file_reading_options,
+      File.Reading.Package.Dependencies = file_reading_package_dependencies,
       File.Git.Ignore = file_gitignore,
       File.R.Buildignore = file_rbuildignore)
-  attr(data_catalogue, "default_compression_algo") <- tmp_default_compression_algo
-  attr(data_catalogue, "default_hashing_algo") <- tmp_default_hashing_algo
 
   # If requested: save data_catalogue
   if(save_catalogue){

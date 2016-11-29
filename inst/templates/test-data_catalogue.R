@@ -5,10 +5,11 @@ context("--> Checking integrity of data referenced in 'data_catalogue' <--")
 
 package_name <- "<PACKAGENAME>"
 
-for(entry in seq(nrow(data_catalogue))){
+for(entry in names(data_catalogue)){
 
   file_base_name <- data_catalogue %>%
-    magrittr::extract(entry, "File")
+    magrittr::extract2(entry) %>%
+    magrittr::extract2("File")
   file_path_compressed <- system.file(
     file.path(
         "extdata",
@@ -28,9 +29,11 @@ for(entry in seq(nrow(data_catalogue))){
         digest(
           file = file_path_compressed,
           algo = data_catalogue %>%
-            magrittr::extract(entry, "Hashing.Algo")),
+            magrittr::extract2(entry) %>%
+            magrittr::extract2("Hashing.Algo")),
         data_catalogue %>%
-          magrittr::extract(entry, "Hash.Compressed"))
+          magrittr::extract2(entry) %>%
+          magrittr::extract2("Hash.Compressed"))
   })
 
   unzip_target_dir <- tempdir()
@@ -52,19 +55,23 @@ for(entry in seq(nrow(data_catalogue))){
         digest(
           file = file_path,
           algo = data_catalogue %>%
-            magrittr::extract(entry, "Hashing.Algo")),
+            magrittr::extract2(entry) %>%
+            magrittr::extract2("Hashing.Algo")),
         data_catalogue %>%
-          magrittr::extract(entry, "Hash.Uncompressed"))
+          magrittr::extract2(entry) %>%
+          magrittr::extract2("Hash.Uncompressed"))
     })
 
   file_content_fresh <- data_catalogue %>%
-    magrittr::extract(entry, "File.Reading.Function") %>%
+    magrittr::extract2(entry) %>%
+    magrittr::extract2("File.Reading.Function") %>%
     do.call(
       c(
-        file_path,
+        file_path %>%
+          as.list(),
         data_catalogue %>%
-          magrittr::extract(entry, "File.Reading.Option")) %>%
-          as.list())
+          magrittr::extract2(entry) %>%
+          magrittr::extract2("File.Reading.Option")))
 
   test_that(
     paste0(

@@ -101,17 +101,7 @@ init <- function(
     dir.create()
 
   # Create the data catalogue
-  data_catalogue <- data.frame(
-    File = character(),
-    Hashing.Algo = character(),
-    Hash.Uncompressed = character(),
-    Hash.Compressed = character(),
-    File.Reading.Function = character(),
-    File.Reading.Option = I(list()),
-    File.Reading.Package.Dependencies = I(character()),
-    File.Git.Ignore = logical(),
-    File.R.Buildignore = logical(),
-    stringsAsFactors = FALSE)
+  data_catalogue <- list()
   attr(data_catalogue, "default_compression_algo") <- default_compression_algo
   attr(data_catalogue, "default_hashing_algo") <- default_hashing_algo
 
