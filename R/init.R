@@ -167,12 +167,12 @@ init <- function(
   }
 
   # Write out the catalogue
-  data_catalogue %>%
-    devtools::use_data(
-      pkg = root,
-      internal = FALSE,
-      overwrite = FALSE,
-      compress = default_compression_algo)
+  devtools::use_data(
+    data_catalogue,
+    pkg = root,
+    internal = FALSE,
+    overwrite = FALSE,
+    compress = default_compression_algo)
 
   # Provide documentation for the catalogue
   template_name <- "data-data_catalogue.R"
@@ -201,5 +201,6 @@ init <- function(
         file.path("tests", "testthat", template_name))
 
 # Todo --------------------------------------------------------------------
+#stop("implement URL retrieval (include_data_file, testing, new call_reteive")
 }
 
