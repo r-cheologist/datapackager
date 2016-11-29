@@ -16,6 +16,8 @@ Imports:
     assertive.types,
     digest,
     magrittr,
+    tibble,
+    devtools,
     pathological,
-    tibble
+    stringi
 RoxygenNote: 5.0.1
