@@ -97,6 +97,9 @@ init <- function(
     file.path("inst", "extdata") %>%
     dir.create(recursive = TRUE)
   root %>%
+    file.path("inst", "scripts") %>%
+    dir.create(recursive = TRUE)
+  root %>%
     file.path("data") %>%
     dir.create()
 
@@ -191,6 +194,16 @@ init <- function(
           basename()),
       target = root %>%
         file.path("tests", "testthat", template_name))
+
+  # Install a script documenting this call
+  c("# The R package infrastructure was largely generated using",
+      "# 'datapackageR::init' as follows.") %>%
+    c(
+      sys.calls()[[1]] %>%
+        deparse()) %>%
+    writeLines(
+      con = "root" %>%
+        file.path("inst", "scripts", "create_pkg_infrastructure.R"))
 
 # Todo --------------------------------------------------------------------
 #stop("implement URL retrieval (include_data_file, testing, new call_reteive")
