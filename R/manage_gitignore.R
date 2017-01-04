@@ -49,6 +49,6 @@ manage_gitignore <- function(
     writeLines(
       con = gitignore_file)
 
-  TRUE %>%
+  file_contents %>%
     invisible()
 }

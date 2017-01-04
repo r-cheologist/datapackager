@@ -218,10 +218,9 @@ include_data_file <- function(
       internal = FALSE,
       overwrite = TRUE,
       compress = compression_algo)
-    invisible(TRUE)
-  } else {
-    ## (Invisibly) return
-    data_catalogue %>%
-      invisible()
   }
+
+  # (Invisibly) return
+  data_catalogue %>%
+    invisible()
 }
