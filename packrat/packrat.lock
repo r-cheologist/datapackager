@@ -29,8 +29,8 @@ Hash: 436ad5c23fad4e22224c7ac2fc82b049
 
 Package: assertive.base
 Source: CRAN
-Version: 0.0-6
-Hash: 4f2b9d76eafb1ab85e69004a97c9abf7
+Version: 0.0-7
+Hash: 8f03c41e14a81aa5ca9a8f94f2c91692
 
 Package: assertive.code
 Source: CRAN
@@ -52,20 +52,20 @@ Requires: assertive.base
 
 Package: assertive.properties
 Source: CRAN
-Version: 0.0-3
-Hash: 8ddd68d2acf333fa9cb16efcb98a8ea5
+Version: 0.0-4
+Hash: f28345140a6af574c71eb19d9efaa62e
 Requires: assertive.base
 
 Package: assertive.reflection
 Source: CRAN
-Version: 0.0-3
-Hash: 4ea25fcd0bfac9a0115d1c610cffa9f8
+Version: 0.0-4
+Hash: f1355735f308e173b4b08d3319cfc7ab
 Requires: assertive.base
 
 Package: assertive.sets
 Source: CRAN
-Version: 0.0-2
-Hash: e89daae7af59ea8eb0ab02dc6c8a6bf9
+Version: 0.0-3
+Hash: 7edcd036b7476f931e0b042a69878d09
 Requires: assertive.base
 
 Package: assertive.strings
@@ -76,8 +76,8 @@ Requires: assertive.base, assertive.types, stringi
 
 Package: assertive.types
 Source: CRAN
-Version: 0.0-2
-Hash: 89a7d6afbdd5ee9cca9924c62ea77c75
+Version: 0.0-3
+Hash: 8c7fdb41ce909452f6c2ac87fc700ffc
 Requires: assertive.base, assertive.properties
 
 Package: assertthat
@@ -109,8 +109,8 @@ Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
 
 Package: digest
 Source: CRAN
-Version: 0.6.10
-Hash: 87165608ca8aeb0958835c3c5b52b6b7
+Version: 0.6.11
+Hash: e959a80e637182a39f4f865ef4fc51cc
 
 Package: evaluate
 Source: CRAN
@@ -120,8 +120,8 @@ Requires: stringr
 
 Package: git2r
 Source: CRAN
-Version: 0.16.0
-Hash: 8022c40f316e7b99258eb19969e2a11c
+Version: 0.18.0
+Hash: 9dfaafbcca68be29b89ef7783dc1dac0
 
 Package: highr
 Source: CRAN
@@ -136,8 +136,8 @@ Requires: R6, curl, jsonlite, mime, openssl
 
 Package: jsonlite
 Source: CRAN
-Version: 1.1
-Hash: 86d4b85b84421a4815f1bb4872e30ef4
+Version: 1.2
+Hash: 3a193a612cae6814719ed523f7e7cf44
 
 Package: knitr
 Source: CRAN
@@ -174,8 +174,8 @@ Hash: 463550cf44fb6f0a2359368f42eebe62
 
 Package: openssl
 Source: CRAN
-Version: 0.9.5
-Hash: 26776a287eaffb2331c9a449c1d2a791
+Version: 0.9.6
+Hash: 5f4711e142a44655dfea4d64fcf2f641
 
 Package: packrat
 Source: CRAN
