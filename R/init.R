@@ -55,7 +55,7 @@ init <- function(
       length() %>%
       assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
     file_reading_function %>%
-      assert_all_are_function_names()
+      datapackageR:::assert_all_are_function_names()
 
     if(
       file_reading_options %>%
