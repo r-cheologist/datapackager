@@ -268,7 +268,7 @@ init <- function(
     sapply(
       function(x){
         system.file(
-          file.path("templates",x),
+          file.path("sharedfunctions",x),
           package="datapackageR",
           mustWork = TRUE)
       })
