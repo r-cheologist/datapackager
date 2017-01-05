@@ -260,6 +260,34 @@ init <- function(
       target = root %>%
         file.path("tests", "testthat", template_name))
 
+  # Install datapackageR functionality
+  warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
+  script_files <- c(
+      "reexport.R",
+      "retrieve_remote_data_plain.R") %>%
+    sapply(
+      function(x){
+        system.file(
+          file.path("templates",x),
+          package="datapackageR",
+          mustWork = TRUE)
+      })
+  for(sf in script_files){
+    file.copy(
+    sf,
+    root %>%
+      file.path(
+        "R",
+        sf %>%
+          basename()))
+  }
+  for(pkg in c("assertive.types", "assertive.sets", "httr", "magrittr")){
+    devtools::use_package(
+      package = pkg,
+      type = "Imports",
+      pkg = root)
+  }
+
   # Install a script documenting this call
   c("# The R package infrastructure was largely generated using",
       "# 'datapackageR::init' as follows.") %>%

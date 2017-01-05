@@ -151,43 +151,9 @@ include_data_file <- function(
 # Processing --------------------------------------------------------------
   # Retreive the file if it is not locally present
   if(file_is_url){
-    ## Make the request
-    if(file_user %>%
-       is.null())
-    {
-      httr_get <- file_to_include %>%
-        httr::GET()
-    } else {
-      httr_get <- file_to_include %>%
-        httr::GET(
-          httr::authenticate(
-            user = file_user,
-            password = file_password,
-            ...))
-    }
-    ## Check for errors
-    if( httr_get %>%
-        httr::http_error())
-    {
-      httr_status <- httr_get %>%
-        httr::http_status()
-      stop(
-        "Can't access URL: ",
-        httr_status %>%
-          magrittr::extract2("message"))
-    }
-    ### Extract the content
-    httr_content <- httr_get %>%
-      httr::content(as = "raw")
-    ### Write the content to file
-    tmp_dir <- tempdir()
-    file_to_include <- file.path(
-      tmp_dir,
-      file_to_include %>%
-        basename())
-    writeBin(
-      object = httr_content,
-      con = file_to_include)
+    file_to_include %<>% retrieve_remote_data_plain(
+      user = file_user,
+      password = file_password)
   }
 
   # Insert compressed version of file into package infrastructure
