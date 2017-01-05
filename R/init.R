@@ -252,7 +252,7 @@ init <- function(
       sys.calls()[[1]] %>%
         deparse()) %>%
     writeLines(
-      con = "root" %>%
+      con = root %>%
         file.path("inst", "scripts", "create_pkg_infrastructure.R"))
 
 # Todo --------------------------------------------------------------------
