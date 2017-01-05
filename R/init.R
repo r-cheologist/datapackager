@@ -12,8 +12,8 @@ init <- function(
   file_reading_options = NULL,
   file_reading_package_dependencies = NULL,
   file_gitignore = FALSE,
-  file_rbuildignore = FALSE
-)
+  file_rbuildignore = FALSE,
+  use_rstudio = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
   root %>%
@@ -131,10 +131,16 @@ init <- function(
       assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
   }
 
+  use_rstudio %>%
+    assertive.types::assert_is_a_bool()
+
 # Processing --------------------------------------------------------------
   # Create infrastructure
   devtools::create(path = root, rstudio = TRUE)
   devtools::use_testthat(pkg = root)
+  if(use_rstudio){
+    devtools::use_rstudio(pkg = root)
+  }
   root %>%
     file.path("inst", "extdata") %>%
     dir.create(recursive = TRUE)
