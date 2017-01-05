@@ -15,6 +15,7 @@ Imports:
     assertive.sets,
     assertive.types,
     digest,
+    httr,
     magrittr,
     tibble,
     devtools,

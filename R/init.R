@@ -5,6 +5,9 @@ init <- function(
   default_hashing_algo = c("sha512", "md5", "sha1", "crc32", "sha256",
                            "xxhash32", "xxhash64", "murmur32"),
   files_to_include = NULL,
+  file_is_url = FALSE,
+  file_user = NULL,
+  file_password = NULL,
   file_reading_function = NULL,
   file_reading_options = NULL,
   file_reading_package_dependencies = NULL,
@@ -25,7 +28,10 @@ init <- function(
   if(data_catalogue_file %>%
      file.exists())
   {
-    stop("'", data_catalogue_file, "' exists. Traces of prior initializations must be manually removed.")
+    stop(
+      "'",
+      data_catalogue_file,
+      "' exists. Traces of prior initializations must be manually removed.")
   }
 
   default_compression_algo %<>%
@@ -47,8 +53,35 @@ init <- function(
       magrittr::not())
   {
     files_to_include %>%
-      assertive.types::assert_is_character() %>%
+      assertive.types::assert_is_character()
+
+    file_is_url %>%
+      assertive.types::assert_is_logical() %>%
+      length() %>%
+      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    file_is_url %<>%
+      length() %>%
+      switch(
+        "1" = rep(
+          file_is_url,
+          files_to_include %>% length()),
+        file_is_url)
+
+    files_to_include %>%
+      magrittr::extract(
+        file_is_url %>%
+          magrittr::not()) %>%
       assertive.files::assert_all_are_readable_files()
+
+    file_user %>%
+      assertive.types::assert_is_character() %>%
+      length() %>%
+      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+
+    file_password %>%
+      assertive.types::assert_is_character() %>%
+      length() %>%
+      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
 
     file_reading_function %>%
       assertive.types::assert_is_character() %>%
@@ -119,6 +152,20 @@ init <- function(
       ## Extract individual parameters
       tmp_file_to_include <- files_to_include %>%
         magrittr::extract2(i)
+      tmp_file_is_url <- file_is_url %>%
+        magrittr::extract2(i)
+      tmp_file_user <- file_user %>%
+        length() %>%
+        switch(
+          "1" = file_user,
+          file_user %>%
+            magrittr::extract2(i))
+      tmp_file_password <- file_password %>%
+        length() %>%
+        switch(
+          "1" = file_password,
+          file_passord %>%
+            magrittr::extract2(i))
       tmp_file_reading_function <- file_reading_function %>%
         length() %>%
         switch(
@@ -150,6 +197,9 @@ init <- function(
         include_data_file(
           root = root,
           data_catalogue = data_catalogue,
+          file_is_url = tmp_file_is_url,
+          file_user = tmp_file_user,
+          file_password = tmp_file_password,
           file_reading_function = tmp_file_reading_function,
           file_reading_options = tmp_file_reading_options,
           file_reading_package_dependencies = file_reading_package_dependencies,
@@ -206,6 +256,6 @@ init <- function(
         file.path("inst", "scripts", "create_pkg_infrastructure.R"))
 
 # Todo --------------------------------------------------------------------
-#stop("implement URL retrieval (include_data_file, testing, new call_reteive")
+#stop("implement URL retrieval (testing, new call_reteive")
 }
 
