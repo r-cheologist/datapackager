@@ -91,7 +91,9 @@ remove_data_file <- function(
       pkg = root,
       internal = FALSE,
       overwrite = TRUE,
-      compress = compression_algo)
+      compress = attr(
+        data_catalogue,
+        "default_compression_algo"))
   }
   # (Invisibly) return
   data_catalogue %>%
