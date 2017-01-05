@@ -32,7 +32,8 @@ manage_gitignore <- function(
   # Create .gitignore compatible path
   relative_path %<>%
     normalizePath(
-      winslash = "/")
+      winslash = "/",
+      mustWork = FALSE)
 
   # Append/delete path (as appropriate)
   if(state == "present"){
