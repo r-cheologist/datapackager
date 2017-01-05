@@ -7,6 +7,13 @@ package_name <- "<PACKAGENAME>"
 
 for(entry in names(data_catalogue)){
 
+  data_catalogue %>%
+    magrittr::extract2(entry) %>%
+    magrittr::extract2("File.Reading.Package.Dependencies") %>%
+    sapply(
+      require,
+      character.only = TRUE)
+
   file_base_name <- data_catalogue %>%
     magrittr::extract2(entry) %>%
     magrittr::extract2("File")
