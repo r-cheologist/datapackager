@@ -179,7 +179,7 @@ init <- function(
         length() %>%
         switch(
           "1" = file_password,
-          file_passord %>%
+          file_password %>%
             magrittr::extract2(i))
       tmp_file_reading_function <- file_reading_function %>%
         length() %>%
