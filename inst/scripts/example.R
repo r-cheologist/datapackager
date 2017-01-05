@@ -40,3 +40,15 @@ include_data_file(
 remove_data_file(
   root = package_root,
   file_to_remove = "data_file_1.csv")
+
+# Add a remote file (from Billing et al. (2016). Comprehensive transcriptomic
+# and proteomic characterization of human mesenchymal stem cells reveals source
+# specific cellular markers. Sci Rep 6, 21507.
+library(readxl)
+include_data_file(
+  root = package_root,
+  file_to_include = "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls",
+  file_is_url = TRUE,
+  file_reading_function = "read_excel",
+  file_reading_options = list(skip = 1),
+  file_reading_package_dependencies = "readxl")

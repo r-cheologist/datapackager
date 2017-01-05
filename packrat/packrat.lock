@@ -201,6 +201,12 @@ Source: CRAN
 Version: 1.0.0
 Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
 
+Package: readxl
+Source: CRAN
+Version: 0.1.1
+Hash: a80e2ef94a7228ec43d840fcb2792bc6
+Requires: Rcpp
+
 Package: roxygen2
 Source: CRAN
 Version: 5.0.1
