@@ -1,5 +1,5 @@
 #' @export
-retrieve_remote_data_plain <- function(
+retrieve_remote_data <- function(
   url,
   user = NULL,
   password = NULL,

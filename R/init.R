@@ -264,7 +264,7 @@ init <- function(
   warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
   script_files <- c(
       "reexport.R",
-      "retrieve_remote_data_plain.R") %>%
+      "retrieve_remote_data.R") %>%
     sapply(
       function(x){
         system.file(

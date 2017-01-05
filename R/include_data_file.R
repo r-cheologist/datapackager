@@ -149,9 +149,9 @@ include_data_file <- function(
     assertive.types::assert_is_a_bool()
 
 # Processing --------------------------------------------------------------
-  # Retreive the file if it is not locally present
+  # Retreive the file if it is not local
   if(file_is_url){
-    file_to_include %<>% retrieve_remote_data_plain(
+    file_to_include %<>% retrieve_remote_data(
       user = file_user,
       password = file_password)
   }
