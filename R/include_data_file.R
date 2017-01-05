@@ -104,7 +104,8 @@ include_data_file <- function(
   {
     file_reading_package_dependencies %>%
       assertive.types::assert_is_character() %>%
-      assertive.sets::assert_is_subset(utils::installed.packages())
+      assertive.sets::assert_is_subset(
+        utils::installed.packages())
   }
 
   file_gitignore %>%
