@@ -72,16 +72,25 @@ init <- function(
         file_is_url %>%
           magrittr::not()) %>%
       assertive.files::assert_all_are_readable_files()
+    if(file_user %>%
+       is.null() %>%
+       magrittr::not())
+    {
+      file_user %>%
+        assertive.types::assert_is_character() %>%
+        length() %>%
+        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    }
 
-    file_user %>%
-      assertive.types::assert_is_character() %>%
-      length() %>%
-      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-
-    file_password %>%
-      assertive.types::assert_is_character() %>%
-      length() %>%
-      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    if(file_password %>%
+       is.null() %>%
+       magrittr::not())
+    {
+      file_password %>%
+        assertive.types::assert_is_character() %>%
+        length() %>%
+        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    }
 
     file_reading_function %>%
       assertive.types::assert_is_character() %>%
