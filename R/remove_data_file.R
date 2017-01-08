@@ -10,8 +10,7 @@ remove_data_file <- function(
     assertive.types::assert_is_a_string()
 
   root %>%
-    assertive.types::assert_is_a_string() %>%
-    assertive.files::assert_all_are_dirs()
+    assert_is_a_valid_package_root()
 
   if(
     data_catalogue %>%

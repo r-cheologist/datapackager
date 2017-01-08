@@ -17,11 +17,7 @@ init <- function(
 {
 # Check prerequisites -----------------------------------------------------
   root %>%
-    assertive.types::assert_is_a_string() %>%
-    c(
-      root %>%
-        dirname()) %>%
-    assertive.files::assert_any_are_dirs()
+    assert_is_a_valid_package_root
 
   data_catalogue_file <- root %>%
     file.path("data", "data_catalogue.rda")

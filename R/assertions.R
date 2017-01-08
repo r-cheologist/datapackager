@@ -10,3 +10,22 @@ assert_all_are_function_names <- function(fn){
   fn %>%
     invisible()
 }
+
+assert_is_a_valid_package_root <- function(pkgr){
+  pkgr %>%
+    assertive.types::assert_is_a_string()
+
+  pkgr_exists <- pkgr %>%
+    file.exists()
+
+  if(pkgr_exists){
+    pkgr %>%
+      assertive.files::assert_all_are_dirs() %>%
+      devtools::is.package() %>%
+      assertive.base::assert_all_are_true()
+  } else {
+    pkgr %>%
+      dirname() %>%
+      assertive.files::assert_all_are_dirs()
+  }
+}
