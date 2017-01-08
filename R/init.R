@@ -247,7 +247,7 @@ init <- function(
       target = root %>%
         file.path("R", template_name))
 
-  # Install the testthat tests that check the catalogue
+  # Install the testthat tests that check the catalogue and the functions they need
   template_name <- "test-data_catalogue.R"
   system.file(
       file.path("templates", template_name),
@@ -259,6 +259,25 @@ init <- function(
           basename()),
       target = root %>%
         file.path("tests", "testthat", template_name))
+
+  template_name <- "test_data_integrity.R"
+  system.file(
+    file.path("templates", template_name),
+    package = "datapackageR",
+    mustWork = TRUE) %>%
+    templating(
+      replacements = list(
+        DATAPACKAGERVERSION = "datapackageR" %>%
+          packageVersion()),
+      target = root %>%
+        file.path("R", template_name))
+
+  for(pkg in c("assertive.sets", "assertive.types", "digest", "magrittr", "testthat", "utils")){
+    devtools::use_package(
+      package = pkg,
+      type = "Imports",
+      pkg = root)
+  }
 
   # Install datapackageR functionality
   warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
