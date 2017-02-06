@@ -1,10 +1,10 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.8.1
 RVersion: 3.3.2
-Repos: BioCsoft=https://bioconductor.org/packages/3.2/bioc,
-    BioCann=https://bioconductor.org/packages/3.2/data/annotation,
-    BioCexp=https://bioconductor.org/packages/3.2/data/experiment,
-    BioCextra=https://bioconductor.org/packages/3.2/extra,
+Repos: BioCsoft=https://bioconductor.org/packages/3.4/bioc,
+    BioCann=https://bioconductor.org/packages/3.4/data/annotation,
+    BioCexp=https://bioconductor.org/packages/3.4/data/experiment,
+    BioCextra=https://bioconductor.org/packages/3.4/extra,
     CRAN=https://cran.rstudio.com/
 
 Package: BH
@@ -85,10 +85,20 @@ Source: CRAN
 Version: 0.1
 Hash: 0afb92b59b02593c70ff8046700ba9d3
 
+Package: backports
+Source: CRAN
+Version: 1.0.5
+Hash: 8b835bdc5447f2c76fda198e17d6bda4
+
 Package: brew
 Source: CRAN
 Version: 1.0-6
 Hash: 931f9972deae0f205e1c78a51f33149b
+
+Package: commonmark
+Source: CRAN
+Version: 1.1
+Hash: ef9740410f8fcf978782a7aa76eaba2b
 
 Package: crayon
 Source: CRAN
@@ -109,8 +119,8 @@ Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
 
 Package: digest
 Source: CRAN
-Version: 0.6.11
-Hash: e959a80e637182a39f4f865ef4fc51cc
+Version: 0.6.12
+Hash: e53fb8c58673df868183697e39a6a4d6
 
 Package: evaluate
 Source: CRAN
