@@ -16,12 +16,8 @@ remove_data_file <- function(
     data_catalogue %>%
       is.null())
   {
-    import_env <- new.env()
-    root %>%
-      file.path("data", "data_catalogue.rda") %>%
-      load(envir = import_env)
-    data_catalogue <- import_env %>%
-      magrittr::extract2("data_catalogue")
+    data_catalogue <- root %>%
+      load_data_catalogue_from_file()
   }
   data_catalogue %>%
     assertive.types::assert_is_list() %>%

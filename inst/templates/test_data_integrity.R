@@ -13,6 +13,11 @@ test_data_integrity <- function(
   testthat::context("--> Checking integrity of data referenced in 'data_catalogue' <--")
 
   for(entry in names(data_catalogue)){
+
+    source_is_remote <- data_catalogue %>%
+      magrittr::extract2(entry) %>%
+      magrittr::extract2("Remote.File")
+
     # Test integrity of compressed 'extdata'
     ## Make path
     file_base_name <- data_catalogue %>%
@@ -24,54 +29,72 @@ test_data_integrity <- function(
         file_base_name) %>%
         paste0(".zip"),
       package = package_name,
-      mustWork = TRUE)
+      mustWork = source_is_remote %>%
+        magrittr::not())
+
     ## Test
-    testthat::test_that(
-      paste0(
-        "'",
-        file_base_name,
-        "' in its compressed form matches the checksum."),
-      {
-        testthat::expect_identical(
-          digest::digest(
-            file = file_path_compressed,
-            algo = data_catalogue %>%
+    if(file_path_compressed %>%
+       magrittr::equals(""))
+    {
+      warning(
+        "Catalogue entry '",
+        entry,
+        "' separately distributed and not present. Conisder fetching with 'fetch_missing_remote_data'."
+      )
+    } else {
+      testthat::test_that(
+        paste0(
+          "'",
+          file_base_name,
+          "' in its compressed form matches the checksum."),
+        {
+          testthat::expect_identical(
+            digest::digest(
+              file = file_path_compressed,
+              algo = data_catalogue %>%
+                magrittr::extract2(entry) %>%
+                magrittr::extract2("Hashing.Algo")),
+            data_catalogue %>%
               magrittr::extract2(entry) %>%
-              magrittr::extract2("Hashing.Algo")),
-          data_catalogue %>%
-            magrittr::extract2(entry) %>%
-            magrittr::extract2("Hash.Compressed"))
-      })
+              magrittr::extract2("Hash.Compressed"))
+        })
+    }
 
     # Test integrity of extracted 'extdata'
     ## Extract the data temporarily
-    unzip_target_dir <- tempdir()
-    utils::unzip(
-      zipfile = file_path_compressed,
-      exdir = unzip_target_dir,
-      junkpaths = TRUE)
-    ## Make path
-    file_path <- unzip_target_dir %>%
-      file.path(file_base_name)
-    ## Test
-    testthat::test_that(
-      paste0(
-        "'",
-        file_base_name,
-        "' in its decompressed form matches the checksum."),
-      {
-        testthat::expect_identical(
-          digest::digest(
-            file = file_path,
-            algo = data_catalogue %>%
+    if(file_path_compressed %>%
+       magrittr::equals("") %>%
+       magrittr::not())
+    {
+      unzip_target_dir <- tempdir()
+      utils::unzip(
+        zipfile = file_path_compressed,
+        exdir = unzip_target_dir,
+        junkpaths = TRUE)
+      ## Make path
+      file_path <- unzip_target_dir %>%
+        file.path(file_base_name)
+      ## Test
+      testthat::test_that(
+        paste0(
+          "'",
+          file_base_name,
+          "' in its decompressed form matches the checksum."),
+        {
+          testthat::expect_identical(
+            digest::digest(
+              file = file_path,
+              algo = data_catalogue %>%
+                magrittr::extract2(entry) %>%
+                magrittr::extract2("Hashing.Algo")),
+            data_catalogue %>%
               magrittr::extract2(entry) %>%
-              magrittr::extract2("Hashing.Algo")),
-          data_catalogue %>%
-            magrittr::extract2(entry) %>%
-            magrittr::extract2("Hash.Uncompressed"))
-      })
+              magrittr::extract2("Hash.Uncompressed"))
+        })
+    }
 
     # Test integrity of stored object
+    stop("if object esists")
     testthat::test_that(
       paste0(
         " the R opbject based on '",

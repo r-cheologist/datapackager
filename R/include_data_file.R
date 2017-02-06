@@ -27,12 +27,8 @@ include_data_file <- function(
     data_catalogue %>%
       is.null())
   {
-    import_env <- new.env()
-    root %>%
-      file.path("data", "data_catalogue.rda") %>%
-      load(envir = import_env)
-    data_catalogue <- import_env %>%
-      magrittr::extract2("data_catalogue")
+    data_catalogue <- root %>%
+      load_data_catalogue_from_file()
   }
   data_catalogue %>%
     assertive.types::assert_is_list() %>%
@@ -171,11 +167,14 @@ include_data_file <- function(
       algo = hashing_algo,
       file = TRUE)
 
-  # Parse the data
+  # Parse the data & capture another hash
   tmp_object <- file_reading_function %>%
     do.call(
       c(file_to_include, file_reading_options) %>%
         as.list())
+  hash_object <- tmp_object %>%
+    digest::digest(
+      algo = hashing_algo)
 
   # Rename the object and write it out
   assign(
@@ -238,9 +237,11 @@ include_data_file <- function(
   data_catalogue[[file_to_include %>% basename()]] <- list(
       File = file_to_include %>%
         basename(),
+      Remote.File = file_is_url,
       Hashing.Algo = hashing_algo,
       Hash.Uncompressed = hash_uncompressed,
       Hash.Compressed = hash_compressed,
+      Hash.Object = hash_object,
       File.Reading.Function = file_reading_function,
       File.Reading.Option = file_reading_options,
       File.Reading.Package.Dependencies = file_reading_package_dependencies,
