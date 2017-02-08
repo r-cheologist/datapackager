@@ -20,9 +20,7 @@ assert_is_a_valid_package_root <- function(pkgr){
 
   if(pkgr_exists){
     pkgr %>%
-      assertive.files::assert_all_are_dirs() %>%
-      devtools::is.package() %>%
-      assertive.base::assert_all_are_true()
+      assertive.files::assert_all_are_dirs()
   } else {
     pkgr %>%
       dirname() %>%
