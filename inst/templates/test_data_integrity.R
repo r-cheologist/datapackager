@@ -94,7 +94,6 @@ test_data_integrity <- function(
     }
 
     # Test integrity of stored object
-    stop("if object esists")
     testthat::test_that(
       paste0(
         " the R opbject based on '",
