@@ -132,11 +132,8 @@ init <- function(
 
 # Processing --------------------------------------------------------------
   # Create infrastructure
-  devtools::create(path = root, rstudio = TRUE)
+  devtools::create(path = root, rstudio = use_rstudio)
   devtools::use_testthat(pkg = root)
-  if(use_rstudio){
-    devtools::use_rstudio(pkg = root)
-  }
   root %>%
     file.path("inst", "extdata") %>%
     dir.create(recursive = TRUE)
