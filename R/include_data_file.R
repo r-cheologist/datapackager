@@ -9,8 +9,9 @@ include_data_file <- function(
   file_reading_function,
   file_reading_options = NULL,
   file_reading_package_dependencies = NULL,
-  file_gitignore = FALSE,
-  file_rbuildignore = FALSE,
+  file_distributable = TRUE,
+  file_gitignore = !file_distributable,
+  file_rbuildignore = !file_distributable,
   compression_algo = NULL,
   hashing_algo = NULL,
   save_catalogue = TRUE,
@@ -101,6 +102,15 @@ include_data_file <- function(
       assertive.types::assert_is_character() %>%
       assertive.sets::assert_is_subset(
         utils::installed.packages())
+  }
+
+  if(
+    file_distributable %>%
+    is.null() %>%
+    magrittr::not())
+  {
+    file_distributable %>%
+      assertive.types::assert_is_a_bool()
   }
 
   file_gitignore %>%

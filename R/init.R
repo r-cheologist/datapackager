@@ -11,8 +11,9 @@ init <- function(
   file_reading_function = NULL,
   file_reading_options = NULL,
   file_reading_package_dependencies = NULL,
-  file_gitignore = FALSE,
-  file_rbuildignore = FALSE,
+  file_distributable = TRUE,
+  file_gitignore = !file_distributable,
+  file_rbuildignore = !file_distributable,
   use_rstudio = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
@@ -116,6 +117,17 @@ init <- function(
         assertive.sets::assert_is_subset(utils::installed.packages())
     }
 
+    if(
+      file_distributable %>%
+      is.null() %>%
+      magrittr::not())
+    {
+      file_distributable %>%
+        assertive.types::assert_is_logical() %>%
+        length() %>%
+        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
+    }
+
     file_gitignore %>%
       assertive.types::assert_is_a_bool() %>%
       length() %>%
@@ -187,6 +199,13 @@ init <- function(
           "1" = file_reading_options,
           file_reading_options %>%
             magrittr::extract2(i))
+      tmp_file_distributable <- file_distributable %>%
+        length() %>%
+        switch(
+          "0" = NULL,
+          "1" = file_distributable,
+          file_distributable %>%
+            magrittr::extract2(i))
       tmp_file_gitignore <- file_gitignore %>%
         length() %>%
         switch(
@@ -211,6 +230,7 @@ init <- function(
           file_reading_function = tmp_file_reading_function,
           file_reading_options = tmp_file_reading_options,
           file_reading_package_dependencies = file_reading_package_dependencies,
+          file_distributable = tmp_file_distributable,
           file_gitignore = tmp_file_gitignore,
           file_rbuildignore = tmp_file_rbuildignore,
           compression_algo = NULL,

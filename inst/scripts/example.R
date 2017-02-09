@@ -44,6 +44,7 @@ remove_data_file(
 # Add a remote file (from Billing et al. (2016). Comprehensive transcriptomic
 # and proteomic characterization of human mesenchymal stem cells reveals source
 # specific cellular markers. Sci Rep 6, 21507.
+# EXCLUDED FROM BUILDS
 library(readxl)
 include_data_file(
   root = package_root,
@@ -51,4 +52,6 @@ include_data_file(
   file_is_url = TRUE,
   file_reading_function = "read_excel",
   file_reading_options = list(skip = 1),
-  file_reading_package_dependencies = "readxl")
+  file_reading_package_dependencies = "readxl",
+  file_distributable = FALSE)
+
