@@ -42,22 +42,28 @@ test_data_integrity <- function(
         "' separately distributed and not present. Conisder fetching with 'fetch_missing_remote_data'."
       )
     } else {
-      testthat::test_that(
-        paste0(
-          "'",
-          file_base_name,
-          "' in its compressed form matches the checksum."),
-        {
-          testthat::expect_identical(
-            digest::digest(
-              file = file_path_compressed,
-              algo = data_catalogue %>%
+      # zip includes timestamps no matter what settings - files zipped at
+      # different times will never have identical hashes
+      if(source_is_remote %>%
+         magrittr::not())
+      {
+        testthat::test_that(
+          paste0(
+            "'",
+            file_base_name,
+            "' in its compressed form matches the checksum."),
+          {
+            testthat::expect_identical(
+              digest::digest(
+                file = file_path_compressed,
+                algo = data_catalogue %>%
+                  magrittr::extract2(entry) %>%
+                  magrittr::extract2("Hashing.Algo")),
+              data_catalogue %>%
                 magrittr::extract2(entry) %>%
-                magrittr::extract2("Hashing.Algo")),
-            data_catalogue %>%
-              magrittr::extract2(entry) %>%
-              magrittr::extract2("Hash.Compressed"))
-        })
+                magrittr::extract2("Hash.Compressed"))
+          })
+      }
     }
 
     # Test integrity of extracted 'extdata'
