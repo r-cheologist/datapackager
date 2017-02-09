@@ -129,12 +129,12 @@ init <- function(
     }
 
     file_gitignore %>%
-      assertive.types::assert_is_a_bool() %>%
+      assertive.types::assert_is_logical() %>%
       length() %>%
       assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
 
     file_rbuildignore %>%
-      assertive.types::assert_is_a_bool() %>%
+      assertive.types::assert_is_logical() %>%
       length() %>%
       assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
   }
