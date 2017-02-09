@@ -46,12 +46,31 @@ remove_data_file(
 # specific cellular markers. Sci Rep 6, 21507.
 # EXCLUDED FROM BUILDS
 library(readxl)
+tmp_url <- "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls"
 include_data_file(
   root = package_root,
-  file_to_include = "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls",
+  file_to_include = tmp_url,
   file_is_url = TRUE,
   file_reading_function = "read_excel",
   file_reading_options = list(skip = 1),
   file_reading_package_dependencies = "readxl",
   file_distributable = FALSE)
 
+# Simulate fresh package checkout/install NOT including undistributed data
+file.path(
+    package_root,
+    "data",
+    tmp_url %>%
+      basename() %>%
+      paste0(".rda")) %>%
+  unlink()
+file.path(
+    package_root,
+    "inst", "extdata",
+    tmp_url %>%
+      basename() %>%
+      paste0(".zip")) %>%
+  unlink()
+
+# Fetch the "seperately distributed" data
+fetch_missing_remote_data(package_root)
