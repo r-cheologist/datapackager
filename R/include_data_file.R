@@ -162,10 +162,9 @@ include_data_file <- function(
   }
 
   # Insert compressed version of file into package infrastructure
-  utils::zip(
-    zipfile = raw_data_target_path,
-    files = file_to_include,
-    flags = "-D")
+  save_zipfile(
+    uncomp_path = file_to_include,
+    root = root)
 
   # Capture hashes
   hash_uncompressed <- file_to_include %>%
@@ -178,29 +177,20 @@ include_data_file <- function(
       file = TRUE)
 
   # Parse the data & capture another hash
-  tmp_object <- file_reading_function %>%
-    do.call(
-      c(file_to_include, file_reading_options) %>%
-        as.list())
+  tmp_object <- parse_data(
+    path = file_to_include,
+    reading_function = file_reading_function,
+    reading_options = file_reading_options)
   hash_object <- tmp_object %>%
     digest::digest(
       algo = hashing_algo)
 
   # Rename the object and write it out
-  assign(
-    file_to_include %>%
-      basename(),
-    tmp_object)
-  save(
-    list = file_to_include %>%
-      basename(),
-    file = root %>%
-      file.path(
-        "data",
-        file_to_include %>%
-          basename %>%
-          paste0(".rda")),
-    compress = compression_algo)
+  data_rename_and_writeout(
+    data_object = tmp_object,
+    file_name = file_to_include,
+    root = root,
+    compression_algo = compression_algo)
   # devtools::use_data(
   #   as.symbol(file_to_include %>%
   #     basename()),
