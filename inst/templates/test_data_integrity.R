@@ -149,6 +149,5 @@ test_data_integrity <- function(
             file_base_name %>%
               get0(),
             file_content_fresh)})
-    stop("Make sure testing is possible even if remote files and objects aren't present")
   }
 }
