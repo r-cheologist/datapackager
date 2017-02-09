@@ -156,6 +156,7 @@ include_data_file <- function(
 # Processing --------------------------------------------------------------
   # Retreive the file if it is not local
   if(file_is_url){
+    file_url <- file_to_include
     file_to_include %<>% retrieve_remote_data(
       user = file_user,
       password = file_password)
@@ -238,7 +239,9 @@ include_data_file <- function(
       File = file_to_include %>%
         basename(),
       Remote.File = file_is_url,
+      Remote.Source = ifelse(file_is_url, file_url, NA_character_),
       Hashing.Algo = hashing_algo,
+      Compression.Algo = compression_algo,
       Hash.Uncompressed = hash_uncompressed,
       Hash.Compressed = hash_compressed,
       Hash.Object = hash_object,
