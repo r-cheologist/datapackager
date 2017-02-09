@@ -69,6 +69,7 @@ init <- function(
         file_is_url %>%
           magrittr::not()) %>%
       assertive.files::assert_all_are_readable_files()
+
     if(file_user %>%
        is.null() %>%
        magrittr::not())
