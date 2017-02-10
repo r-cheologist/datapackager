@@ -348,7 +348,7 @@ init <- function(
   {
     devtools::use_package(
       package = pkg,
-      type = "Recommends",
+      type = "suggests",
       pkg = root)
   }
 
