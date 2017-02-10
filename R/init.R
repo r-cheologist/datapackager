@@ -282,17 +282,18 @@ init <- function(
     templating(
       replacements = list(
         DATAPACKAGERVERSION = "datapackageR" %>%
-          packageVersion() %>%
+          utiels::packageVersion() %>%
           as.character()),
       target = root %>%
         file.path("R", template_name))
 
-  for(pkg in c("assertive.sets", "assertive.types", "digest", "magrittr", "testthat", "utils")){
-    devtools::use_package(
-      package = pkg,
-      type = "Imports",
-      pkg = root)
-  }
+  pkg_to_import_from <- c(
+    "assertive.sets",
+    "assertive.types",
+    "digest",
+    "magrittr",
+    "testthat",
+    "utils")
 
   # Install datapackageR functionality
   warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
@@ -315,12 +316,11 @@ init <- function(
         sf %>%
           basename()))
   }
-  for(pkg in c("assertive.types", "assertive.sets", "httr", "magrittr")){
-    devtools::use_package(
-      package = pkg,
-      type = "Imports",
-      pkg = root)
-  }
+  pkg_to_import_from %<>% c(
+    "assertive.sets",
+    "assertive.types",
+    "httr",
+    "magrittr")
 
   # Install a script documenting this call
   c("# The R package infrastructure was largely generated using",
@@ -331,6 +331,26 @@ init <- function(
     writeLines(
       con = root %>%
         file.path("inst", "scripts", "create_pkg_infrastructure.R"))
+
+  pkg_to_import_from %<>%
+    unique()
+  for(pkg in pkg_to_import_from)
+  {
+    devtools::use_package(
+      package = pkg,
+      type = "Imports",
+      pkg = root)
+  }
+
+  pkg_to_recommend <- "datapackageR" %>%
+    unique()
+  for(pk in pkg_to_recommend)
+  {
+    devtools::use_package(
+      package = pkg,
+      type = "Recommends",
+      pkg = root)
+  }
 
 # Todo --------------------------------------------------------------------
 #stop("implement URL retrieval (testing, new call_reteive")
