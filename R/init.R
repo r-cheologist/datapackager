@@ -282,7 +282,7 @@ init <- function(
     templating(
       replacements = list(
         DATAPACKAGERVERSION = "datapackageR" %>%
-          utiels::packageVersion() %>%
+          utils::packageVersion() %>%
           as.character()),
       target = root %>%
         file.path("R", template_name))
