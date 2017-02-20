@@ -200,8 +200,8 @@ Hash: 6ad605ba7b4b476d84be6632393f5765
 
 Package: pathological
 Source: CRAN
-Version: 0.1-1
-Hash: c312b30ae21c2da9f5bb34185b21942a
+Version: 0.1-2
+Hash: df1d2b30314c12752910bb15bc495892
 Requires: assertive.base, assertive.files, assertive.numbers,
     assertive.properties, assertive.reflection, assertive.strings,
     assertive.types, magrittr, plyr, stringi
