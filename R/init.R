@@ -330,7 +330,7 @@ init <- function(
         deparse()) %>%
     writeLines(
       con = root %>%
-        file.path("inst", "scripts", "create_pkg_infrastructure.R"))
+        file.path("inst", "scripts", "00_create_pkg_infrastructure.R"))
 
   pkg_to_import_from %<>%
     unique()
