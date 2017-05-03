@@ -145,7 +145,7 @@ test_data_integrity <- function(
         "The R object derived from '",
         file_base_name,
         "' represents the original file."), {
-          expect_equal(
+          testthat::expect_equal(
             file_base_name %>%
               get0(),
             file_content_fresh)})
