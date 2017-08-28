@@ -26,7 +26,7 @@ cryptographic hashing function used for integrity testing of objects/files
 via \code{\link[digest]{digest}} (see there for details). Defaulting to the
 strong \code{sha512} option.}
 
-\item{files_to_include}{\code{\link{numeric}} representing paths to data
+\item{files_to_include}{\code{\link{character}} representing paths to data
 files included using \code{\link{include_data_file}} (may also be URLs; see
 \code{file_is_url} option of \code{\link{include_data_file}}).}
 
