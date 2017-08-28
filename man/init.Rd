@@ -81,6 +81,72 @@ In detail the function proceeds as follows:
     potentially by implied \code{\link{include_data_file}} usage).
 }
 }
+\examples{
+# Load tools
+library(magrittr)
+
+# Simple Example: Just generate infrastructure
+## Define a package root
+pkg_root <- tempdir() \%>\%
+  file.path("packagetest")
+
+## Create the infrastructure
+init(
+  root = pkg_root)
+
+## (Crudely) investigate the result
+### In the file system ...
+pkg_root \%>\%
+  list.files(
+    full.names = TRUE,
+    recursive  = TRUE)
+
+### The data catalogue ...
+tmp_env <- new.env()
+pkg_root \%>\%
+  file.path("data/data_catalogue.rda") \%>\%
+  load(envir = tmp_env)
+tmp_env$data_catalogue \%>\%
+  str()
+
+# A more complex example with immediate data inclusion
+## Define a package root
+pkg_root2 <- tempdir() \%>\%
+  file.path("packagetest2")
+
+## Create a dummy data file
+data.frame(
+  x   = 1,
+  y   = 1:10,
+  fac = sample(LETTERS[1:3], 10, replace = TRUE)) \%>\%
+  write.table(
+    file      = file.path(dirname(pkg_root2), "data_dummy.tsv"),
+    sep       = "\\t",
+    col.names = TRUE,
+    row.names = FALSE)
+
+## Create the package infrastructure, including the dummy file
+init(
+  root = pkg_root2,
+  files_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
+  file_reading_function = "read.csv",
+  file_reading_options = list(sep = "\\t", stringsAsFactors = FALSE))
+
+## (Crudely) investigate the result
+### In the file system ...
+pkg_root2 \%>\%
+  list.files(
+    full.names = TRUE,
+    recursive  = TRUE)
+
+### The data catalogue ...
+tmp_env <- new.env()
+pkg_root2 \%>\%
+  file.path("data/data_catalogue.rda") \%>\%
+  load(envir = tmp_env)
+tmp_env$data_catalogue \%>\%
+  str()
+}
 \seealso{
 \code{\link{save}}, \code{\link[digest]{digest}},
 \code{\link{include_data_file}}, \code{\link[devtools]{create}}
