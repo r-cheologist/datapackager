@@ -130,7 +130,7 @@ fetch_missing_remote_data <- function(
         tmp_object <- datapackageR:::parse_data(
           path = tmp_path,
           reading_function = File.Reading.Function,
-          reading_options = File.Reading.Option)
+          reading_options = File.Reading.Options)
         assertive.base::assert_are_identical(
           Hash.Object,
           tmp_object %>%
