@@ -238,7 +238,7 @@ include_data_file <- function(
   data_catalogue[[file_to_include %>% basename()]] <- list(
       File = file_to_include %>%
         basename(),
-      Remote.File = file_is_url,
+      File.Is.Remote = file_is_url,
       Remote.Source = ifelse(file_is_url, file_url, NA_character_),
       Hashing.Algo = hashing_algo,
       Compression.Algo = compression_algo,

@@ -16,7 +16,7 @@ test_data_integrity <- function(
 
     source_is_remote <- data_catalogue %>%
       magrittr::extract2(entry) %>%
-      magrittr::extract2("Remote.File")
+      magrittr::extract2("File.Is.Remote")
 
     # Test integrity of compressed 'extdata'
     ## Make path

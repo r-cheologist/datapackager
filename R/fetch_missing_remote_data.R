@@ -38,7 +38,7 @@ fetch_missing_remote_data <- function(
     sapply(
       function(x){
         x %>%
-          magrittr::extract2("Remote.File") %>%
+          magrittr::extract2("File.Is.Remote") %>%
           return()
       })
   data_catalogue %<>%
