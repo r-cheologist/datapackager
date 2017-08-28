@@ -199,5 +199,9 @@ init <- function(
 
 # Todo --------------------------------------------------------------------
 #stop("implement URL retrieval (testing, new call_reteive")
+
+# Provide silent return value ---------------------------------------------
+  TRUE %>%
+    invisible()
 }
 
