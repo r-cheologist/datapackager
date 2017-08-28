@@ -6,7 +6,7 @@ fetch_missing_remote_data <- function(
 {
 # Check prerequisites -----------------------------------------------------
   root %>%
-    datapackageR:::assert_is_a_valid_package_root()
+    assert_is_a_valid_package_root()
 
   if(user %>%
      is.null() %>%
@@ -31,7 +31,7 @@ fetch_missing_remote_data <- function(
 # Processing --------------------------------------------------------------
   # Load the data catalogue
   data_catalogue <- root %>%
-    datapackageR:::load_data_catalogue_from_file()
+    load_data_catalogue_from_file()
 
   # Select only what's marked as being remote
   subsetter <- data_catalogue %>%
@@ -127,7 +127,7 @@ fetch_missing_remote_data <- function(
     with(
       me,
       {
-        tmp_object <- datapackageR:::parse_data(
+        tmp_object <- parse_data(
           path = tmp_path,
           reading_function = File.Reading.Function,
           reading_options = File.Reading.Options)
@@ -136,7 +136,7 @@ fetch_missing_remote_data <- function(
           tmp_object %>%
             digest::digest(
               algo = Hashing.Algo))
-        datapackageR:::data_rename_and_writeout(
+        data_rename_and_writeout(
           data_object = tmp_object,
           file_name = File,
           root = root,
@@ -148,7 +148,7 @@ fetch_missing_remote_data <- function(
     with(
       me,
       {
-        datapackageR:::save_zipfile(
+        save_zipfile(
           uncomp_path = tmp_path,
           root = root) %>%
           digest::digest(

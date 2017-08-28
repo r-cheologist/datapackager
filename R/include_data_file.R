@@ -82,7 +82,7 @@ include_data_file <- function(
 
   file_reading_function %>%
     assertive.types::assert_is_a_string() %>%
-    datapackageR:::assert_all_are_function_names()
+    assert_all_are_function_names()
 
   if(
     file_reading_options %>%
