@@ -29,7 +29,7 @@ include_data_file <- function(
       is.null())
   {
     data_catalogue <- root %>%
-      load_data_catalogue_from_file()
+      load_data_file_as_object()
   }
   data_catalogue %>%
     assertive.types::assert_is_list() %>%

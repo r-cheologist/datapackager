@@ -31,7 +31,7 @@ fetch_missing_remote_data <- function(
 # Processing --------------------------------------------------------------
   # Load the data catalogue
   data_catalogue <- root %>%
-    load_data_catalogue_from_file()
+    load_data_file_as_object()
 
   # Select only what's marked as being remote
   subsetter <- data_catalogue %>%
