@@ -5,16 +5,8 @@ init <- function(
   default_hashing_algo = c("sha512", "md5", "sha1", "crc32", "sha256",
                            "xxhash32", "xxhash64", "murmur32"),
   files_to_include = NULL,
-  file_is_url = FALSE,
-  file_user = NULL,
-  file_password = NULL,
-  file_reading_function = NULL,
-  file_reading_options = NULL,
-  file_reading_package_dependencies = NULL,
-  file_distributable = TRUE,
-  file_gitignore = !file_distributable,
-  file_rbuildignore = !file_distributable,
-  use_rstudio = TRUE)
+  use_rstudio = TRUE,
+  ...)
 {
 # Check prerequisites -----------------------------------------------------
   root %>%
@@ -51,93 +43,6 @@ init <- function(
   {
     files_to_include %>%
       assertive.types::assert_is_character()
-
-    file_is_url %>%
-      assertive.types::assert_is_logical() %>%
-      length() %>%
-      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-    file_is_url %<>%
-      length() %>%
-      switch(
-        "1" = rep(
-          file_is_url,
-          files_to_include %>% length()),
-        file_is_url)
-
-    files_to_include %>%
-      magrittr::extract(
-        file_is_url %>%
-          magrittr::not()) %>%
-      assertive.files::assert_all_are_readable_files()
-
-    if(file_user %>%
-       is.null() %>%
-       magrittr::not())
-    {
-      file_user %>%
-        assertive.types::assert_is_character() %>%
-        length() %>%
-        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-    }
-
-    if(file_password %>%
-       is.null() %>%
-       magrittr::not())
-    {
-      file_password %>%
-        assertive.types::assert_is_character() %>%
-        length() %>%
-        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-    }
-
-    file_reading_function %>%
-      assertive.types::assert_is_character() %>%
-      length() %>%
-      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-    file_reading_function %>%
-      datapackageR:::assert_all_are_function_names()
-
-    if(
-      file_reading_options %>%
-        is.null() %>%
-        magrittr::not())
-    {
-      file_reading_options %>%
-        assertive.types::assert_is_list() %>%
-        length() %>%
-        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-    }
-
-    if(
-      file_reading_package_dependencies %>%
-      is.null() %>%
-      magrittr::not())
-    {
-      file_reading_package_dependencies %>%
-        assertive.types::assert_is_character() %>%
-        assertive.sets::assert_is_subset(utils::installed.packages())
-    }
-
-    if(
-      file_distributable %>%
-      is.null() %>%
-      magrittr::not())
-    {
-      file_distributable %>%
-        assertive.types::assert_is_logical() %>%
-        length() %>%
-        assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-    }
-
-    file_gitignore %>%
-      assertive.types::assert_is_logical() %>%
-      length() %>%
-      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
-
-    file_rbuildignore %>%
-      assertive.types::assert_is_logical() %>%
-      length() %>%
-      assertive.sets::assert_is_subset(c(1, files_to_include %>% length()))
   }
 
   use_rstudio %>%
@@ -163,80 +68,20 @@ init <- function(
   attr(data_catalogue, "default_hashing_algo") <- default_hashing_algo
 
   # If present, iterate over data files to be integrated
-  if(
+  if (
     files_to_include %>%
     is.null() %>%
     magrittr::not())
   {
-    for(i in files_to_include %>% seq_along())
+    for(i in files_to_include)
     {
-      ## Extract individual parameters
-      tmp_file_to_include <- files_to_include %>%
-        magrittr::extract2(i)
-      tmp_file_is_url <- file_is_url %>%
-        magrittr::extract2(i)
-      tmp_file_user <- file_user %>%
-        length() %>%
-        switch(
-          "1" = file_user,
-          file_user %>%
-            magrittr::extract2(i))
-      tmp_file_password <- file_password %>%
-        length() %>%
-        switch(
-          "1" = file_password,
-          file_password %>%
-            magrittr::extract2(i))
-      tmp_file_reading_function <- file_reading_function %>%
-        length() %>%
-        switch(
-          "1" = file_reading_function,
-          file_reading_function %>%
-            magrittr::extract2(i))
-      tmp_file_reading_options <- file_reading_options %>%
-        length() %>%
-        switch(
-          "0" = NULL,
-          "1" = file_reading_options,
-          file_reading_options %>%
-            magrittr::extract2(i))
-      tmp_file_distributable <- file_distributable %>%
-        length() %>%
-        switch(
-          "0" = NULL,
-          "1" = file_distributable,
-          file_distributable %>%
-            magrittr::extract2(i))
-      tmp_file_gitignore <- file_gitignore %>%
-        length() %>%
-        switch(
-          "1" = file_gitignore,
-          file_gitignore %>%
-            magrittr::extract2(i))
-      tmp_file_rbuildignore <- file_rbuildignore %>%
-        length() %>%
-        switch(
-          "1" = file_rbuildignore,
-          file_rbuildignore %>%
-            magrittr::extract2(i))
-
       ## Include the files into the infrastructure
-      data_catalogue <- tmp_file_to_include %>%
+      data_catalogue <- i %>%
         include_data_file(
           root = root,
           data_catalogue = data_catalogue,
-          file_is_url = tmp_file_is_url,
-          file_user = tmp_file_user,
-          file_password = tmp_file_password,
-          file_reading_function = tmp_file_reading_function,
-          file_reading_options = tmp_file_reading_options,
-          file_reading_package_dependencies = file_reading_package_dependencies,
-          file_distributable = tmp_file_distributable,
-          file_gitignore = tmp_file_gitignore,
-          file_rbuildignore = tmp_file_rbuildignore,
-          compression_algo = NULL,
-          hashing_algo = NULL,
-          save_catalogue = FALSE)
+          save_catalogue = FALSE,
+          ...)
     }
   }
 
