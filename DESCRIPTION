@@ -22,4 +22,6 @@ Imports:
     devtools,
     pathological,
     stringi
+Suggests:
+    readxl
 RoxygenNote: 6.0.1
