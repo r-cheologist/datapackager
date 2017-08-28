@@ -127,6 +127,10 @@
 #'   load(envir = tmp_env)
 #' tmp_env$data_catalogue %>%
 #'   str()
+#'
+#' # Clean up the package roots - ensure proper example testing by R CMD check
+#' unlink(pkg_root, recursive = TRUE)
+#' unlink(pkg_root2, recursive = TRUE)
 #' @export
 init <- function(
   root = getwd(),
