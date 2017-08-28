@@ -1,14 +1,16 @@
 #' @title data_catalogue
 #' @name data_catalogue
 #' @description \code{\link{list}} representing a collection of metadata
-#' for files/objects in \pkg{<PACKAGENAME>} as a reference for data
+#' for stored or othwhise used files/objects as a reference for data
 #' verification.
-#' @author <AUTHOR>
 #' @seealso \code{\link{list}} \code{\link[digest]{digest}}
-#' @format \code{\link{list}} with entries named according to filenames. Each
-#' entry is another \code{\link{list}} with the following fields:
+#' @format \code{\link{list}} with entries named according to file names.
+#' \code{default_compression_algo} and \code{default_hashing_algo} are set as
+#' \code{\link{attributes}} and represent default values for the corresponding
+#' per-entry values below.
+#' Each entry is a \code{\link{list}} with the following fields:
 #' \describe{
-#'   \item{\code{File}:}{(Base)names of original data files as
+#'   \item{\code{File}:}{\code{\link{basename}}s of original data files as
 #'     \code{\link{character}} objects. Giving rise to objects of the same names
 #'     and are stored (zipped and with the corresponding extension) in the
 #'     \code{extdata} directory of the package.}
@@ -22,7 +24,7 @@
 #'   \item{\code{File.Reading.Function}:}{Name (\code{\link{character}}) of the
 #'     \code{R} function used to produce the corresponding \code{R} object from
 #'     its original data file.}
-#'   \item{\code{File.Reading.Option}:}{Options to \code{File.Reading.Function}
+#'   \item{\code{File.Reading.Options}:}{Options to \code{File.Reading.Function}
 #'     stored as a \code{\link{list}}.}
 #'   \item{\code{File.Reading.Package.Dependencies}:}{Package dependencies
 #'     required by \code{File.Reading.Function}. Encoded as a
