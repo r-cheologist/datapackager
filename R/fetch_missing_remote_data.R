@@ -1,8 +1,95 @@
+#' @title fetch_missing_remote_data
+#' @aliases fetch_missing_remote_data
+#' @description Convenience funtion to retrieve data files missing in the file
+#' system.
+#' @details Retrieves files listed in a \code{\link{data_catalogue}}, but not
+#' distributed with the package.
+#'
+#' An intended use case is e.g. the publication of a package that documents the
+#' analysis of a data set, where the raw data itself is subject to a separate
+#' data sharing agreement.
+#'
+#' Uses \code{\link{retrieve_remote_file}} after identifying data files/objects
+#' not present and proceeds to add the (compressed) files and objects
+#' analogously to \code{\link{include_data_file}}, using the parameters listed
+#' in \code{\link{data_catalogue}}.
+#' @param root Single \code{\link{character}} representing the path of the
+#' directory in which the package infrastructure resides.
+#' @param user Single \code{\link{character}} object used for authentication
+#' where retrieval requires it.
+#' @param password Single \code{\link{character}} object used for authentication
+#' where retrieval requires it.
+#' @param ... Further parameters handed to \code{\link{retrieve_remote_file}}.
+#' @return If successful, returns a single \code{\link{logical} TRUE} object via
+#' \code{\link{invisible}}.
+#' @author Johannes Graumann
+#' @seealso \code{\link{retrieve_remote_file}}, \code{\link{data_catalogue}}
+#' @examples
+#' # Load tools
+#' library(magrittr)
+#'
+#' # Generate package infrastructure
+#' ## Define a package root
+#' pkg_root <- tempdir() %>%
+#'   file.path("packagetest")
+#'
+#' ## Create the infrastructure and add a remote file on the fly
+#' ## (from Billing et al. (2016). Comprehensive transcriptomic
+#' ## and proteomic characterization of human mesenchymal stem cells reveals
+#' ## source specific cellular markers. Sci Rep 6, 21507;
+#' ## Licensed under the Creative Commons Attribution 4.0 International License.
+#' ## http://creativecommons.org/licenses/by/4.0/)
+#' \donttest{
+#'   require(readxl)
+#'   init(
+#'     root = pkg_root,
+#'     files_to_include = paste0(
+#'       c("http://www.nature.com/article-assets/npg/srep",
+#'         "2016/160209/srep21507/extref/srep21507-s4.xls"),
+#'       collapse = "/"),
+#'     file_is_url = TRUE,
+#'     file_reading_function = "read_excel",
+#'     file_reading_options = list(skip = 1),
+#'     file_reading_package_dependencies = "readxl",
+#'     file_distributable = FALSE)
+#'
+#'   # Investigate the data catalogue
+#'   tmp_env <- new.env()
+#'   pkg_root %>%
+#'     file.path("data","data_catalogue.rda") %>%
+#'     load(envir = tmp_env)
+#'   tmp_env$data_catalogue %>%
+#'   str()
+#'
+#'   # Investigate derived objects in the file system
+#'   (tmp_files <- pkg_root %>%
+#'      list.files(pattern = "srep21507", recursive = TRUE))
+#'
+#'   # Delete them to simulate undistributed data
+#'   pkg_root %>%
+#'     file.path(tmp_files) %>%
+#'     unlink()
+#'
+#'   ## See: all gone ...
+#'   pkg_root %>%
+#'     list.files(pattern = "srep21507", recursive = TRUE)
+#'
+#'   # Fetch the missing data back using the parameters in the 'data_catalogue'
+#'   pkg_root %>%
+#'     fetch_missing_remote_data()
+#'     ## See: all back!
+#'     pkg_root %>%
+#'       list.files(pattern = "srep21507", recursive = TRUE)
+#' }
+#'
+#' # Clean up the package root - ensure proper example testing by R CMD check
+#' unlink(pkg_root, recursive = TRUE)
 #' @export
 fetch_missing_remote_data <- function(
   root = getwd(),
   user = NULL,
-  password = NULL)
+  password = NULL,
+  ...)
 {
 # Check prerequisites -----------------------------------------------------
   root %>%
@@ -100,7 +187,7 @@ fetch_missing_remote_data <- function(
       me,
       {
         message(File)
-        tmp_path <- retrieve_remote_data(
+        tmp_path <- retrieve_remote_file(
           url = Remote.Source,
           user = user %>%
             length() %>%
@@ -113,7 +200,8 @@ fetch_missing_remote_data <- function(
             switch(
               "0" = NULL,
               "1" = password,
-              password[mei]))
+              password[mei]),
+          ...)
         assertive.base::assert_are_identical(
           Hash.Uncompressed,
           tmp_path %>%
@@ -156,4 +244,8 @@ fetch_missing_remote_data <- function(
             file = TRUE)
       })
   }
+
+  # Return TRUE if successful
+  TRUE %>%
+    invisible()
 }
