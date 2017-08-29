@@ -1,3 +1,42 @@
+#' @title retrieve_remote_data
+#' @aliases retrieve_remote_data
+#' @description Convenience funtion to retrieve data files from URLs.
+#' @details Wraps functionality provided by \pkg{httr}.
+#' @param url Single \code{\link{character}} representing the URL to retrieve.
+#' @param user Single \code{\link{character}} object used for authentication
+#' where retrieval requires it.
+#' @param password Single \code{\link{character}} object used for authentication
+#' where retrieval requires it.
+#' @param ... Further parameters handed to \code{\link[httr]{authenticate}}.
+#' @return Returns a \code{\link{character}} object representing the path of the
+#' temporary file resulting from the retrieval.
+#' @author Johannes Graumann
+#' @seealso \code{\link{include_data_file}},
+#' \code{\link{fetch_missing_remote_data}}
+#' @examples
+#' # Load tools
+#' require(magrittr)
+#'
+#' # Retrieve a remote file (from Billing et al. (2016). Comprehensive transcriptomic
+#' # and proteomic characterization of human mesenchymal stem cells reveals
+#' # source specific cellular markers. Sci Rep 6, 21507.
+#' # Licensed under the Creative Commons Attribution 4.0 International License.
+#' # http://creativecommons.org/licenses/by/4.0/
+#' ## Complicated URL generation to circumvent line length restrictions
+#' tmp_url <- paste0(
+#'   c("http://www.nature.com/article-assets/npg/srep",
+#'   "2016/160209/srep21507/extref/srep21507-s4.xls"),
+#'   collapse = "/")
+#' (tmp_path <- tmp_url %>%
+#'   retrieve_remote_data())
+#'
+#' # Explore the file
+#' \donttest{ # To avoid dependence on readxl
+#'   require(readxl)
+#'   tmp_path %>%
+#'     read_excel(skip = 1) %>%
+#'     str()
+#' }
 #' @export
 retrieve_remote_data <- function(
   url,
