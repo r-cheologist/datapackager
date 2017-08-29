@@ -138,7 +138,11 @@
 #' # EXCLUDED FROM BUILDS
 #' \donttest{ # To avoid dependence on readxl
 #'   require(readxl)
-#'   tmp_url <- "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls"
+#'   ## Complicated URL generation to circumvent line length restrictions
+#'   tmp_url <- paste0(
+#'     c("http://www.nature.com/article-assets/npg/srep",
+#'       "2016/160209/srep21507/extref/srep21507-s4.xls"),
+#'     collapse = "/")
 #'   include_data_file(
 #'     root = pkg_root,
 #'     file_to_include = tmp_url,
