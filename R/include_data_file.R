@@ -136,7 +136,7 @@
 #' # Licensed under the Creative Commons Attribution 4.0 International License.
 #' # http://creativecommons.org/licenses/by/4.0/
 #' # EXCLUDED FROM BUILDS
-#' \donttest{ # To avoid dependence on readxl
+#' \donttest{
 #'   require(readxl)
 #'   ## Complicated URL generation to circumvent line length restrictions
 #'   tmp_url <- paste0(

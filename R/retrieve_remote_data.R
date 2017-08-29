@@ -31,7 +31,7 @@
 #'   retrieve_remote_data())
 #'
 #' # Explore the file
-#' \donttest{ # To avoid dependence on readxl
+#' \donttest{
 #'   require(readxl)
 #'   tmp_path %>%
 #'     read_excel(skip = 1) %>%
