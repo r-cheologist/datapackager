@@ -133,6 +133,8 @@
 #' # Add a remote file (from Billing et al. (2016). Comprehensive transcriptomic
 #' # and proteomic characterization of human mesenchymal stem cells reveals
 #' # source specific cellular markers. Sci Rep 6, 21507.
+#' # Licensed under the Creative Commons Attribution 4.0 International License.
+#' # http://creativecommons.org/licenses/by/4.0/
 #' # EXCLUDED FROM BUILDS
 #' \donttest{
 #'   require(readxl)
