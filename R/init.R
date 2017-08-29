@@ -226,32 +226,7 @@ init <- function(
     overwrite = FALSE,
     compress = default_compression_algo)
 
-  # Provide documentation for the catalogue
-  template_name <- "data-data_catalogue.R"
-  system.file(
-      file.path("templates", template_name),
-      package = "datapackageR",
-      mustWork = TRUE) %>%
-    templating(
-      replacements = list(
-        PACKAGENAME = root %>%
-          basename()),
-      target = root %>%
-        file.path("R", template_name))
-
   # Install the testthat tests that check the catalogue and the functions they need
-  template_name <- "test-data_catalogue.R"
-  system.file(
-      file.path("templates", template_name),
-      package = "datapackageR",
-      mustWork = TRUE) %>%
-    templating(
-      replacements = list(
-        PACKAGENAME = root %>%
-          basename()),
-      target = root %>%
-        file.path("tests", "testthat", template_name))
-
   template_name <- "test_data_integrity.R"
   system.file(
     file.path("templates", template_name),
@@ -276,6 +251,7 @@ init <- function(
   # Install datapackageR functionality
   warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
   script_files <- c(
+      "data-data_catalogue.R",
       "reexport.R",
       "retrieve_remote_data.R") %>%
     sapply(
