@@ -1,3 +1,78 @@
+#' @title remove_data_file
+#' @aliases remove_data_file
+#' @description Removing a data file from \pkg{datapackageR}s infrastructure.
+#' @details The function essentially reverses the steps taken by
+#' \code{\link{include_data_file}} (documented there).
+#' @param file_to_remove Single \code{\link{character}} representing the name or
+#' path of a data file to be removed.
+#' @param root Single \code{\link{character}} representing the path of the
+#' directory in which the package infrastructure to be modified resides.
+#' @param data_catalogue Single \code{link{character}} object representing the
+#' relative path to the \code{\link{data_catalogue}}-containing \code{R} data
+#' file within the packaging infrastructure (defaulting to
+#' \code{data/data_catalogue.rda} if set to \code{\link{NULL}}).
+#' @param save_catalogue Single \code{\link{logical}} indicating whether the
+#' amended \code{\link{data_catalogue}} object is to be saved back to the
+#' package infrastructure or just (silently) returned.
+#' @return Returns a \code{\link{list}} of \code{\link{data_catalogue}}
+#' characteristics via \code{\link{invisible}}.
+#' @author Johannes Graumann
+#' @seealso \code{\link{include_data_file}}, \code{\link{data_catalogue}}
+#' @examples
+#' # Load tools
+#' library(magrittr)
+#'
+#' # Generate package infrastructure
+#' ## Define a package root
+#' pkg_root <- tempdir() %>%
+#'   file.path("packagetest")
+#'
+#' ## Create the infrastructure
+#' init(
+#'   root = pkg_root)
+#'
+#' ## Investigate the data catalogue
+#' tmp_env <- new.env()
+#' pkg_root %>%
+#'   file.path("data/data_catalogue.rda") %>%
+#'   load(envir = tmp_env)
+#' tmp_env$data_catalogue %>%
+#'   str()
+#'
+#' # Add a local data file
+#' ## Create a dummy data file
+#' data.frame(
+#'   x   = 1,
+#'   y   = 1:10,
+#'   fac = sample(LETTERS[1:3], 10, replace = TRUE)) %>%
+#'   write.table(
+#'     file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
+#'     sep       = "\t",
+#'     col.names = TRUE,
+#'     row.names = FALSE)
+#'
+#' ## Add the dummy file to the existing package infrastructure
+#' data_catalogue <- include_data_file(
+#'   file_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
+#'   root = pkg_root,
+#'   file_reading_function = "read.csv",
+#'   file_reading_options = list(sep = "\t", stringsAsFactors = FALSE))
+#'
+#' ## Investigate the data catalogue
+#' data_catalogue %>%
+#'   str()
+#'
+#' # Remove the data file
+#' data_catalogue <- remove_data_file(
+#'   file_to_remove = "data_dummy.tsv",
+#'   root = pkg_root)
+#'
+#' ## Investigate the result
+#' data_catalogue %>%
+#'   str()
+#'
+#' # Clean up the package root - ensure proper example testing by R CMD check
+#' unlink(pkg_root, recursive = TRUE)
 #' @export
 remove_data_file <- function(
   file_to_remove,
