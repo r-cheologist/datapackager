@@ -136,7 +136,7 @@
 #' # Licensed under the Creative Commons Attribution 4.0 International License.
 #' # http://creativecommons.org/licenses/by/4.0/
 #' # EXCLUDED FROM BUILDS
-#' \donttest{
+#' \donttest{ # To avoid dependence on readxl
 #'   require(readxl)
 #'   tmp_url <- "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls"
 #'   include_data_file(
