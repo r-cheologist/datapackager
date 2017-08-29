@@ -164,10 +164,16 @@ data_catalogue \%>\%
 # Add a remote file (from Billing et al. (2016). Comprehensive transcriptomic
 # and proteomic characterization of human mesenchymal stem cells reveals
 # source specific cellular markers. Sci Rep 6, 21507.
+# Licensed under the Creative Commons Attribution 4.0 International License.
+# http://creativecommons.org/licenses/by/4.0/
 # EXCLUDED FROM BUILDS
-\donttest{
+\donttest{ # To avoid dependence on readxl
   require(readxl)
-  tmp_url <- "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls"
+  ## Complicated URL generation to circumvent line length restrictions
+  tmp_url <- paste0(
+    c("http://www.nature.com/article-assets/npg/srep",
+      "2016/160209/srep21507/extref/srep21507-s4.xls"),
+    collapse = "/")
   include_data_file(
     root = pkg_root,
     file_to_include = tmp_url,
@@ -186,8 +192,8 @@ data_catalogue \%>\%
 unlink(pkg_root, recursive = TRUE)
 }
 \seealso{
-\code{\link{init}}, \code{\link[digest]{digest}},
-\code{\link{data_catalogue}}
+\code{\link{init}}, \code{\link{remove_data_file}},
+\code{\link[digest]{digest}}, \code{\link{data_catalogue}}
 }
 \author{
 Johannes Graumann
