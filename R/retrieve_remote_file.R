@@ -1,6 +1,6 @@
-#' @title retrieve_remote_data
-#' @aliases retrieve_remote_data
-#' @description Convenience funtion to retrieve data files from URLs.
+#' @title retrieve_remote_file
+#' @aliases retrieve_remote_file
+#' @description Convenience funtion to retrieve a data file from an URL.
 #' @details Wraps functionality provided by \pkg{httr}.
 #' @param url Single \code{\link{character}} representing the URL to retrieve.
 #' @param user Single \code{\link{character}} object used for authentication
@@ -28,7 +28,7 @@
 #'   "2016/160209/srep21507/extref/srep21507-s4.xls"),
 #'   collapse = "/")
 #' (tmp_path <- tmp_url %>%
-#'   retrieve_remote_data())
+#'   retrieve_remote_file())
 #'
 #' # Explore the file
 #' \donttest{
@@ -38,7 +38,7 @@
 #'     str()
 #' }
 #' @export
-retrieve_remote_data <- function(
+retrieve_remote_file <- function(
   url,
   user = NULL,
   password = NULL,

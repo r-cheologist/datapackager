@@ -253,7 +253,7 @@ init <- function(
   script_files <- c(
       "data-data_catalogue.R",
       "reexport.R",
-      "retrieve_remote_data.R") %>%
+      "retrieve_remote_file.R") %>%
     sapply(
       function(x){
         system.file(

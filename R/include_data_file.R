@@ -5,7 +5,7 @@
 #' \enumerate{
 #'   \item If the file does not reside locally, it is downloaded in a first step
 #'     (depending on \code{File.Is.Remote}),
-#'      using \code{\link{retrieve_remote_data}}.
+#'      using \code{\link{retrieve_remote_file}}.
 #'   \item Next, a \code{zip} compressed version of the file is saved to
 #'     \code{inst/extdata} of the package infrastructure, using the internal
 #'     function \code{save_zipfile}.
@@ -317,7 +317,7 @@ include_data_file <- function(
   # Retreive the file if it is not local
   if(file_is_url){
     file_url <- file_to_include
-    file_to_include %<>% retrieve_remote_data(
+    file_to_include %<>% retrieve_remote_file(
       user = file_user,
       password = file_password)
   }

@@ -88,7 +88,7 @@ The function proceeds as follows:
 \enumerate{
   \item If the file does not reside locally, it is downloaded in a first step
     (depending on \code{File.Is.Remote}),
-     using \code{\link{retrieve_remote_data}}.
+     using \code{\link{retrieve_remote_file}}.
   \item Next, a \code{zip} compressed version of the file is saved to
     \code{inst/extdata} of the package infrastructure, using the internal
     function \code{save_zipfile}.
