@@ -1,4 +1,15 @@
-#' @details This function is provided by \pkg{datapackageR} (version <DATAPACKAGERVERSION>).
+#' @title test_data_integrity
+#' @alias test_data_integrity
+#' @details This function is provided by \pkg{datapackageR} (version
+#' <%=as.character(utils::packageVersion("datapackageR"))%>) and integrated into
+#' the packaging infrastructure it generates.
+#'
+#' It allows for integrity checking of data sets included via
+#' \code{\link[digest]{digest}}, using the cryptographic hash information stored
+#' in \code{\link{data_catalogue}}.
+#' @param package_name Sincle \code{\link{character}} object, providing the name
+#' of the package for which data integrity is to be tested.
+#' @author Johannes Graumann
 #' @export
 test_data_integrity <- function(
   package_name = NULL
@@ -12,6 +23,7 @@ test_data_integrity <- function(
 # Processing --------------------------------------------------------------
   testthat::context("--> Checking integrity of data referenced in 'data_catalogue' <--")
 
+  require(package_name)
   for(entry in names(data_catalogue)){
 
     source_is_remote <- data_catalogue %>%
