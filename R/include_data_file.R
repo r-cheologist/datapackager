@@ -84,8 +84,8 @@
 #' @return Returns a \code{\link{list}} of \code{\link{data_catalogue}}
 #' characteristics via \code{\link{invisible}}.
 #' @author Johannes Graumann
-#' @seealso \code{\link{init}}, \code{\link[digest]{digest}},
-#' \code{\link{data_catalogue}}
+#' @seealso \code{\link{init}}, \code{\link{remove_data_file}},
+#' \code{\link[digest]{digest}}, \code{\link{data_catalogue}}
 #' @examples
 #' # Load tools
 #' library(magrittr)
