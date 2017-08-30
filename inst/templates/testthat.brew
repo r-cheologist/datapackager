@@ -1,0 +1,4 @@
+library(testthat)
+library(<%=basename(root)%>)
+
+test_check(<%=basename(root)%>)
