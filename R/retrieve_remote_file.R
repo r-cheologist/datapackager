@@ -11,8 +11,7 @@
 #' @return Returns a \code{\link{character}} object representing the path of the
 #' temporary file resulting from the retrieval.
 #' @author Johannes Graumann
-#' @seealso \code{\link{include_data_file}},
-#' \code{\link{fetch_missing_remote_data}}
+#' @seealso \code{\link{retrieve_missing_remote_data}}
 #' @examples
 #' # Load tools
 #' require(magrittr)
@@ -32,10 +31,13 @@
 #'
 #' # Explore the file
 #' \donttest{
-#'   require(readxl)
-#'   tmp_path %>%
-#'     read_excel(skip = 1) %>%
-#'     str()
+#'   if(requireNamespace("readxl", quietly = TRUE))
+#'   {
+#'     require(readxl)
+#'     tmp_path %>%
+#'       read_excel(skip = 1) %>%
+#'       str()
+#'   }
 #' }
 #' @export
 retrieve_remote_file <- function(

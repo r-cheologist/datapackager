@@ -2,10 +2,10 @@
 
 export("%<>%")
 export("%>%")
-export(fetch_missing_remote_data)
 export(include_data_file)
 export(init)
 export(remove_data_file)
+export(retrieve_missing_remote_data)
 export(retrieve_remote_file)
 importFrom(magrittr,"%<>%")
 importFrom(magrittr,"%>%")

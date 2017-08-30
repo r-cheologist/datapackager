@@ -46,15 +46,17 @@ tmp_url <- paste0(
 
 # Explore the file
 \donttest{
-  require(readxl)
-  tmp_path \%>\%
-    read_excel(skip = 1) \%>\%
-    str()
+  if(requireNamespace("readxl", quietly = TRUE))
+  {
+    require(readxl)
+    tmp_path \%>\%
+      read_excel(skip = 1) \%>\%
+      str()
+  }
 }
 }
 \seealso{
-\code{\link{include_data_file}},
-\code{\link{fetch_missing_remote_data}}
+\code{\link{retrieve_missing_remote_data}}
 }
 \author{
 Johannes Graumann

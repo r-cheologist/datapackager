@@ -1,5 +1,5 @@
-#' @title fetch_missing_remote_data
-#' @aliases fetch_missing_remote_data
+#' @title retrieve_missing_remote_data
+#' @aliases retrieve_missing_remote_data
 #' @description Convenience funtion to retrieve data files missing in the file
 #' system.
 #' @details Retrieves files listed in a \code{\link{data_catalogue}}, but not
@@ -40,52 +40,55 @@
 #' ## Licensed under the Creative Commons Attribution 4.0 International License.
 #' ## http://creativecommons.org/licenses/by/4.0/)
 #' \donttest{
-#'   require(readxl)
-#'   init(
-#'     root = pkg_root,
-#'     files_to_include = paste0(
-#'       c("http://www.nature.com/article-assets/npg/srep",
-#'         "2016/160209/srep21507/extref/srep21507-s4.xls"),
-#'       collapse = "/"),
-#'     file_is_url = TRUE,
-#'     file_reading_function = "read_excel",
-#'     file_reading_options = list(skip = 1),
-#'     file_reading_package_dependencies = "readxl",
-#'     file_distributable = FALSE)
+#'   if(requireNamespace("readxl", quietly = TRUE))
+#'   {
+#'     require(readxl)
+#'     init(
+#'       root = pkg_root,
+#'       files_to_include = paste0(
+#'         c("http://www.nature.com/article-assets/npg/srep",
+#'           "2016/160209/srep21507/extref/srep21507-s4.xls"),
+#'         collapse = "/"),
+#'       file_is_url = TRUE,
+#'       file_reading_function = "read_excel",
+#'       file_reading_options = list(skip = 1),
+#'       file_reading_package_dependencies = "readxl",
+#'       file_distributable = FALSE)
 #'
-#'   # Investigate the data catalogue
-#'   tmp_env <- new.env()
-#'   pkg_root %>%
-#'     file.path("data","data_catalogue.rda") %>%
-#'     load(envir = tmp_env)
-#'   tmp_env$data_catalogue %>%
-#'   str()
+#'     # Investigate the data catalogue
+#'     tmp_env <- new.env()
+#'     pkg_root %>%
+#'       file.path("data","data_catalogue.rda") %>%
+#'       load(envir = tmp_env)
+#'     tmp_env$data_catalogue %>%
+#'     str()
 #'
-#'   # Investigate derived objects in the file system
-#'   (tmp_files <- pkg_root %>%
-#'      list.files(pattern = "srep21507", recursive = TRUE))
+#'     # Investigate derived objects in the file system
+#'     (tmp_files <- pkg_root %>%
+#'        list.files(pattern = "srep21507", recursive = TRUE))
 #'
-#'   # Delete them to simulate undistributed data
-#'   pkg_root %>%
-#'     file.path(tmp_files) %>%
-#'     unlink()
+#'     # Delete them to simulate undistributed data
+#'     pkg_root %>%
+#'       file.path(tmp_files) %>%
+#'       unlink()
 #'
-#'   ## See: all gone ...
-#'   pkg_root %>%
-#'     list.files(pattern = "srep21507", recursive = TRUE)
-#'
-#'   # Fetch the missing data back using the parameters in the 'data_catalogue'
-#'   pkg_root %>%
-#'     fetch_missing_remote_data()
-#'     ## See: all back!
+#'     ## See: all gone ...
 #'     pkg_root %>%
 #'       list.files(pattern = "srep21507", recursive = TRUE)
+#'
+#'     # retrieve the missing data back using the parameters in the 'data_catalogue'
+#'     pkg_root %>%
+#'       retrieve_missing_remote_data()
+#'       ## See: all back!
+#'       pkg_root %>%
+#'         list.files(pattern = "srep21507", recursive = TRUE)
+#'   }
 #' }
 #'
 #' # Clean up the package root - ensure proper example testing by R CMD check
 #' unlink(pkg_root, recursive = TRUE)
 #' @export
-fetch_missing_remote_data <- function(
+retrieve_missing_remote_data <- function(
   root = getwd(),
   user = NULL,
   password = NULL,

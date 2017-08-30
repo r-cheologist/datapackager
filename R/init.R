@@ -265,19 +265,28 @@ init <- function(
             pathological::replace_extension("R")))
 
   pkg_to_import_from <- c(
+    "assertive.base",
+    "assertive.files",
+    "assertive.properties",
     "assertive.sets",
     "assertive.types",
     "digest",
+    "httr",
     "magrittr",
-    "testthat",
     "utils")
 
   # Install datapackageR functionality
   warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
   script_files <- c(
-      "data-data_catalogue.R",
-      "reexport.R",
-      "retrieve_remote_file.R") %>%
+      "datapackageR-assertion-assert_is_a_valid_package_root.R",
+      "datapackageR-data-data_catalogue.R",
+      "datapackageR-data_rename_and_writeout.R",
+      "datapackageR-load_data_file_as_object.R",
+      "datapackageR-parse_data.R",
+      "datapackageR-reexport.R",
+      "datapackageR-retrieve_missing_remote_data.R",
+      "datapackageR-retrieve_remote_file.R",
+      "datapackageR-save_zipfile.R") %>%
     sapply(
       function(x){
         system.file(
@@ -297,7 +306,6 @@ init <- function(
   pkg_to_import_from %<>% c(
     "assertive.sets",
     "assertive.types",
-    "httr",
     "magrittr")
 
   # Install a script documenting this call
@@ -320,15 +328,20 @@ init <- function(
       pkg = root)
   }
 
-  pkg_to_recommend <- "datapackageR" %>%
+  pkg_to_recommend <- c(
+    "datapackageR",
+    "readxl") %>%
     unique()
   for(pk in pkg_to_recommend)
   {
     devtools::use_package(
       package = pkg,
-      type = "suggests",
+      type = "Suggests",
       pkg = root)
   }
+
+# Result-package internal processes ---------------------------------------
+  devtools::document(pkg = root)
 
 # Todo --------------------------------------------------------------------
 #stop("implement URL retrieval (testing, new call_reteive")

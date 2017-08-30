@@ -73,4 +73,4 @@ file.path(
   unlink()
 
 # Fetch the "seperately distributed" data
-fetch_missing_remote_data(package_root)
+retrieve_missing_remote_data(package_root)

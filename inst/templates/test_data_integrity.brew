@@ -1,5 +1,7 @@
 #' @title test_data_integrity
 #' @alias test_data_integrity
+#' @description Uses information in a \code{\link{data_catalogue}} to check the
+#' integrity of data sets shipped.
 #' @details This function is provided by \pkg{datapackageR} (version
 #' <%=as.character(utils::packageVersion("datapackageR"))%>) and integrated into
 #' the packaging infrastructure it generates.
@@ -7,7 +9,7 @@
 #' It allows for integrity checking of data sets included via
 #' \code{\link[digest]{digest}}, using the cryptographic hash information stored
 #' in \code{\link{data_catalogue}}.
-#' @param package_name Sincle \code{\link{character}} object, providing the name
+#' @param package_name Single \code{\link{character}} object, providing the name
 #' of the package for which data integrity is to be tested.
 #' @author Johannes Graumann
 #' @export
@@ -18,12 +20,14 @@ test_data_integrity <- function(
 # Check prerequisites -----------------------------------------------------
   package_name %>%
     assertive.types::assert_is_a_string() %>%
-    assertive.sets::assert_is_subset(installed.packages())
+    assertive.sets::assert_is_subset(
+      utils::installed.packages())
 
 # Processing --------------------------------------------------------------
+  library(package_name, character.only = TRUE)
   testthat::context("--> Checking integrity of data referenced in 'data_catalogue' <--")
 
-  require(package_name)
+  require(package_name, character.only = TRUE)
   for(entry in names(data_catalogue)){
 
     source_is_remote <- data_catalogue %>%
@@ -51,7 +55,7 @@ test_data_integrity <- function(
       warning(
         "Catalogue entry '",
         entry,
-        "' separately distributed and not present. Conisder fetching with 'fetch_missing_remote_data'."
+        "' separately distributed and not present. Conisder fetching with 'retreive_missing_remote_data'."
       )
     } else {
       # zip includes timestamps no matter what settings - files zipped at
@@ -163,3 +167,5 @@ test_data_integrity <- function(
             file_content_fresh)})
   }
 }
+
+utils::globalVariables("data_catalogue")

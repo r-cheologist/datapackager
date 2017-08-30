@@ -5,4 +5,4 @@
 library(testthat)
 library(<%=basename(root)%>)
 
-testthat::test_check(<%=basename(root)%>)
+testthat::test_check("<%=basename(root)%>")

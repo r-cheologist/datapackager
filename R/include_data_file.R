@@ -137,24 +137,27 @@
 #' # http://creativecommons.org/licenses/by/4.0/
 #' # EXCLUDED FROM BUILDS
 #' \donttest{
-#'   require(readxl)
-#'   ## Complicated URL generation to circumvent line length restrictions
-#'   tmp_url <- paste0(
-#'     c("http://www.nature.com/article-assets/npg/srep",
-#'       "2016/160209/srep21507/extref/srep21507-s4.xls"),
-#'     collapse = "/")
-#'   include_data_file(
-#'     root = pkg_root,
-#'     file_to_include = tmp_url,
-#'     file_is_url = TRUE,
-#'     file_reading_function = "read_excel",
-#'     file_reading_options = list(skip = 1),
-#'     file_reading_package_dependencies = "readxl",
-#'     file_distributable = FALSE)
+#'   if(requireNamespace("readxl", quietly = TRUE))
+#'   {
+#'     require(readxl)
+#'     ## Complicated URL generation to circumvent line length restrictions
+#'     tmp_url <- paste0(
+#'       c("http://www.nature.com/article-assets/npg/srep",
+#'         "2016/160209/srep21507/extref/srep21507-s4.xls"),
+#'       collapse = "/")
+#'     include_data_file(
+#'       root = pkg_root,
+#'       file_to_include = tmp_url,
+#'       file_is_url = TRUE,
+#'       file_reading_function = "read_excel",
+#'       file_reading_options = list(skip = 1),
+#'       file_reading_package_dependencies = "readxl",
+#'       file_distributable = FALSE)
 #'
-#'   ## Investigate the data catalogue
-#'   data_catalogue %>%
-#'     str()
+#'     ## Investigate the data catalogue
+#'     data_catalogue %>%
+#'       str()
+#'   }
 #' }
 #'
 #' # Clean up the package root - ensure proper example testing by R CMD check
