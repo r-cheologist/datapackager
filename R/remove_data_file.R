@@ -116,6 +116,16 @@ remove_data_file <- function(
   r_object_target_path <- root %>%
     file.path(relative_r_object_target_path)
 
+  relative_data_documentation_path <- file.path(
+    "R",
+    paste0(
+      "data-",
+      file_to_remove %>%
+          basename(),
+      ".R"))
+  data_documentation_path <- root %>%
+    file.path(relative_data_documentation_path)
+
   save_catalogue %>%
     assertive.types::assert_is_a_bool()
 
@@ -129,6 +139,10 @@ remove_data_file <- function(
     file.remove()
 
   # TODO?: Remove package dependencies from DESCRIPTION
+
+  # Remove data set documentation(stub)
+  data_documentation_path %>%
+    file.remove()
 
   # Remove files from .Rbuildignore (as appropriate)
   remove_from_rbuildignore <- c(

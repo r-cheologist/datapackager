@@ -23,7 +23,9 @@
 #'   \item If \code{file_reading_function} requires dependencies, the
 #'     appropriate packages (given by \code{File.Reading.Package.Dependencies})
 #'     are integrated into the \code{DESCRIPTION} file using
-#'    \pkg{devtools}-provided tools.
+#'     \pkg{devtools}-provided tools.
+#'   \item A \pkg{roxygen2}-based documentation stub is installed into the
+#'     target package infrastructure.
 #'   \item Depending on the options \code{File.Git.Ignore} and
 #'     \code{File.R.Buildignore}, \code{.gitignore} and \code{.Rbuildignore} in
 #'     the top level of the resulting package infrastructure are amended using
@@ -376,6 +378,23 @@ include_data_file <- function(
         pkg = root)
     }
   }
+
+  # Install a roxygen2-based documentation stub
+  template_name <- "data-data_documentation_stub.brew"
+  system.file(
+    file.path("templates", template_name),
+    package = "datapackageR",
+    mustWork = TRUE) %>%
+    brew::brew(
+      output = root %>%
+        file.path(
+          "R",
+          template_name %>%
+            stringi::stri_replace_all_fixed(
+              pattern = "data_documentation_stub",
+              replacement = file_to_include
+                %>% basename()) %>%
+            pathological::replace_extension("R")))
 
   # Add file to .Rbuildignore (as appropriate)
   if(file_rbuildignore){

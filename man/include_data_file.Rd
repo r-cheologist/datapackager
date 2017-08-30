@@ -106,7 +106,9 @@ The function proceeds as follows:
   \item If \code{file_reading_function} requires dependencies, the
     appropriate packages (given by \code{File.Reading.Package.Dependencies})
     are integrated into the \code{DESCRIPTION} file using
-   \pkg{devtools}-provided tools.
+    \pkg{devtools}-provided tools.
+  \item A \pkg{roxygen2}-based documentation stub is installed into the
+    target package infrastructure.
   \item Depending on the options \code{File.Git.Ignore} and
     \code{File.R.Buildignore}, \code{.gitignore} and \code{.Rbuildignore} in
     the top level of the resulting package infrastructure are amended using
