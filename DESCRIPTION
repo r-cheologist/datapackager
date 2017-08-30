@@ -15,6 +15,7 @@ Imports:
     assertive.properties,
     assertive.sets,
     assertive.types,
+    brew,
     digest,
     httr,
     magrittr,

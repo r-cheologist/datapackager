@@ -239,6 +239,31 @@ init <- function(
           template_name %>%
             pathological::replace_extension("R")))
 
+  template_name <- "testthat.brew"
+  system.file(
+      file.path("templates", template_name),
+      package = "datapackageR",
+      mustWork = TRUE) %>%
+    brew::brew(
+      output = root %>%
+        file.path(
+          "tests",
+          template_name %>%
+            pathological::replace_extension("R")))
+
+  template_name <- "test-data_catalogue.brew"
+  system.file(
+    file.path("templates", template_name),
+    package = "datapackageR",
+    mustWork = TRUE) %>%
+    brew::brew(
+      output = root %>%
+        file.path(
+          "tests",
+          "testthat",
+          template_name %>%
+            pathological::replace_extension("R")))
+
   pkg_to_import_from <- c(
     "assertive.sets",
     "assertive.types",
