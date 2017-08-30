@@ -1,1 +1,4 @@
+# This file is provided by datapackageR (version
+# <%=as.character(utils::packageVersion("datapackageR"))%>) and integrated into
+# the packaging infrastructure it generates.
 test_data_integrity(root = <%=basename(root)%>)

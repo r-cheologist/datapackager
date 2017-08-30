@@ -1,3 +1,7 @@
+# This file is provided by datapackageR (version
+# <%=as.character(utils::packageVersion("datapackageR"))%>) and integrated into
+# the packaging infrastructure it generates.
+
 library(testthat)
 library(<%=basename(root)%>)
 
