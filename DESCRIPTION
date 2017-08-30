@@ -1,11 +1,16 @@
 Package: datapackageR
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.1
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Tools to build packaging infrastructure for R around data sets
+Version: 0.2.0
+Author: Johannes Graumann [cre, aut]
+Maintainer: Johannes Graumann <johannes.graumann@mpi-bn.mpg.de>
+Authors@R: c(person("Johannes", "Graumann", email =
+    "johannes.graumann@mpi-bn.mpg.de", role = c("cre", "aut")))
+Description: A package to setup and maintain an R package skeleton that allows
+    for easy integration of data sets into packages documenting their analysis.
+    A centrally supported use case is the separate distribution of packaged data
+    analysis and any data sets addressed, where strong cryptographic hashing is
+    used to ensure data integrity/match between analysis and data.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
