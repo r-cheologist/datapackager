@@ -390,11 +390,11 @@ include_data_file <- function(
         file.path(
           "R",
           template_name %>%
+            pathological::replace_extension("R") %>%
             stringi::stri_replace_all_fixed(
               pattern = "data_documentation_stub",
               replacement = file_to_include
-                %>% basename()) %>%
-            pathological::replace_extension("R")))
+                %>% basename())))
 
   # Add file to .Rbuildignore (as appropriate)
   if(file_rbuildignore){
