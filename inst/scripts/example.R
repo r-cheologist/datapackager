@@ -74,3 +74,8 @@ file.path(
 
 # Fetch the "seperately distributed" data
 retrieve_missing_remote_data(package_root)
+
+# Run tests
+devtools::install(pkg = package_root)
+devtools::test(pkg = package_root)
+remove.packages(package_root %>% basename())
