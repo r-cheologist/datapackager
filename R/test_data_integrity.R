@@ -1,14 +1,10 @@
 #' @title test_data_integrity
-#' @alias test_data_integrity
-#' @description Uses information in a \code{\link{data_catalogue}} to check the
+#' @aliases test_data_integrity
+#' @description Uses information in the \code{\link{data_catalogue}} to check the
 #' integrity of data sets shipped.
-#' @details This function is provided by \pkg{datapackageR} (version
-#' <%=as.character(utils::packageVersion("datapackageR"))%>) and integrated into
-#' the packaging infrastructure it generates.
-#'
-#' It allows for integrity checking of data sets included via
-#' \code{\link[digest]{digest}}, using the cryptographic hash information stored
-#' in \code{\link{data_catalogue}}.
+#' @details This function allows for integrity checking of data sets included
+#' via \code{\link[digest]{digest}}, using the cryptographic hash information
+#' stored in \code{\link{data_catalogue}}.
 #' @param package_name Single \code{\link{character}} object, providing the name
 #' of the package for which data integrity is to be tested.
 #' @author Johannes Graumann
@@ -167,5 +163,3 @@ test_data_integrity <- function(
             file_content_fresh)})
   }
 }
-
-utils::globalVariables("data_catalogue")

@@ -253,17 +253,17 @@ init <- function(
     compress = default_compression_algo)
 
   # Install the testthat tests that check the catalogue and the functions they need
-  template_name <- "test_data_integrity.brew"
-  system.file(
-      file.path("templates", template_name),
-      package = "datapackageR",
-      mustWork = TRUE) %>%
-    brew::brew(
-      output = root %>%
-        file.path(
-          "R",
-          template_name %>%
-            pathological::replace_extension("R")))
+  # template_name <- "test_data_integrity.brew"
+  # system.file(
+  #     file.path("templates", template_name),
+  #     package = "datapackageR",
+  #     mustWork = TRUE) %>%
+  #   brew::brew(
+  #     output = root %>%
+  #       file.path(
+  #         "R",
+  #         template_name %>%
+  #           pathological::replace_extension("R")))
 
   template_name <- "testthat.brew"
   system.file(
@@ -302,18 +302,10 @@ init <- function(
     "utils")
 
   # Install datapackageR functionality
-  warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
+  # warning("Upon release this should be replaced by a dependency on 'datapackageR'.")
   script_files <- c(
-      "datapackageR-assertion-assert_is_a_valid_package_root.R",
       "datapackageR-data-data_catalogue.R",
-      "datapackageR-data_rename_and_writeout.R",
-      "datapackageR-load_data_file_as_object.R",
-      "datapackageR-parse_data.R",
-      "datapackageR-reexport.R",
-      "datapackageR-retrieve_missing_remote_data.R",
-      "datapackageR-retrieve_remote_file.R",
-      "datapackageR-save_zipfile.R",
-      "datapackageR-unpack_raw_data.R") %>%
+      "datapackageR-reexport.R") %>%
     sapply(
       function(x){
         system.file(
@@ -330,10 +322,10 @@ init <- function(
         sf %>%
           basename()))
   }
-  pkg_to_import_from %<>% c(
-    "assertive.sets",
-    "assertive.types",
-    "magrittr")
+  # pkg_to_import_from %<>% c(
+  #   "assertive.sets",
+  #   "assertive.types",
+  #   "magrittr")
 
   # Install a script documenting this call
   c("# The R package infrastructure was largely generated using",
@@ -344,6 +336,18 @@ init <- function(
     writeLines(
       con = root %>%
         file.path("inst", "scripts", "00_create_pkg_infrastructure.R"))
+
+# Deal with package dependencies ------------------------------------------
+  pkg_to_depend_on <- c(
+    "datapackageR") %>%
+    unique()
+  for(pkg in pkg_to_depend_on)
+  {
+    devtools::use_package(
+      package = pkg,
+      type = "Depends",
+      pkg = root)
+  }
 
   pkg_to_import_from %<>%
     unique()
@@ -356,7 +360,6 @@ init <- function(
   }
 
   pkg_to_recommend <- c(
-    "datapackageR",
     "readxl") %>%
     unique()
   for(pk in pkg_to_recommend)
@@ -371,7 +374,6 @@ init <- function(
   devtools::document(pkg = root)
 
 # Todo --------------------------------------------------------------------
-#stop("implement URL retrieval (testing, new call_reteive")
 
 # Provide silent return value ---------------------------------------------
   TRUE %>%

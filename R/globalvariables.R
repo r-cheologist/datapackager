@@ -4,3 +4,5 @@ if(
 {
   utils::globalVariables(c("."))
 }
+
+utils::globalVariables("data_catalogue")
