@@ -286,7 +286,8 @@ init <- function(
       "datapackageR-reexport.R",
       "datapackageR-retrieve_missing_remote_data.R",
       "datapackageR-retrieve_remote_file.R",
-      "datapackageR-save_zipfile.R") %>%
+      "datapackageR-save_zipfile.R",
+      "datapackageR-unpack_raw_data.R") %>%
     sapply(
       function(x){
         system.file(
