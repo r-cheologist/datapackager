@@ -7,7 +7,7 @@
 init(root = getwd(), default_compression_algo = c("xz", "bzip2", "gzip"),
   default_hashing_algo = c("sha512", "md5", "sha1", "crc32", "sha256",
   "xxhash32", "xxhash64", "murmur32"), files_to_include = NULL,
-  use_rstudio = TRUE, ...)
+  use_rstudio = TRUE, description = NULL, ...)
 }
 \arguments{
 \item{root}{Single \code{\link{character}} representing the path of the
@@ -33,6 +33,11 @@ files included using \code{\link{include_data_file}} (may also be URLs; see
 \item{use_rstudio}{Single \code{\link{logical}} handed to
 \code{\link[devtools]{create}} and indicating whether infrastructure used by
 \code{RStudio} is to be generated in the resulting data-wrapping package.}
+
+\item{description}{\code{\link{list}} of descriptions values to override
+default values or add additional values (see \code{\link[devtools]{create}}
+for details). Setting this to \code{\link{NULL}} implies the defaults of the
+underlying function.}
 
 \item{...}{Paramters handed through to \code{\link{include_data_file}}. See
 there for details}

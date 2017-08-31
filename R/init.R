@@ -56,6 +56,10 @@
 #' @param use_rstudio Single \code{\link{logical}} handed to
 #' \code{\link[devtools]{create}} and indicating whether infrastructure used by
 #' \code{RStudio} is to be generated in the resulting data-wrapping package.
+#' @param description \code{\link{list}} of descriptions values to override
+#' default values or add additional values (see \code{\link[devtools]{create}}
+#' for details). Setting this to \code{\link{NULL}} implies the defaults of the
+#' underlying function.
 #' @param ... Paramters handed through to \code{\link{include_data_file}}. See
 #' there for details
 #' @return Returns \code{\link{TRUE}} via \code{\link{invisible}}.
@@ -139,6 +143,7 @@ init <- function(
                            "xxhash32", "xxhash64", "murmur32"),
   files_to_include = NULL,
   use_rstudio = TRUE,
+  description = NULL,
   ...)
 {
 # Check prerequisites -----------------------------------------------------
@@ -181,9 +186,30 @@ init <- function(
   use_rstudio %>%
     assertive.types::assert_is_a_bool()
 
+  if(
+    description %>%
+      is.null() %>%
+      magrittr::not())
+  {
+    description %>%
+      assertive.types::assert_is_list()
+  }
+
 # Processing --------------------------------------------------------------
   # Create infrastructure
-  devtools::create(path = root, rstudio = use_rstudio)
+  if(
+    description %>%
+    is.null())
+  {
+    devtools::create(
+      path = root,
+      rstudio = use_rstudio)
+  } else {
+    devtools::create(
+      path = root,
+      rstudio = use_rstudio,
+      description = description)
+  }
   devtools::use_testthat(pkg = root)
   root %>%
     file.path("inst", "extdata") %>%
