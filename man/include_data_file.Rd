@@ -5,8 +5,8 @@
 \title{include_data_file}
 \usage{
 include_data_file(file_to_include, root, data_catalogue = NULL,
-  file_is_url = FALSE, file_user = NULL, file_password = NULL,
-  file_reading_function, file_reading_options = NULL,
+  store_data = TRUE, file_is_url = FALSE, file_user = NULL,
+  file_password = NULL, file_reading_function, file_reading_options = NULL,
   file_reading_package_dependencies = NULL, file_distributable = TRUE,
   file_gitignore = !file_distributable,
   file_rbuildignore = !file_distributable, compression_algo = NULL,
@@ -24,6 +24,11 @@ must have been \code{\link{init}}.}
 relative path to the \code{\link{data_catalogue}}-containing \code{R} data
 file within the packaging infrastructure (defaulting to
 \code{data/data_catalogue.rda} if set to \code{\link{NULL}}).}
+
+\item{store_data}{Single \code{\link{logical}} indicating whether to actually
+save the raw data in \code{inst/extdata} and as a parsed object in
+\code{data} (\code{TRUE} case; default) or to \strong{only} list an
+additional entry in the \code{\link{data_catalogue}} (\code{FALSE} case).}
 
 \item{file_is_url}{Single \code{\link{logical}} indicating whether the data
 file included resides remotely and must be retreived for integration.}

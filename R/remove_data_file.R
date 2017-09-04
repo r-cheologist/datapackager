@@ -11,6 +11,12 @@
 #' relative path to the \code{\link{data_catalogue}}-containing \code{R} data
 #' file within the packaging infrastructure (defaulting to
 #' \code{data/data_catalogue.rda} if set to \code{\link{NULL}}).
+#' @param only_remove_stored_data Single \code{\link{logical}} indicating
+#' whether to \strong{only} remove stored raw and parsed data objects from
+#' \code{inst/extdata} \code{data}, respectively, without touching the
+#' \code{\link{data_catalogue}} (\code{TRUE} case), or to also purge the
+#' corresponding entry from \code{\link{data_catalogue}} (\code{FALSE} case;
+#' default).
 #' @param save_catalogue Single \code{\link{logical}} indicating whether the
 #' amended \code{\link{data_catalogue}} object is to be saved back to the
 #' package infrastructure or just (silently) returned.
@@ -78,6 +84,7 @@ remove_data_file <- function(
   file_to_remove,
   root,
   data_catalogue = NULL,
+  only_remove_stored_data = FALSE,
   save_catalogue = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
@@ -98,6 +105,9 @@ remove_data_file <- function(
     assertive.types::assert_is_list() %>%
     assertive.properties::assert_has_all_attributes(
       c("default_compression_algo", "default_hashing_algo"))
+
+  only_remove_stored_data %>%
+    assertive.types::assert_is_a_bool()
 
   relative_raw_data_target_path <- file.path(
     "inst",
@@ -141,32 +151,48 @@ remove_data_file <- function(
   # TODO?: Remove package dependencies from DESCRIPTION
 
   # Remove data set documentation(stub)
-  data_documentation_path %>%
-    file.remove()
+  if(only_remove_stored_data %>%
+     magrittr::not())
+  {
+    data_documentation_path %>%
+      file.remove()
+  }
 
   # Remove files from .Rbuildignore (as appropriate)
-  remove_from_rbuildignore <- c(
+  if(only_remove_stored_data %>%
+     magrittr::not())
+  {
+    remove_from_rbuildignore <- c(
       relative_raw_data_target_path,
       relative_r_object_target_path) %>%
-    paste0("^", gsub("\\.", "\\\\.", .), "$")
-  root %>%
-    file.path(".Rbuildignore") %>%
-    readLines() %>%
-    setdiff(remove_from_rbuildignore) %>%
-    writeLines(
-      root %>%
-        file.path(".Rbuildignore"))
+      paste0("^", gsub("\\.", "\\\\.", .), "$")
+    root %>%
+      file.path(".Rbuildignore") %>%
+      readLines() %>%
+      setdiff(remove_from_rbuildignore) %>%
+      writeLines(
+        root %>%
+          file.path(".Rbuildignore"))
+  }
 
   # Remove files from .gitignore (as appropriate)
-  manage_gitignore(
-    gitignore_file = file.path(root, ".gitignore"),
-    relative_path = c(
-      relative_raw_data_target_path,
-      relative_r_object_target_path),
-    state = "absent")
+  if(only_remove_stored_data %>%
+     magrittr::not())
+  {
+    manage_gitignore(
+      gitignore_file = file.path(root, ".gitignore"),
+      relative_path = c(
+        relative_raw_data_target_path,
+        relative_r_object_target_path),
+      state = "absent")
+  }
 
   # Update data_catalogue
-  data_catalogue[[file_to_remove %>% basename()]] <- NULL
+  if(only_remove_stored_data %>%
+     magrittr::not())
+  {
+    data_catalogue[[file_to_remove %>% basename()]] <- NULL
+  }
 
   # If requested: save data_catalogue
   if(save_catalogue){

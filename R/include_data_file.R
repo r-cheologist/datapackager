@@ -44,6 +44,10 @@
 #' relative path to the \code{\link{data_catalogue}}-containing \code{R} data
 #' file within the packaging infrastructure (defaulting to
 #' \code{data/data_catalogue.rda} if set to \code{\link{NULL}}).
+#' @param store_data Single \code{\link{logical}} indicating whether to actually
+#' save the raw data in \code{inst/extdata} and as a parsed object in
+#' \code{data} (\code{TRUE} case; default) or to \strong{only} list an
+#' additional entry in the \code{\link{data_catalogue}} (\code{FALSE} case).
 #' @param file_is_url Single \code{\link{logical}} indicating whether the data
 #' file included resides remotely and must be retreived for integration.
 #' @param file_user Single \code{\link{character}} object used for authentication
@@ -169,6 +173,7 @@ include_data_file <- function(
   file_to_include,
   root,
   data_catalogue = NULL,
+  store_data = TRUE,
   file_is_url = FALSE,
   file_user = NULL,
   file_password = NULL,
@@ -200,6 +205,9 @@ include_data_file <- function(
     assertive.types::assert_is_list() %>%
     assertive.properties::assert_has_all_attributes(
       c("default_compression_algo", "default_hashing_algo"))
+
+  store_data %>%
+    assertive.types::assert_is_a_bool()
 
   relative_raw_data_target_path <- file.path(
     "inst",
@@ -328,6 +336,7 @@ include_data_file <- function(
   }
 
   # Insert compressed version of file into package infrastructure
+  # Also done if cataloging only requested - to capture a hash from the zip file
   save_zipfile(
     uncomp_path = file_to_include,
     root = root)
@@ -342,6 +351,13 @@ include_data_file <- function(
       algo = hashing_algo,
       file = TRUE)
 
+  # Remove the compressed file if only entry in catalog requested
+  if (store_data %>%
+     magrittr::not())
+  {
+    unlink(raw_data_target_path)
+  }
+
   # Parse the data & capture another hash
   tmp_object <- parse_data(
     path = file_to_include,
@@ -352,18 +368,21 @@ include_data_file <- function(
       algo = hashing_algo)
 
   # Rename the object and write it out
-  data_rename_and_writeout(
-    data_object = tmp_object,
-    file_name = file_to_include,
-    root = root,
-    compression_algo = compression_algo)
-  # devtools::use_data(
-  #   as.symbol(file_to_include %>%
-  #     basename()),
-  #   pkg = root,
-  #   internal = FALSE,
-  #   overwrite = FALSE,
-  #   compress = compression_algo)
+  if (store_data)
+  {
+    data_rename_and_writeout(
+      data_object = tmp_object,
+      file_name = file_to_include,
+      root = root,
+      compression_algo = compression_algo)
+    # devtools::use_data(
+    #   as.symbol(file_to_include %>%
+    #     basename()),
+    #   pkg = root,
+    #   internal = FALSE,
+    #   overwrite = FALSE,
+    #   compress = compression_algo)
+  }
 
   # Add package dependencies to DESCRIPTION
   if(

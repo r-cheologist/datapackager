@@ -5,7 +5,7 @@
 \title{remove_data_file}
 \usage{
 remove_data_file(file_to_remove, root, data_catalogue = NULL,
-  save_catalogue = TRUE)
+  only_remove_stored_data = FALSE, save_catalogue = TRUE)
 }
 \arguments{
 \item{file_to_remove}{Single \code{\link{character}} representing the name or
@@ -18,6 +18,13 @@ directory in which the package infrastructure to be modified resides.}
 relative path to the \code{\link{data_catalogue}}-containing \code{R} data
 file within the packaging infrastructure (defaulting to
 \code{data/data_catalogue.rda} if set to \code{\link{NULL}}).}
+
+\item{only_remove_stored_data}{Single \code{\link{logical}} indicating
+whether to \strong{only} remove stored raw and parsed data objects from
+\code{inst/extdata} \code{data}, respectively, without touching the
+\code{\link{data_catalogue}} (\code{TRUE} case), or to also purge the
+corresponding entry from \code{\link{data_catalogue}} (\code{FALSE} case;
+default).}
 
 \item{save_catalogue}{Single \code{\link{logical}} indicating whether the
 amended \code{\link{data_catalogue}} object is to be saved back to the
