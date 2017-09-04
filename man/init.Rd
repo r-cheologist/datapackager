@@ -57,7 +57,7 @@ package build around (raw) data to be analyzed.
 In detail the function proceeds as follows:
 \enumerate{
   \item The package \code{root} directory is created (and partially populated)
-    using \code{\link[devtools]{create}}, using the \code{use_rstudio}
+    using \code{\link[devtools]{create}}, and the \code{use_rstudio}
     paramter as appropriate.
   \item As \pkg{testthat}-dependent components are included, the
      corresponding infrastructure is initialized using
