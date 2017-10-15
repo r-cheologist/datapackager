@@ -305,21 +305,14 @@ include_data_file <- function(
         several.ok = FALSE)
   }
 
-  if(
-    hashing_algo %>%
-    is.null())
-  {
-    hashing_algo <- attr(
-      data_catalogue,
-      "default_hashing_algo")
-  } else {
-    hashing_algo %<>%
-      assertive.types::assert_is_character() %>%
-      match.arg(
-        choices = c("sha512", "md5", "sha1", "crc32", "sha256", "xxhash32",
-                    "xxhash64", "murmur32"),
-        several.ok = FALSE)
-  }
+  hashing_algo %<>%
+    match_function_arg(
+      fun = digest::digest,
+      fun_arg_name = "algo",
+      several.ok = FALSE,
+      default = attr(
+        data_catalogue,
+        "default_hashing_algo"))
 
   save_catalogue %>%
     assertive.types::assert_is_a_bool()

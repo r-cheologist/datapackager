@@ -5,9 +5,9 @@
 \title{init}
 \usage{
 init(root = getwd(), default_compression_algo = c("xz", "bzip2", "gzip"),
-  default_hashing_algo = c("sha512", "md5", "sha1", "crc32", "sha256",
-  "xxhash32", "xxhash64", "murmur32"), files_to_include = NULL,
-  use_rstudio = TRUE, description = NULL, ...)
+  default_hashing_algo = match_function_arg(arg = NULL, fun = digest::digest,
+  fun_arg_name = "algo", several.ok = FALSE, default = "sha512"),
+  files_to_include = NULL, use_rstudio = TRUE, description = NULL, ...)
 }
 \arguments{
 \item{root}{Single \code{\link{character}} representing the path of the

@@ -19,6 +19,7 @@ Depends:
     R (>= 3.4.1)
 Imports:
     assertive.base (>= 0.0-7),
+    assertive.code (>= 0.0-1),
     assertive.files (>= 0.0-2),
     assertive.properties (>= 0.0-4),
     assertive.sets (>= 0.0-3),
@@ -28,6 +29,7 @@ Imports:
     digest (>= 0.6.12),
     httr (>= 1.3.1),
     magrittr (>= 1.5),
+    methods,
     testthat (>= 1.0.2),
     tibble (>= 1.3.4),
     pathological (>= 0.1-2),
