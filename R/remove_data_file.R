@@ -102,9 +102,7 @@ remove_data_file <- function(
       load_data_file_as_object()
   }
   data_catalogue %>%
-    assertive.types::assert_is_list() %>%
-    assertive.properties::assert_has_all_attributes(
-      c("default_compression_algo", "default_hashing_algo"))
+    assert_is_a_valid_data_catalogue()
 
   only_remove_stored_data %>%
     assertive.types::assert_is_a_bool()
