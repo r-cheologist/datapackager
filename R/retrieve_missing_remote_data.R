@@ -121,6 +121,7 @@ retrieve_missing_remote_data <- function(
 # Processing --------------------------------------------------------------
   # Load the data catalogue
   data_catalogue <- root %>%
+    file.path("data", "data_catalogue.rda") %>%
     load_data_file_as_object()
 
   # Select only what's marked as being remote

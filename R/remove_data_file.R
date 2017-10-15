@@ -99,6 +99,7 @@ remove_data_file <- function(
       is.null())
   {
     data_catalogue <- root %>%
+      file.path("data", "data_catalogue.rda") %>%
       load_data_file_as_object()
   }
   data_catalogue %>%
