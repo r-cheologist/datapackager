@@ -228,6 +228,41 @@ data_catalogue \%>\%
   }
 }
 
+# Add a local object
+local_data_object <-list(A = LETTERS, B = letters)
+data_catalogue <- include_data(
+  object_to_include = "local_data_object",
+  root = pkg_root)
+
+# Add a remote *.Rda (pasted to make CRAN line length requirements)
+data_catalogue <- include_data(
+  object_to_include = paste(
+    "https://bitbucket.org",
+    "graumannlabtools",
+    "datapackager",
+    "downloads",
+    "remote_rda.Rda",
+     sep = "/"),
+  root = pkg_root)
+
+# Add a remote *.Rds (pasted to make CRAN line length requirements)
+data_catalogue <- include_data(
+  object_to_include = paste(
+    "https://bitbucket.org",
+    "graumannlabtools",
+    "datapackager",
+    "downloads",
+    "remote_rds.Rds",
+    sep = "/"),
+  root = pkg_root)
+
+# Investigate the data catalogue
+data_catalogue \%>\%
+  str()
+
+ # Have a look at the package structure
+ list.files(pkg_root, recursive = TRUE)
+
 # Clean up the package root - ensure proper example testing by R CMD check
 unlink(pkg_root, recursive = TRUE)
 }
