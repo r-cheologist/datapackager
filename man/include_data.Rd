@@ -199,11 +199,11 @@ data_catalogue <- include_data(
 data_catalogue \%>\%
   str()
 
-# Add a remote file (from Billing et al. (2016). Comprehensive transcriptomic
-# and proteomic characterization of human mesenchymal stem cells reveals
-# source specific cellular markers. Sci Rep 6, 21507.
-# Licensed under the Creative Commons Attribution 4.0 International License.
-# http://creativecommons.org/licenses/by/4.0/
+# Add a remote file that needs parsing (from Billing et al. (2016).
+# Comprehensive transcriptomic and proteomic characterization of human
+# mesenchymal stem cells reveals source specific cellular markers. Sci Rep 6,
+# 21507. Licensed under the Creative Commons Attribution 4.0 International
+# License. http://creativecommons.org/licenses/by/4.0/
 # EXCLUDED FROM BUILDS
 \donttest{
   if(requireNamespace("readxl", quietly = TRUE))
@@ -215,8 +215,8 @@ data_catalogue \%>\%
         "2016/160209/srep21507/extref/srep21507-s4.xls"),
       collapse = "/")
     data_catalogue <- include_data(
-      root = pkg_root,
       object_to_include = tmp_url,
+      root = pkg_root,
       parsing_function = "read_excel",
       parsing_options = list(skip = 1),
       package_dependencies = "readxl",
