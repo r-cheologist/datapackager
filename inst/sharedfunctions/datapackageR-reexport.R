@@ -16,8 +16,8 @@ NULL
 
 #' datapackageR data inclusion function
 #'
-#' See \code{\link[datapackageR]{include_data_file}}.
-#' @name include_data_file
+#' See \code{\link[datapackageR]{include_data}}.
+#' @name include_data
 #' @importFrom datapackageR include_data_file
 #' @export include_data_file
 NULL

@@ -17,8 +17,8 @@ data.frame(
     row.names = FALSE)
 init(
   root = pkg_root2,
-  files_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
-  file_reading_function = "read.csv",
-  file_reading_options = list(sep = "\t", stringsAsFactors = FALSE))
+  objects_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
+  parsing_function = "read.csv",
+  parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 
 devtools::check(pkg_root2, run_dont_test = TRUE)

@@ -25,21 +25,21 @@ tmp_data %>%
 # Initiate data package infrastructure and add one of the files
 init(
   root = package_root,
-  files_to_include = file.path(tmp_dir, "data_file_1.csv"),
-  file_reading_function = "read.delim")
+  objects_to_include = file.path(tmp_dir, "data_file_1.csv"),
+  parsing_function = "read.delim")
 # unlink(package_root,recursive = TRUE)
 
 # Post-initiation addition (with reading option)
-include_data_file(
+include_data(
   root = package_root,
-  file_to_include = file.path(tmp_dir, "data_file_2.csv"),
-  file_reading_function = "read.delim",
-  file_reading_options = list(sep = ","))
+  object_to_include = file.path(tmp_dir, "data_file_2.csv"),
+  parsing_function = "read.delim",
+  parsing_options = list(sep = ","))
 
 # Deletion of the first file
 remove_data_file(
   root = package_root,
-  file_to_remove = "data_file_1.csv")
+  object_to_remove = "data_file_1.csv")
 
 # Add a remote file (from Billing et al. (2016). Comprehensive transcriptomic
 # and proteomic characterization of human mesenchymal stem cells reveals source
@@ -47,14 +47,13 @@ remove_data_file(
 # EXCLUDED FROM BUILDS
 library(readxl)
 tmp_url <- "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls"
-include_data_file(
+include_data(
   root = package_root,
-  file_to_include = tmp_url,
-  file_is_url = TRUE,
-  file_reading_function = "read_excel",
-  file_reading_options = list(skip = 1),
-  file_reading_package_dependencies = "readxl",
-  file_distributable = FALSE)
+  object_to_include = tmp_url,
+  package_dependencies = "readxl",
+  parsing_function = "read_excel",
+  parsing_options = list(skip = 1),
+  distributable = FALSE)
 
 # Simulate fresh package checkout/install NOT including undistributed data
 file.path(

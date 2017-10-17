@@ -22,7 +22,7 @@
 #'     \code{default_hashing_algo} as \code{\link{attributes}}. This is the
 #'     central component of the data/content tracking at the core of
 #'     \pkg{datapackageR}. See \code{\link{data_catalogue}} for details.
-#'   \item If \code{files_to_include != NULL}, \code{\link{include_data_file}}
+#'   \item If \code{objects_to_include != NULL}, \code{\link{include_data}}
 #'     is used to include the files given into the packaging structure.
 #'   \item The \code{\link{data_catalogue}} (and it's documentation) are saved
 #'     in the \code{root}-based structure.
@@ -30,16 +30,15 @@
 #'     to enable automated (integrity)checking of the data packaged etc.
 #'   \item \pkg{datapackageR} then adds further functions to the new,
 #'     data-wrapping package, which enable e.g. retrieval of remote data etc.
-#'     without having \pkg{datapackageR} loaded - or even present.
 #'   \item An \code{R} script documenting the \pkg{datapackageR} call used to
 #'     generate the new package infrastructure is added to its
 #'     \code{inst/scripts} directory.
-#'   \item Finally, packages required by the installed functionally (and
-#'     potentially by implied \code{\link{include_data_file}} usage).
+#'   \item Finally, packages are added to the \code{DESCRIPTION} file as
+#'     required (and potentially by implied \code{\link{include_data}} usage).
 #' }
 #' @param root Single \code{\link{character}} representing the path of the
 #' directory in which the package infrastructure is to reside. The directory
-#' must be nonexistent. \code{basename(root)} corresponds to the name of the
+#' cannot exist yet. \code{basename(root)} corresponds to the name of the
 #' package and must thus conform to \code{R}s package naming conventions.
 #' @param default_compression_algo Single \code{\link{character}} defining the
 #' default method for compression of \code{R} objects stored in the package
@@ -50,9 +49,8 @@
 #' cryptographic hashing function used for integrity testing of objects/files
 #' via \code{\link[digest]{digest}} (see there for details). Defaulting to the
 #' strong \code{sha512} option.
-#' @param files_to_include \code{\link{character}} representing paths to data
-#' files included using \code{\link{include_data_file}} (may also be URLs; see
-#' \code{file_is_url} option of \code{\link{include_data_file}}).
+#' @param objects_to_include \code{\link{character}} representing paths to data
+#' files included using \code{\link{include_data}} (may also be URLs).
 #' @param use_rstudio Single \code{\link{logical}} handed to
 #' \code{\link[devtools]{create}} and indicating whether infrastructure used by
 #' \code{RStudio} is to be generated in the resulting data-wrapping package.
@@ -60,12 +58,12 @@
 #' default values or add additional values (see \code{\link[devtools]{create}}
 #' for details). Setting this to \code{\link{NULL}} implies the defaults of the
 #' underlying function.
-#' @param ... Paramters handed through to \code{\link{include_data_file}}. See
+#' @param ... Paramters handed through to \code{\link{include_data}}. See
 #' there for details
 #' @return Returns \code{\link{TRUE}} via \code{\link{invisible}}.
 #' @author Johannes Graumann
 #' @seealso \code{\link{save}}, \code{\link[digest]{digest}},
-#' \code{\link{include_data_file}}, \code{\link[devtools]{create}}
+#' \code{\link{include_data}}, \code{\link[devtools]{create}}
 #' @examples
 #' # Load tools
 #' library(magrittr)
@@ -113,9 +111,9 @@
 #' ## Create the package infrastructure, including the dummy file
 #' init(
 #'   root = pkg_root2,
-#'   files_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
-#'   file_reading_function = "read.csv",
-#'   file_reading_options = list(sep = "\t", stringsAsFactors = FALSE))
+#'   objects_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
+#'   parsing_function = "read.csv",
+#'   parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 #'
 #' ## (Crudely) investigate the result
 #' ### In the file system ...
@@ -139,8 +137,13 @@
 init <- function(
   root = getwd(),
   default_compression_algo = c("xz", "bzip2", "gzip"),
-  default_hashing_algo = match_function_arg(arg = NULL, fun = digest::digest, fun_arg_name = "algo", several.ok = FALSE, default = "sha512"),
-  files_to_include = NULL,
+  default_hashing_algo = match_function_arg(
+    arg = NULL,
+    fun = digest::digest,
+    fun_arg_name = "algo",
+    several.ok = FALSE,
+    default = "sha512"),
+  objects_to_include = NULL,
   use_rstudio = TRUE,
   description = NULL,
   ...)
@@ -174,11 +177,11 @@ init <- function(
       default = "sha5121")
 
   if(
-    files_to_include %>%
+    objects_to_include %>%
       is.null() %>%
       magrittr::not())
   {
-    files_to_include %>%
+    objects_to_include %>%
       assertive.types::assert_is_character()
   }
 
@@ -227,15 +230,15 @@ init <- function(
 
   # If present, iterate over data files to be integrated
   if (
-    files_to_include %>%
+    objects_to_include %>%
     is.null() %>%
     magrittr::not())
   {
-    for(i in files_to_include)
+    for(i in objects_to_include)
     {
       ## Include the files into the infrastructure
       data_catalogue <- i %>%
-        include_data_file(
+        include_data(
           root = root,
           data_catalogue = data_catalogue,
           save_catalogue = FALSE,
@@ -252,17 +255,17 @@ init <- function(
     compress = default_compression_algo)
 
   # Install the testthat tests that check the catalogue and the functions they need
-  # template_name <- "test_data_integrity.brew"
-  # system.file(
-  #     file.path("templates", template_name),
-  #     package = "datapackageR",
-  #     mustWork = TRUE) %>%
-  #   brew::brew(
-  #     output = root %>%
-  #       file.path(
-  #         "R",
-  #         template_name %>%
-  #           pathological::replace_extension("R")))
+  template_name <- "test_data_integrity.brew"
+  system.file(
+      file.path("templates", template_name),
+      package = "datapackageR",
+      mustWork = TRUE) %>%
+    brew::brew(
+      output = root %>%
+        file.path(
+          "R",
+          template_name %>%
+            pathological::replace_extension("R")))
 
   template_name <- "testthat.brew"
   system.file(
@@ -340,7 +343,7 @@ init <- function(
   pkg_to_depend_on <- c(
     "datapackageR") %>%
     unique()
-  for(pkg in pkg_to_depend_on)
+  for (pkg in pkg_to_depend_on)
   {
     devtools::use_package(
       package = pkg,
@@ -350,7 +353,7 @@ init <- function(
 
   pkg_to_import_from %<>%
     unique()
-  for(pkg in pkg_to_import_from)
+  for (pkg in pkg_to_import_from)
   {
     devtools::use_package(
       package = pkg,
@@ -361,7 +364,7 @@ init <- function(
   pkg_to_recommend <- c(
     "readxl") %>%
     unique()
-  for(pk in pkg_to_recommend)
+  for (pk in pkg_to_recommend)
   {
     devtools::use_package(
       package = pkg,
