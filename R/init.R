@@ -255,17 +255,17 @@ init <- function(
     compress = default_compression_algo)
 
   # Install the testthat tests that check the catalogue and the functions they need
-  template_name <- "test_data_integrity.brew"
-  system.file(
-      file.path("templates", template_name),
-      package = "datapackageR",
-      mustWork = TRUE) %>%
-    brew::brew(
-      output = root %>%
-        file.path(
-          "R",
-          template_name %>%
-            pathological::replace_extension("R")))
+  # template_name <- "test_data_integrity.brew"
+  # system.file(
+  #     file.path("templates", template_name),
+  #     package = "datapackageR",
+  #     mustWork = TRUE) %>%
+  #   brew::brew(
+  #     output = root %>%
+  #       file.path(
+  #         "R",
+  #         template_name %>%
+  #           pathological::replace_extension("R")))
 
   template_name <- "testthat.brew"
   system.file(
