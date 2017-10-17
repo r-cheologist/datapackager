@@ -116,7 +116,7 @@ remove_data <- function(
   relative_raw_data_target_path <- file.path(
     "inst",
     "extdata",
-    file_to_remove %>%
+    object_to_remove %>%
       basename() %>%
       paste0(".zip"))
   raw_data_target_path <- root %>%
@@ -124,7 +124,7 @@ remove_data <- function(
 
   relative_r_object_target_path <- file.path(
     "data",
-    file_to_remove %>%
+    object_to_remove %>%
       basename() %>%
       paste0(".rda"))
   r_object_target_path <- root %>%
@@ -134,7 +134,7 @@ remove_data <- function(
     "R",
     paste0(
       "data-",
-      file_to_remove %>%
+      object_to_remove %>%
         basename(),
       ".R"))
   data_documentation_path <- root %>%
@@ -194,7 +194,7 @@ remove_data <- function(
   # Update data_catalogue
   if (!keep_meta_data)
   {
-    data_catalogue[[file_to_remove %>% basename()]] <- NULL
+    data_catalogue[[object_to_remove %>% basename()]] <- NULL
   }
 
   # If requested: save data_catalogue
