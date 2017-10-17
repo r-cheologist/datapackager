@@ -37,7 +37,7 @@ include_data(
   parsing_options = list(sep = ","))
 
 # Deletion of the first file
-remove_data_file(
+remove_data(
   root = package_root,
   object_to_remove = "data_file_1.csv")
 

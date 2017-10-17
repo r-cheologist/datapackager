@@ -232,7 +232,7 @@ data_catalogue \%>\%
 unlink(pkg_root, recursive = TRUE)
 }
 \seealso{
-\code{\link{init}}, \code{\link{remove_data_file}},
+\code{\link{init}}, \code{\link{remove_data}},
 \code{\link[digest]{digest}}, \code{\link{data_catalogue}}
 }
 \author{

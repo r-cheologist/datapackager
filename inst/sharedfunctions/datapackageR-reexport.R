@@ -24,10 +24,10 @@ NULL
 
 #' datapackageR data removal function
 #'
-#' See \code{\link[datapackageR]{remove_data_file}}.
-#' @name remove_data_file
-#' @importFrom datapackageR remove_data_file
-#' @export remove_data_file
+#' See \code{\link[datapackageR]{remove_data}}.
+#' @name remove_data
+#' @importFrom datapackageR remove_data
+#' @export remove_data
 NULL
 
 #' datapackageR function for the retrieval of data in the catalogue but not on disk
