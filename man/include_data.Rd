@@ -260,8 +260,8 @@ data_catalogue <- include_data(
 data_catalogue \%>\%
   str()
 
- # Have a look at the package structure
- list.files(pkg_root, recursive = TRUE)
+# Have a look at the package structure
+list.files(pkg_root, recursive = TRUE)
 
 # Clean up the package root - ensure proper example testing by R CMD check
 unlink(pkg_root, recursive = TRUE)
