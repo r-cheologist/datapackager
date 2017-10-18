@@ -7,11 +7,6 @@ data_rename_and_writeout <- function(data_object, file_name, root, compression_a
   save(
     list = file_name %>%
       basename(),
-    file = root %>%
-      file.path(
-        "data",
-        file_name %>%
-          basename %>%
-          paste0(".rda")),
+    file = make_data_path(root, file_name),
     compress = compression_algo)
 }

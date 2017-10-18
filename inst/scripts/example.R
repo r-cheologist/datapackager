@@ -56,19 +56,9 @@ include_data(
   distributable = FALSE)
 
 # Simulate fresh package checkout/install NOT including undistributed data
-file.path(
-    package_root,
-    "data",
-    tmp_url %>%
-      basename() %>%
-      paste0(".rda")) %>%
+datapackageR:::make_data_path(package_root, tmp_url) %>%
   unlink()
-file.path(
-    package_root,
-    "inst", "extdata",
-    tmp_url %>%
-      basename() %>%
-      paste0(".zip")) %>%
+datapackager:::make_extdata_path(package_root, tmp_url) %>%
   unlink()
 
 # Fetch the "seperately distributed" data

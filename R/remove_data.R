@@ -113,22 +113,11 @@ remove_data <- function(
 
 # Processing --------------------------------------------------------------
   # Generate paths
-  relative_raw_data_target_path <- file.path(
-    "inst",
-    "extdata",
-    object_to_remove %>%
-      basename() %>%
-      paste0(".zip"))
-  raw_data_target_path <- root %>%
-    file.path(relative_raw_data_target_path)
+  relative_raw_data_target_path <- make_extdata_path("", object_to_remove)
+  raw_data_target_path <- make_extdata_path(root, object_to_remove)
 
-  relative_r_object_target_path <- file.path(
-    "data",
-    object_to_remove %>%
-      basename() %>%
-      paste0(".rda"))
-  r_object_target_path <- root %>%
-    file.path(relative_r_object_target_path)
+  relative_r_object_target_path <- make_data_path("", object_to_remove)
+  r_object_target_path <- make_data_path(root, object_to_remove)
 
   relative_data_documentation_path <- file.path(
     "R",

@@ -405,20 +405,10 @@ include_data <- function(
 
 # Processing --------------------------------------------------------------
 ## Build paths ----
-  relative_extdata_path <- file.path(
-    "inst",
-    "extdata",
-    object_to_include %>%
-      basename() %>%
-      paste0(".zip"))
-  extdata_path <- root %>%
-    file.path(relative_extdata_path)
+  relative_extdata_path <- make_extdata_path("", object_to_include)
+  extdata_path <- make_extdata_path(root, object_to_include)
 
-  relative_data_path <- file.path(
-    "data",
-    object_to_include %>%
-      basename() %>%
-      paste0(".rda"))
+  relative_data_path <- make_data_path("", object_to_include)
 
 ## Retrieve the file if it is not local ----
   original_object_to_include <- object_to_include
