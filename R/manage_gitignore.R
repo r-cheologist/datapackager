@@ -1,3 +1,4 @@
+#' @noRd
 manage_gitignore <- function(
   gitignore_file = file.path(getwd(), ".gitignore"),
   relative_path,

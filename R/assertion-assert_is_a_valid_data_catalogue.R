@@ -1,3 +1,4 @@
+#' @noRd
 assert_is_a_valid_data_catalogue <- function(obj){
   obj %>%
     assertive.types::assert_is_list() %>%

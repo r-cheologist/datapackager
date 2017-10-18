@@ -1,3 +1,4 @@
+#' @noRd
 analyse_extension <- function(
   x,
   extensions = list(rda = c("Rda", "RData"), rds = "Rds"),

@@ -1,3 +1,4 @@
+#' @noRd
 is_url <- function(
   x,
   protocols = c("https", "http", "ftp", "ftps"))
