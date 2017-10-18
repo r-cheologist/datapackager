@@ -485,7 +485,8 @@ include_data <- function(
 ## Capture a hash of the in-memory object ----
   hash_object <- tmp_object %>%
     digest::digest(
-      algo = hashing_algo)
+      algo = hashing_algo,
+      file = FALSE)
 
 ## Rename the object and write it out ----
   if ("data" %in% saved_elements)
