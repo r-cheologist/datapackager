@@ -1,6 +1,6 @@
 #' @noRd
 load_data_file_as_object <- function(
-  path = file.path(".", "data", "data_catalogue.rda"),
+  path = file.path(getwd(), "data", "data_catalogue.rda"),
   name = pathological::strip_extension(basename(path)))
 {
 # Check prerequisites -----------------------------------------------------

@@ -237,7 +237,7 @@
 include_data <- function(
   object_to_include,
   type                 = c("auto", "object", "file", "file_rda", "file_rds", "url", "url_rda", "url_rds"),
-  root                 = ".",
+  root                 = getwd(),
   data_catalogue       = NULL,
   saved_elements       = c("all", "data", "extdata"),
   distributable        = TRUE,

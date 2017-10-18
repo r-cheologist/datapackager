@@ -5,7 +5,7 @@
 \title{include_data}
 \usage{
 include_data(object_to_include, type = c("auto", "object", "file", "file_rda",
-  "file_rds", "url", "url_rda", "url_rds"), root = ".",
+  "file_rds", "url", "url_rda", "url_rds"), root = getwd(),
   data_catalogue = NULL, saved_elements = c("all", "data", "extdata"),
   distributable = TRUE, gitignore = !distributable,
   rbuildignore = !distributable, package_dependencies = NULL,
