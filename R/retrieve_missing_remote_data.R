@@ -185,43 +185,6 @@ retrieve_missing_remote_data <- function(
       }
     )
 
-  # Retrieve and integrate it
-  for (i in ext_catalogue)
-  {
-    ## Retrieve file & check integrity
-    tmp_path <- with(
-      i,
-      {
-        message(Base.Name)
-        tmp_path <- retrieve_remote_file(
-          url      = Full.Name,
-          user     = user,
-          password = password,
-          ...)
-        assertive.base::assert_are_identical(
-          Hash.Uncompressed,
-          tmp_path %>%
-            digest::digest(
-              algo = Hashing.Algo,
-              file = TRUE))
-        tmp_path %>%
-          return()
-      })
-    ## Compress & save
-    ### Integrity checking not possible on compressed files, as zip includes
-    ### timestamps no matter what setting --> never matching to prior compression
-    with(
-      i,
-      {
-        save_zipfile(
-          uncomp_path = tmp_path,
-          root = root) %>%
-          digest::digest(
-            algo = Hashing.Algo,
-            file = TRUE)
-      })
-  }
-
 ## Fetch missing remote extdata & check for data integrity ----
   for (entry in data_catalogue %>%
        magrittr::extract2(needs_retrieval_of_extdata))
