@@ -1,5 +1,5 @@
-#' @title <%=basename(file_to_include)%>
-#' @name <%=basename(file_to_include)%>
+#' @title <%=basename(object_to_include)%>
+#' @name <%=basename(object_to_include)%>
 #' @description A dataset stored in the package through functionality provided
 #' by \pkg{datapackageR}.
 #' @keywords datasets

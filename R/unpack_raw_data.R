@@ -38,9 +38,9 @@
 #' ## Create the package infrastructure, including the dummy file
 #' init(
 #'   root = pkg_root,
-#'   files_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
-#'   file_reading_function = "read.csv",
-#'   file_reading_options = list(sep = "\t", stringsAsFactors = FALSE))
+#'   objects_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
+#'   parsing_function = "read.csv",
+#'   parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 #'
 #' # Install the resulting package
 #' devtools::install(pkg_root)
@@ -97,7 +97,8 @@ unpack_raw_data <- function(
             mustWork = TRUE) %>%
         ## Unzip it into the target directory
           utils::unzip(
-            exdir = target_dir)
+            exdir     = target_dir,
+            junkpaths = TRUE)
 
         # Return the new path
         target_dir %>%

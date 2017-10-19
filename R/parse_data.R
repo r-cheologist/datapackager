@@ -1,3 +1,4 @@
+#' @noRd
 parse_data <- function(path, reading_function, reading_options){
   reading_function %>%
     do.call(

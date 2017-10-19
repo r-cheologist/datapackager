@@ -2,8 +2,8 @@
 #' @aliases retrieve_missing_remote_data
 #' @description Convenience funtion to retrieve data files missing in the file
 #' system.
-#' @details Retrieves files listed in a \code{\link{data_catalogue}}, but not
-#' distributed with the package.
+#' @details Retrieves remote files listed in a \code{\link{data_catalogue}}, but
+#' not distributed with the package.
 #'
 #' An intended use case is e.g. the publication of a package that documents the
 #' analysis of a data set, where the raw data itself is subject to a separate
@@ -11,8 +11,8 @@
 #'
 #' Uses \code{\link{retrieve_remote_file}} after identifying data files/objects
 #' not present and proceeds to add the (compressed) files and objects
-#' analogously to \code{\link{include_data_file}}, using the parameters listed
-#' in \code{\link{data_catalogue}}.
+#' analogously to \code{\link{include_data}}, using the parameters listed in
+#' \code{\link{data_catalogue}}.
 #' @param root Single \code{\link{character}} representing the path of the
 #' directory in which the package infrastructure resides.
 #' @param user Single \code{\link{character}} object used for authentication
@@ -33,11 +33,11 @@
 #' pkg_root <- tempdir() %>%
 #'   file.path("packagetest")
 #'
-#' ## Create the infrastructure and add a remote file on the fly
-#' ## (from Billing et al. (2016). Comprehensive transcriptomic
-#' ## and proteomic characterization of human mesenchymal stem cells reveals
-#' ## source specific cellular markers. Sci Rep 6, 21507;
-#' ## Licensed under the Creative Commons Attribution 4.0 International License.
+#' ## Create the infrastructure and add a remote file (needing parsing) on the
+#' ## fly (from Billing et al. (2016). Comprehensive transcriptomic and
+#' ## proteomic characterization of human mesenchymal stem cells reveals source
+#' ## specific cellular markers. Sci Rep 6, 21507; Licensed under the Creative
+#' ## Commons Attribution 4.0 International License.
 #' ## http://creativecommons.org/licenses/by/4.0/)
 #' \donttest{
 #'   if(requireNamespace("readxl", quietly = TRUE))
@@ -98,157 +98,201 @@ retrieve_missing_remote_data <- function(
   root %>%
     assert_is_a_valid_package_root()
 
-  if(user %>%
-     is.null() %>%
-     magrittr::not())
+  if (!is.null(user))
   {
     user %>%
-      assertive.types::assert_is_character()
+      assertive.types::assert_is_a_string()
   }
 
-  if(password %>%
-     is.null() %>%
-     magrittr::not())
+  if (!is.null(password))
   {
     password %>%
-      assertive.types::assert_is_character()
+      assertive.types::assert_is_a_string()
   }
-
-  assertive.properties::assert_are_same_length(
-    user,
-    password)
 
 # Processing --------------------------------------------------------------
-  # Load the data catalogue
+## Load the data catalogue ----
   data_catalogue <- root %>%
+    file.path("data", "data_catalogue.rda") %>%
     load_data_file_as_object()
 
-  # Select only what's marked as being remote
-  subsetter <- data_catalogue %>%
+## Where's remote extdata expected but not present? ----
+  needs_retrieval_of_extdata <- data_catalogue %>%
     sapply(
       function(x){
-        x %>%
-          magrittr::extract2("File.Is.Remote") %>%
-          return()
+        with(x,
+             {
+               if (
+                 Data.Type %>%
+                 stringi::stri_detect_fixed(
+                   "url",
+                   negate = TRUE,
+                   opts_fixed = stringi::stri_opts_fixed(case_insensitive = TRUE)))
+               {
+                 return(FALSE)
+               }
+
+               make_extdata_path(root, Base.Name) %>%
+                 assertive.files::is_readable_file() %>%
+                 magrittr::not() %>%
+                 return()
+             })
       })
-  data_catalogue %<>%
-    magrittr::extract(subsetter)
 
-  # Select only what isn't present
-  raw_data_present <- data_catalogue %>%
+## Where's parsed data expected but not present? ----
+  needs_parsing_of_extdata <- data_catalogue %>%
     sapply(
-      function(x){
-        file.path(
-          root,
-          "inst",
-          "extdata",
-          x %>%
-            magrittr::extract2("File") %>%
-            paste0(".zip")) %>%
-          assertive.files::is_readable_file() %>%
-          return()
-      }) %>%
-    unname()
-  parsed_data_present <- data_catalogue %>%
-    sapply(
-      function(x){
-        file.path(
-          root,
-          "data",
-          x %>%
-            magrittr::extract2("File") %>%
-            paste0(".rda")) %>%
-          assertive.files::is_readable_file() %>%
-          return()
-      }) %>%
-    unname()
-  assertive.base::assert_are_identical(
-    raw_data_present,
-    parsed_data_present)
-  data_catalogue %<>%
-    magrittr::extract(
-      raw_data_present %>%
-        magrittr::not())
+      function(x)
+      {
+        with(x,
+             {
+               if (
+                 Data.Type %in% c("file", "url") %>%
+                 magrittr::not())
+               {
+                 return(FALSE)
+               }
 
-  if(user %>%
-      is.null() %>%
-      magrittr::not())
-  {
-    assertive.sets::is_subset(
-      user %>%
-        length(),
-      c(1,data_catalogue %>% length())
+               make_data_path(root, Base.Name) %>%
+                 assertive.files::is_readable_file() %>%
+                 magrittr::not() %>%
+                 return()
+             })
+      })
+
+## Where's data corresponding to remote serialized objects missing? ----
+  needs_saving_of_remote_data <- data_catalogue %>%
+    sapply(
+      function(x)
+      {
+        with(x,
+             {
+               if (
+                 Data.Type %>%
+                   stringi::stri_detect_fixed(
+                     pattern = "url_",
+                     negate = TRUE,
+                     opts_fixed = stringi::stri_opts_fixed(case_insensitive = TRUE)))
+               {
+                 return(FALSE)
+               }
+
+               make_data_path(root, Base.Name) %>%
+                 assertive.files::is_readable_file() %>%
+                 magrittr::not() %>%
+                 return()
+             })
+      }
     )
-  }
 
-  for (mei in (data_catalogue %>% seq_along()))
+## Fetch missing remote extdata & check for data integrity ----
+  for (entry in data_catalogue %>%
+       magrittr::extract(needs_retrieval_of_extdata))
   {
-    me <- data_catalogue %>%
-      magrittr::extract2(mei)
-    # Retrieve file & check integrity
-    tmp_path <- with(
-      me,
-      {
-        message(File)
-        tmp_path <- retrieve_remote_file(
-          url = Remote.Source,
-          user = user %>%
-            length() %>%
-            switch(
-              "0" = NULL,
-              "1" = user,
-              user[mei]),
-          password = password %>%
-            length() %>%
-            switch(
-              "0" = NULL,
-              "1" = password,
-              password[mei]),
-          ...)
-        assertive.base::assert_are_identical(
-          Hash.Uncompressed,
-          tmp_path %>%
-            digest::digest(
-              algo = Hashing.Algo,
-              file = TRUE))
-        tmp_path %>%
-          return()
-      })
-    # Parse file, check object integrity & save results
-    with(
-      me,
-      {
-        tmp_object <- parse_data(
-          path = tmp_path,
-          reading_function = File.Reading.Function,
-          reading_options = File.Reading.Options)
-        assertive.base::assert_are_identical(
-          Hash.Object,
-          tmp_object %>%
-            digest::digest(
-              algo = Hashing.Algo))
-        data_rename_and_writeout(
-          data_object = tmp_object,
-          file_name = File,
-          root = root,
-          compression_algo = Compression.Algo)
-      })
-    # Compress & save
-    ## Integrity checking not possible on compressed files, as zip includes
-    ## timestamps no matter what setting --> never matching to prior compression
-    with(
-      me,
-      {
-        save_zipfile(
-          uncomp_path = tmp_path,
-          root = root) %>%
-          digest::digest(
-            algo = Hashing.Algo,
-            file = TRUE)
-      })
+    with(entry,
+         {
+           tmp_path <- retrieve_remote_file(
+             url      = Full.Name,
+             user     = user,
+             password = password,
+             ...)
+
+           assertive.base::assert_are_identical(
+             digest::digest(
+               object = tmp_path,
+               algo   = Hashing.Algo,
+               file   = TRUE),
+             Hash.Uncompressed
+           )
+
+           save_zipfile(tmp_path, file.path(root,"inst", "extdata"))
+         })
   }
 
-  # Return TRUE if successful
+## Parse extdata with missing object representation & check for data integrity ----
+  for (entry in data_catalogue %>%
+       magrittr::extract(needs_parsing_of_extdata))
+  {
+    with(entry,
+         {
+           tmp_path <- retrieve_remote_file(
+             url      = Full.Name,
+             user     = user,
+             password = password,
+             ...)
+
+           tmp_object <- parse_data(
+             path             = tmp_path,
+             reading_function = Parsing.Function,
+             reading_options  = Parsing.Options)
+
+           assertive.base::assert_are_identical(
+             digest::digest(
+               object = tmp_object,
+               algo   = Hashing.Algo,
+               file   = FALSE),
+             Hash.Object)
+
+           data_rename_and_writeout(
+             data_object      = tmp_object,
+             file_name        = Base.Name,
+             root             = root,
+             compression_algo = Compression.Algo)
+         })
+  }
+
+## Retrieve missing remote data & test its integrity ----
+  for (entry in data_catalogue %>%
+       magrittr::extract(needs_saving_of_remote_data))
+  {
+    with(entry,
+         {
+           tmp_path <- retrieve_remote_file(
+             url      = Full.Name,
+             user     = user,
+             password = password,
+             ...)
+
+           if (stringi::stri_endswith_fixed(str = Data.Type, pattern =  "rds"))
+           {
+             tmp_object <- readRDS(tmp_path)
+           }
+
+           if (stringi::stri_endswith_fixed(str = Data.Type, pattern = "rda"))
+           {
+             tmp_env <- new.env()
+             tmp_path %>%
+               load(envir = tmp_env)
+             if (length(tmp_env) != 1)
+             {
+               warning(
+                 "Multiple objects contained in '",
+                 Full.Name,
+                 "'. Only the first one is extracted.")
+             }
+             tmp_object <- get(
+               tmp_env %>%
+                 names() %>%
+                 magrittr::extract2(1),
+               envir = tmp_env)
+           }
+
+           assertive.base::assert_are_identical(
+             digest::digest(
+               object = tmp_object,
+               algo   = Hashing.Algo,
+               file   = FALSE),
+             Hash.Object)
+
+           data_rename_and_writeout(
+             data_object      = tmp_object,
+             file_name        = Base.Name,
+             root             = root,
+             compression_algo = Compression.Algo)
+         })
+  }
+
+## Return TRUE if successful ----
   TRUE %>%
     invisible()
 }

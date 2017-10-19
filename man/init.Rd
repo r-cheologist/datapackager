@@ -5,14 +5,14 @@
 \title{init}
 \usage{
 init(root = getwd(), default_compression_algo = c("xz", "bzip2", "gzip"),
-  default_hashing_algo = c("sha512", "md5", "sha1", "crc32", "sha256",
-  "xxhash32", "xxhash64", "murmur32"), files_to_include = NULL,
-  use_rstudio = TRUE, description = NULL, ...)
+  default_hashing_algo = match_function_arg(arg = NULL, fun = digest::digest,
+  fun_arg_name = "algo", several.ok = FALSE, default = "sha512"),
+  objects_to_include = NULL, use_rstudio = TRUE, description = NULL, ...)
 }
 \arguments{
 \item{root}{Single \code{\link{character}} representing the path of the
 directory in which the package infrastructure is to reside. The directory
-must be nonexistent. \code{basename(root)} corresponds to the name of the
+cannot exist yet. \code{basename(root)} corresponds to the name of the
 package and must thus conform to \code{R}s package naming conventions.}
 
 \item{default_compression_algo}{Single \code{\link{character}} defining the
@@ -26,9 +26,8 @@ cryptographic hashing function used for integrity testing of objects/files
 via \code{\link[digest]{digest}} (see there for details). Defaulting to the
 strong \code{sha512} option.}
 
-\item{files_to_include}{\code{\link{character}} representing paths to data
-files included using \code{\link{include_data_file}} (may also be URLs; see
-\code{file_is_url} option of \code{\link{include_data_file}}).}
+\item{objects_to_include}{\code{\link{character}} representing paths to data
+files included using \code{\link{include_data}} (may also be URLs).}
 
 \item{use_rstudio}{Single \code{\link{logical}} handed to
 \code{\link[devtools]{create}} and indicating whether infrastructure used by
@@ -39,7 +38,7 @@ default values or add additional values (see \code{\link[devtools]{create}}
 for details). Setting this to \code{\link{NULL}} implies the defaults of the
 underlying function.}
 
-\item{...}{Paramters handed through to \code{\link{include_data_file}}. See
+\item{...}{Paramters handed through to \code{\link{include_data}}. See
 there for details}
 }
 \value{
@@ -70,7 +69,7 @@ In detail the function proceeds as follows:
     \code{default_hashing_algo} as \code{\link{attributes}}. This is the
     central component of the data/content tracking at the core of
     \pkg{datapackageR}. See \code{\link{data_catalogue}} for details.
-  \item If \code{files_to_include != NULL}, \code{\link{include_data_file}}
+  \item If \code{objects_to_include != NULL}, \code{\link{include_data}}
     is used to include the files given into the packaging structure.
   \item The \code{\link{data_catalogue}} (and it's documentation) are saved
     in the \code{root}-based structure.
@@ -78,12 +77,11 @@ In detail the function proceeds as follows:
     to enable automated (integrity)checking of the data packaged etc.
   \item \pkg{datapackageR} then adds further functions to the new,
     data-wrapping package, which enable e.g. retrieval of remote data etc.
-    without having \pkg{datapackageR} loaded - or even present.
   \item An \code{R} script documenting the \pkg{datapackageR} call used to
     generate the new package infrastructure is added to its
     \code{inst/scripts} directory.
-  \item Finally, packages required by the installed functionally (and
-    potentially by implied \code{\link{include_data_file}} usage).
+  \item Finally, packages are added to the \code{DESCRIPTION} file as
+    required (and potentially by implied \code{\link{include_data}} usage).
 }
 }
 \examples{
@@ -133,9 +131,9 @@ data.frame(
 ## Create the package infrastructure, including the dummy file
 init(
   root = pkg_root2,
-  files_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
-  file_reading_function = "read.csv",
-  file_reading_options = list(sep = "\\t", stringsAsFactors = FALSE))
+  objects_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
+  parsing_function = "read.csv",
+  parsing_options = list(sep = "\\t", stringsAsFactors = FALSE))
 
 ## (Crudely) investigate the result
 ### In the file system ...
@@ -158,7 +156,7 @@ unlink(pkg_root2, recursive = TRUE)
 }
 \seealso{
 \code{\link{save}}, \code{\link[digest]{digest}},
-\code{\link{include_data_file}}, \code{\link[devtools]{create}}
+\code{\link{include_data}}, \code{\link[devtools]{create}}
 }
 \author{
 Johannes Graumann

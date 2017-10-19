@@ -4,37 +4,46 @@
 \name{data_catalogue}
 \alias{data_catalogue}
 \title{data_catalogue}
-\format{\code{\link{list}} with entries named according to file names.
+\format{\code{\link{list}} with entries named according to data set names.
 \code{default_compression_algo} and \code{default_hashing_algo} are set as
 \code{\link{attributes}} and represent default values for the corresponding
 per-entry values below.
 Each entry is a \code{\link{list}} with the following fields:
 \describe{
-  \item{\code{File}:}{\code{\link{basename}}s of original data files as
-    \code{\link{character}} objects. Giving rise to objects of the same names
-    and are stored (zipped and with the corresponding extension) in the
-    \code{extdata} directory of the package.}
-  \item{\code{Hashing.Algo}:}{Cryptographic hashing algorithms as understood
-    by \code{\link[digest]{digest}} and represented by
-    \code{\link{character}} objects. Used to test data integrity (see below).}
-  \item{\code{Hash.Uncompressed} & \code{Hash.Compressed}:}{
+  \item{\code{Base.Name}:}{\code{\link{basename}}s of original data set as a
+    \code{\link{character}} object. Giving rise to objects of the same names
+    and are stored (zipped and with the corresponding extension if feasible
+    and so instructed ) in the \code{extdata} directory of the package.}
+  \item{\code{Data.Type}:}{Single \code{\link{character}} object indicating
+    the type of data characterized. See \code{\link{include_data}} for
+    details.}
+  \item{\code{Full.Name}:}{Sincle \code{\link{character}} object representing
+    the full name/URL of the data set included.}
+  \item{\code{Hashing.Algo}:}{Cryptographic hashing algorithm as understood
+    by \code{\link[digest]{digest}} and represented by a
+    \code{\link{character}} object. Used to test data integrity (see below).}
+  \item{\code{Compression.Algo}:}{Single \code{\link{character}} object
+    indicatingas data compression methodology as understood by
+    \code{\link{save}}}.
+  \item{\code{Hash.Uncompressed}, \code{Hash.Compressed} & \code{Hash.object}:}{
     \code{\link{character}} representations of cryptographic hashes of the
-    plain and zip-compressed version of integrated data files. Algorithm used
-    depends on \code{Hashing.Algo}.}
-  \item{\code{File.Reading.Function}:}{Name (\code{\link{character}}) of the
+    plainand zip-compressed version of integrated data files, as well as a
+    parsed version derived thereof. Algorithm used depends on
+    \code{Hashing.Algo}.}
+  \item{\code{Parsing.Function}:}{Name (\code{\link{character}}) of the
     \code{R} function used to produce the corresponding \code{R} object from
     its original data file.}
-  \item{\code{File.Reading.Options}:}{Options to \code{File.Reading.Function}
+  \item{\code{Parsing.Options}:}{Options to \code{Parsing.Function}
     stored as a \code{\link{list}}.}
-  \item{\code{File.Reading.Package.Dependencies}:}{Package dependencies
-    required by \code{File.Reading.Function}. Encoded as a
-    \code{\link{character}} vector.}
-  \item{\code{File.Git.Ignore}:}{\code{\link{logical}}, indicating whether
-    the file is to be listed in \file{.gitignore} of the top package
+  \item{\code{Package.Dependencies}:}{Package dependencies required by
+    \code{Parsing.Function} or to deal with an integrated data object.
+    Encoded as a \code{\link{character}} vector.}
+  \item{\code{Git.Ignore}:}{\code{\link{logical}}, indicating whether
+    files are to be listed in \file{.gitignore} of the top package
     directory. This option is intended for tracking analysis of
     non-distibutable data sets.}
-  \item{\code{File.R.Buildgnore}:}{\code{\link{logical}}, indicating whether
-    the file is to be listed in \file{.Rbuildignore} of the top package
+  \item{\code{R.Buildgnore}:}{\code{\link{logical}}, indicating whether
+    files are to be listed in \file{.Rbuildignore} of the top package
     directory. This option is intended for tracking analysis of
     non-distibutable data sets.}}}
 \description{

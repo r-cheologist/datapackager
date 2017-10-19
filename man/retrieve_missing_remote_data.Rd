@@ -28,8 +28,8 @@ Convenience funtion to retrieve data files missing in the file
 system.
 }
 \details{
-Retrieves files listed in a \code{\link{data_catalogue}}, but not
-distributed with the package.
+Retrieves remote files listed in a \code{\link{data_catalogue}}, but
+not distributed with the package.
 
 An intended use case is e.g. the publication of a package that documents the
 analysis of a data set, where the raw data itself is subject to a separate
@@ -37,8 +37,8 @@ data sharing agreement.
 
 Uses \code{\link{retrieve_remote_file}} after identifying data files/objects
 not present and proceeds to add the (compressed) files and objects
-analogously to \code{\link{include_data_file}}, using the parameters listed
-in \code{\link{data_catalogue}}.
+analogously to \code{\link{include_data}}, using the parameters listed in
+\code{\link{data_catalogue}}.
 }
 \examples{
 # Load tools
@@ -49,11 +49,11 @@ library(magrittr)
 pkg_root <- tempdir() \%>\%
   file.path("packagetest")
 
-## Create the infrastructure and add a remote file on the fly
-## (from Billing et al. (2016). Comprehensive transcriptomic
-## and proteomic characterization of human mesenchymal stem cells reveals
-## source specific cellular markers. Sci Rep 6, 21507;
-## Licensed under the Creative Commons Attribution 4.0 International License.
+## Create the infrastructure and add a remote file (needing parsing) on the
+## fly (from Billing et al. (2016). Comprehensive transcriptomic and
+## proteomic characterization of human mesenchymal stem cells reveals source
+## specific cellular markers. Sci Rep 6, 21507; Licensed under the Creative
+## Commons Attribution 4.0 International License.
 ## http://creativecommons.org/licenses/by/4.0/)
 \donttest{
   if(requireNamespace("readxl", quietly = TRUE))

@@ -1,11 +1,10 @@
-save_zipfile <- function(uncomp_path,root){
-  target_path <- file.path(
-    root,
-    "inst",
-    "extdata",
-    uncomp_path %>%
-      basename() %>%
-      paste0(".zip"))
+#' @noRd
+save_zipfile <- function(uncomp_path,target_dir){
+  target_path <- target_dir %>%
+    file.path(
+      uncomp_path %>%
+        basename() %>%
+        paste0(".zip"))
   utils::zip(
     zipfile = target_path,
     files = uncomp_path,

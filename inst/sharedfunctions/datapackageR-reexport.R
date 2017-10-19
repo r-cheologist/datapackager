@@ -16,18 +16,18 @@ NULL
 
 #' datapackageR data inclusion function
 #'
-#' See \code{\link[datapackageR]{include_data_file}}.
-#' @name include_data_file
-#' @importFrom datapackageR include_data_file
-#' @export include_data_file
+#' See \code{\link[datapackageR]{include_data}}.
+#' @name include_data
+#' @importFrom datapackageR include_data
+#' @export include_data
 NULL
 
 #' datapackageR data removal function
 #'
-#' See \code{\link[datapackageR]{remove_data_file}}.
-#' @name remove_data_file
-#' @importFrom datapackageR remove_data_file
-#' @export remove_data_file
+#' See \code{\link[datapackageR]{remove_data}}.
+#' @name remove_data
+#' @importFrom datapackageR remove_data
+#' @export remove_data
 NULL
 
 #' datapackageR function for the retrieval of data in the catalogue but not on disk
