@@ -67,4 +67,8 @@ retrieve_missing_remote_data(package_root)
 # Run tests
 devtools::install(pkg = package_root)
 devtools::test(pkg = package_root)
+
+# Clean upo
 remove.packages(package_root %>% basename())
+unlink(package_root, recursive = TRUE)
+
