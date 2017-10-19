@@ -52,22 +52,22 @@ test_data_integrity <- function(
              {
                warning(
                  "Catalogue entry '",
-                 entry,
+                 Base.Name,
                  "' possibly separately distributed and not present. Conisder fetching with 'retreive_missing_remote_data'.")
              } else {
 ### Test integrity of compressed 'extdata' ----
                # zip includes timestamps no matter what settings - files zipped at
                # different times will never have identical hashes
-               testthat::test_that(
-                 paste0("'", Base.Name, "' in its compressed form matches the checksum."),
-                 {
-                   testthat::expect_identical(
-                     digest::digest(
-                       object = ext_data_path,
-                       algo   = Hashing.Algo,
-                       file   = TRUE),
-                     Hash.Compressed)
-                 })
+               # testthat::test_that(
+               #   paste0("'", Base.Name, "' in its compressed form matches the checksum."),
+               #   {
+               #     testthat::expect_identical(
+               #       digest::digest(
+               #         object = ext_data_path,
+               #         algo   = Hashing.Algo,
+               #         file   = TRUE),
+               #       Hash.Compressed)
+               #   })
 
 ### Test integrity of extracted 'extdata' ----
                unzip_target_dir <- tempdir()
