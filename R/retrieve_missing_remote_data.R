@@ -187,7 +187,7 @@ retrieve_missing_remote_data <- function(
 
 ## Fetch missing remote extdata & check for data integrity ----
   for (entry in data_catalogue %>%
-       magrittr::extract2(needs_retrieval_of_extdata))
+       magrittr::extract(needs_retrieval_of_extdata))
   {
     with(entry,
          {
@@ -211,14 +211,20 @@ retrieve_missing_remote_data <- function(
 
 ## Parse extdata with missing object representation & check for data integrity ----
   for (entry in data_catalogue %>%
-       magrittr::extract2(needs_parsing_of_extdata))
+       magrittr::extract(needs_parsing_of_extdata))
   {
     with(entry,
          {
+           tmp_path <- retrieve_remote_file(
+             url      = Full.Name,
+             user     = user,
+             password = password,
+             ...)
+
            tmp_object <- parse_data(
-             path             = make_extdata_path(root, Base.Name),
-             reading_function = Reading.Function,
-             reading_options  = Reading.Options)
+             path             = tmp_path,
+             reading_function = Parsing.Function,
+             reading_options  = Parsing.Options)
 
            assertive.base::assert_are_identical(
              digest::digest(
@@ -237,7 +243,7 @@ retrieve_missing_remote_data <- function(
 
 ## Retrieve missing remote data & test its integrity ----
   for (entry in data_catalogue %>%
-       magrittr::extract2(needs_saving_of_remote_data))
+       magrittr::extract(needs_saving_of_remote_data))
   {
     with(entry,
          {
