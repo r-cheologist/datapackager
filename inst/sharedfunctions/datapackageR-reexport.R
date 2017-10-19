@@ -18,8 +18,8 @@ NULL
 #'
 #' See \code{\link[datapackageR]{include_data}}.
 #' @name include_data
-#' @importFrom datapackageR include_data_file
-#' @export include_data_file
+#' @importFrom datapackageR include_data
+#' @export include_data
 NULL
 
 #' datapackageR data removal function

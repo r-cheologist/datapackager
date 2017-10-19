@@ -53,9 +53,9 @@ write.table(
 ## Create the package infrastructure, including the dummy file
 init(
   root = pkg_root,
-  files_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
-  file_reading_function = "read.csv",
-  file_reading_options = list(sep = "\\t", stringsAsFactors = FALSE))
+  objects_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
+  parsing_function = "read.csv",
+  parsing_options = list(sep = "\\t", stringsAsFactors = FALSE))
 
 # Install the resulting package
 devtools::install(pkg_root)
