@@ -21,19 +21,19 @@
 #'     \code{\link{character}} representations of cryptographic hashes of the
 #'     plain and zip-compressed version of integrated data files. Algorithm used
 #'     depends on \code{Hashing.Algo}.}
-#'   \item{\code{File.Reading.Function}:}{Name (\code{\link{character}}) of the
+#'   \item{\code{Parsing,Function}:}{Name (\code{\link{character}}) of the
 #'     \code{R} function used to produce the corresponding \code{R} object from
 #'     its original data file.}
-#'   \item{\code{File.Reading.Options}:}{Options to \code{File.Reading.Function}
+#'   \item{\code{Parsing.Options}:}{Options to \code{File.Reading.Function}
 #'     stored as a \code{\link{list}}.}
-#'   \item{\code{File.Reading.Package.Dependencies}:}{Package dependencies
-#'     required by \code{File.Reading.Function}. Encoded as a
+#'   \item{\code{Package.Dependencies}:}{Package dependencies
+#'     required by \code{Parsing.Function}. Encoded as a
 #'     \code{\link{character}} vector.}
-#'   \item{\code{File.Git.Ignore}:}{\code{\link{logical}}, indicating whether
+#'   \item{\code{Git.Ignore}:}{\code{\link{logical}}, indicating whether
 #'     the file is to be listed in \file{.gitignore} of the top package
 #'     directory. This option is intended for tracking analysis of
 #'     non-distibutable data sets.}
-#'   \item{\code{File.R.Buildgnore}:}{\code{\link{logical}}, indicating whether
+#'   \item{\code{R.Buildgnore}:}{\code{\link{logical}}, indicating whether
 #'     the file is to be listed in \file{.Rbuildignore} of the top package
 #'     directory. This option is intended for tracking analysis of
 #'     non-distibutable data sets.}}
