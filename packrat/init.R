@@ -90,7 +90,7 @@ local({
       ## packrat installed in the user library to bootstrap
       if (requireNamespace("packrat", quietly = TRUE) && packageVersion("packrat") >= "0.2.0.99") {
         message("> Using user-library packrat (",
-                utils::packageVersion("packrat"),
+                packageVersion("packrat"),
                 ") to bootstrap this project")
       }
 
