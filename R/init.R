@@ -154,7 +154,7 @@ init <- function(
 
   data_catalogue_file <- root %>%
     file.path("data", "data_catalogue.rda")
-  if(data_catalogue_file %>%
+  if (data_catalogue_file %>%
      file.exists())
   {
     stop(
@@ -176,7 +176,7 @@ init <- function(
       several.ok = FALSE,
       default = "sha5121")
 
-  if(
+  if (
     objects_to_include %>%
       is.null() %>%
       magrittr::not())
@@ -188,7 +188,7 @@ init <- function(
   use_rstudio %>%
     assertive.types::assert_is_a_bool()
 
-  if(
+  if (
     description %>%
       is.null() %>%
       magrittr::not())
@@ -199,7 +199,7 @@ init <- function(
 
 # Processing --------------------------------------------------------------
   # Create infrastructure
-  if(
+  if (
     description %>%
     is.null())
   {
@@ -234,7 +234,7 @@ init <- function(
     is.null() %>%
     magrittr::not())
   {
-    for(i in objects_to_include)
+    for (i in objects_to_include)
     {
       ## Include the files into the infrastructure
       data_catalogue <- i %>%
@@ -312,10 +312,11 @@ init <- function(
       function(x){
         system.file(
           file.path("sharedfunctions",x),
-          package="datapackageR",
+          package  = "datapackageR",
           mustWork = TRUE)
       })
-  for(sf in script_files){
+  for (sf in script_files)
+  {
     file.copy(
     sf,
     root %>%
