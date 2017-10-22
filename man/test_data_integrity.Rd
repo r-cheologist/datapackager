@@ -4,11 +4,14 @@
 \alias{test_data_integrity}
 \title{test_data_integrity}
 \usage{
-test_data_integrity(package_name = NULL)
+test_data_integrity(package_name = NULL, lib_loc = .libPaths())
 }
 \arguments{
 \item{package_name}{Single \code{\link{character}} object, providing the name
 of the package for which data integrity is to be tested.}
+
+\item{lib_loc}{A \code{\link{character}} \code{\link{vector}} with path names
+of R libraries.}
 }
 \description{
 Uses information in the \code{\link{data_catalogue}} to check the

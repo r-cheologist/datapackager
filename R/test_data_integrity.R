@@ -7,10 +7,13 @@
 #' stored in \code{\link{data_catalogue}}.
 #' @param package_name Single \code{\link{character}} object, providing the name
 #' of the package for which data integrity is to be tested.
+#' @param lib_loc A \code{\link{character}} \code{\link{vector}} with path names
+#' of R libraries.
 #' @author Johannes Graumann
 #' @export
 test_data_integrity <- function(
-  package_name = NULL
+  package_name = NULL,
+  lib_loc = .libPaths()
 ){
 
 # Check prerequisites -----------------------------------------------------
@@ -47,6 +50,7 @@ test_data_integrity <- function(
                  Base.Name) %>%
                  paste0(".zip"),
                package = package_name,
+               lib.loc = lib_loc,
                mustWork = FALSE)
              if (identical(ext_data_path, ""))
              {
