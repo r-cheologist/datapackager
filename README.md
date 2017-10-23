@@ -9,6 +9,10 @@ in detail) is well suited for this integration and the representation of a
 package tracking input data and its analysis parallely in the file system might
 look something like this:
 
+- analysis.of.x.2017 (top level directory)
+    - DESCRIPTION ([standardized](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file)
+	  file containing basic information about the package)
+
 `datapackageR`
 ### What is this repository for? ###
 
