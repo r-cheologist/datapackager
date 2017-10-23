@@ -41,7 +41,7 @@ e.g. include a manuscript when using [`rmarkdown`](https://cran.r-project.org/we
 and/or [`bookdown`](https://cran.r-project.org/web/packages/bookdown)
 (e.g. in `inst/mansucript/manuscript.Rmd`).
 
-Two major challenges when using `R`'s packaging infrastructure in this manner are
+When using `R`'s packaging infrastructure in this manner, two major challenges are
 
 1. The complexity of establishing the project-specific infrastructure and
 
@@ -56,10 +56,10 @@ Two major challenges when using `R`'s packaging infrastructure in this manner ar
 
 Building heavily on the toolkit provided by the excellent
 [`devtools`](https://cran.r-project.org/web/packages/devtools) package, `datapackageR`
-aims to aleviate these difficulties and provides a simple toolkit for the management
+aims to aleviate these difficulties and provides a simple interface for the management
 of raw data and deriving objects within the packaging infrastructure, emphasizing
 cryptographically strong data integrity assurance (using
-[digest](https://cran.r-project.org/web/packages/digest))and mechanisms for separate
+[digest](https://cran.r-project.org/web/packages/digest)) and mechanisms for separate
 distribution of data and analyzing code.
 
 ### What is this repository for? ###
