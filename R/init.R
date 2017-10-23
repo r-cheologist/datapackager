@@ -60,7 +60,8 @@
 #' underlying function.
 #' @param ... Paramters handed through to \code{\link{include_data}}. See
 #' there for details
-#' @return Returns \code{\link{TRUE}} via \code{\link{invisible}}.
+#' @return Returns the resulting \code{\link{data_catalogue}} via
+#' \code{\link{invisible}}.
 #' @author Johannes Graumann
 #' @seealso \code{\link{save}}, \code{\link[digest]{digest}},
 #' \code{\link{include_data}}, \code{\link[devtools]{create}}
@@ -74,7 +75,7 @@
 #'   file.path("packagetest")
 #'
 #' ## Create the infrastructure
-#' init(
+#' data_catalogue <- init(
 #'   root = pkg_root)
 #'
 #' ## (Crudely) investigate the result
@@ -85,11 +86,7 @@
 #'     recursive  = TRUE)
 #'
 #' ### The data catalogue ...
-#' tmp_env <- new.env()
-#' pkg_root %>%
-#'   file.path("data/data_catalogue.rda") %>%
-#'   load(envir = tmp_env)
-#' tmp_env$data_catalogue %>%
+#' data_catalogue %>%
 #'   str()
 #'
 #' # A more complex example with immediate data inclusion
@@ -109,7 +106,7 @@
 #'     row.names = FALSE)
 #'
 #' ## Create the package infrastructure, including the dummy file
-#' init(
+#' data_catalogue <- init(
 #'   root = pkg_root2,
 #'   objects_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
 #'   parsing_function = "read.csv",
@@ -123,11 +120,7 @@
 #'     recursive  = TRUE)
 #'
 #' ### The data catalogue ...
-#' tmp_env <- new.env()
-#' pkg_root2 %>%
-#'   file.path("data/data_catalogue.rda") %>%
-#'   load(envir = tmp_env)
-#' tmp_env$data_catalogue %>%
+#' data_catalogue %>%
 #'   str()
 #'
 #' # Clean up the package roots - ensure proper example testing by R CMD check
@@ -379,7 +372,7 @@ init <- function(
 # Todo --------------------------------------------------------------------
 
 # Provide silent return value ---------------------------------------------
-  TRUE %>%
+  data_catalogue %>%
     invisible()
 }
 
