@@ -32,9 +32,9 @@ package tracking input data and its analysis parallely might
 			- ...
 
 After building and loading, such a package makes readily available from within `R`
-raw data (`inst/extdata/raw_data.csv.zip`), its parsed, immediately `R`-accessible
+a) raw data (`inst/extdata/raw_data.csv.zip`), b) its parsed, immediately `R`-accessible
 counterpart (`data/raw_data.Rda`, respectively a `raw_data` object),
-generalizable custom `R` functionality (`R/...`), as well as work flow
+c) generalizable custom `R` functionality (`R/...`), as well as d) work flow
 documentation (`inst/scripts/...`) in a neat, integrated and easily
 distributed unit. The structure is easily extended and further customized to
 e.g. include a manuscript when using [`rmarkdown`](https://cran.r-project.org/web/packages/rmarkdown)
