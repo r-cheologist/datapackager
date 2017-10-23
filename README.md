@@ -222,12 +222,12 @@ installation procedure should be followed:
 4. Simulate a package infrastructure shared **without** the remote &
    authentication-protected data
    
-    list.files(
-        pkg_root,
-        recursive  = TRUE,
-        pattern    = "^data[[:punct:]]remote",
-        full.names = TRUE) %>%
-      unlink()
+        list.files(
+            pkg_root,
+            recursive  = TRUE,
+            pattern    = "^data[[:punct:]]remote",
+            full.names = TRUE) %>%
+          unlink()
 
     - (Crudely) investigate the result in the file system
    
@@ -235,16 +235,16 @@ installation procedure should be followed:
 
 5. Use `datapackageR` for attempted retreival of the missing data
 
-    retrieve_missing_remote_data(pkg_root)
-    # --> Can't access URL: Client error: (401) Unauthorized
+        retrieve_missing_remote_data(pkg_root)
+        # --> Can't access URL: Client error: (401) Unauthorized
 
 6. Repeat and properly authenticate (& implicitly check downloads against the
    stored hashes)
    
-    retrieve_missing_remote_data(
-      pkg_root,
-      user              = "datapackageR_user",
-      password          = "datapackageR_user")
+        retrieve_missing_remote_data(
+          pkg_root,
+          user     = "datapackageR_user",
+          password = "datapackageR_user")
     
     - (Crudely) investigate the result in the file system
    
