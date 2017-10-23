@@ -146,7 +146,6 @@ procedure should be followed:
         data_catalogue <- include_data(
           object_to_include = "https://bitbucket.org/graumannlabtools/datapackager/downloads/remote_rds.Rds",
           root              = pkg_root)
-
 		  
     - Investigate the resulting `data_catalogue`
    
@@ -156,9 +155,28 @@ procedure should be followed:
 	
             list.files(pkg_root, recursive = TRUE)
 
+9. Remove one of the tracked data sets
 
-# Clean up the package root - ensure proper example testing by R CMD check
-unlink(pkg_root, recursive = TRUE)
+        data_catalogue <- remove_data(
+          object_to_remove = "data_dummy.tsv",
+          root             = pkg_root)
+		  
+    - Investigate the resulting `data_catalogue`
+   
+            str(data_catalogue)
+		
+    - (Crudely) investigate the result in the file system
+	
+            list.files(pkg_root, recursive = TRUE)
+
+10. (Remotely) install the result & use the internal functionality to test data integrity
+        
+        devtools::install(pkg_root)
+        devtools::test(pkg_root)
+
+11. Clean up the example package root
+
+        unlink(pkg_root, recursive = TRUE)
 	  
 ### Exemplary use case "seperately distributed data"
 * Summary of set up
