@@ -80,14 +80,20 @@ procedure should be followed:
 	
 2. Define a temporary working directory & packaging root
 
-        pkg_root <- tempdir() %>% file.path("packagetest")
+        pkg_root <- tempdir() %>%
+		  file.path("packagetest")
 	  
 3. Generate a (dummy) data file
 
-        data.frame(x   = 1, y   = 1:10, fac = sample(LETTERS[1:3], 10, replace = TRUE)) %>%
+        data.frame(
+		    x   = 1,
+			y   = 1:10,
+			fac = sample(LETTERS[1:3], 10, replace = TRUE)) %>%
           write.table(
             file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
-	        sep       = "\t", col.names = TRUE, row.names = FALSE)
+	        sep       = "\t",
+			col.names = TRUE,
+			row.names = FALSE)
 
 4. Create the packaging skeleton, at the same time inserting the dummy data file from above:
 
@@ -100,11 +106,11 @@ procedure should be followed:
 		  
     1. Investigate the resulting `data_catalogue`
    
-        str(data_catalogue)
+           str(data_catalogue)
 		
     2. (Crudely) investigate the result in the file system
    
-        list.files(pkg_root, recursive = TRUE)
+           list.files(pkg_root, recursive = TRUE)
 	  
 ### Exemplary use case "seperately distributed data"
 * Summary of set up
