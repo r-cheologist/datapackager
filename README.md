@@ -22,9 +22,9 @@ package tracking input data and its analysis parallely might
 	- `data` (directory containing `R` objects saved using `save(...)` and
 	  [lazy loaded](https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Lazy-loading) on attaching the resulting package)
 	    - `raw_data.Rda`
-	- `inst` (directory holding other material *inst*alled into `R`s infrastructure
+	- `inst` (directory holding other material **inst**alled into `R`s infrastructure
 	  along with the package)
-	    - `extdata` (directory holding compressed *ext*ernal raw *data*)
+	    - `extdata` (directory holding compressed **ext**ernal raw **data**)
 		    - `raw_data.csv.zip`
 	    - `scripts` (directory holding work flow-documenting scripts)
 		    - `00_Script_Documenting_Data_Import.R`
