@@ -76,6 +76,7 @@ procedure should be followed:
 
         library(datapackageR)
 	    library(magrittr)
+		library(readxl)
 	    requireNamespace("devtools")
 	
 2. Define a temporary working directory & packaging root
@@ -111,6 +112,53 @@ procedure should be followed:
     - (Crudely) investigate the result in the file system
    
             list.files(pkg_root, recursive = TRUE)
+
+5. Add a remote file that needs parsing (from Billing et al. (2016). *Comprehensive transcriptomic
+   and proteomic characterization of human mesenchymal stem cells reveals source specific cellular markers.*
+   Sci Rep *6*, 21507. Licensed under the 
+   [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
+   **Note that the file is excluded from built packages (via `.rBuildignore`) and wouldn't be tracked by
+   [`git`](https://git-scm.com/) (using `.gitignore`).**
+   
+        data_catalogue <- include_data(
+          object_to_include    = "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls",
+		  root                 = pkg_root,
+          parsing_function     = "read_excel",
+          parsing_options      = list(skip = 1),
+          package_dependencies = "readxl",
+          distributable        = FALSE)
+
+6. Add a local object
+
+        local_data_object <-list(A = LETTERS, B = letters)
+        data_catalogue <- include_data(
+          object_to_include = "local_data_object",
+          root              = pkg_root)
+
+7. Add a remote *.Rda
+
+        data_catalogue <- include_data(
+          object_to_include = "https://bitbucket.org"/graumannlabtools/datapackager/downloads/remote_rda.Rda",
+          root              = pkg_root)
+
+8. Add a remote *.Rds
+
+        data_catalogue <- include_data(
+          object_to_include = "https://bitbucket.org/graumannlabtools/datapackager/downloads/remote_rds.Rds",
+          root              = pkg_root)
+
+		  
+    - Investigate the resulting `data_catalogue`
+   
+            str(data_catalogue)
+		
+    - (Crudely) investigate the result in the file system
+	
+            list.files(pkg_root, recursive = TRUE)
+
+
+# Clean up the package root - ensure proper example testing by R CMD check
+unlink(pkg_root, recursive = TRUE)
 	  
 ### Exemplary use case "seperately distributed data"
 * Summary of set up
