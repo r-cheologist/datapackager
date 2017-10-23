@@ -37,8 +37,9 @@ counterpart (`data/raw_data.Rda`, respectively a `raw_data` object),
 generalizable custom `R` functionality (`R/...`), as well as work flow
 documentation (`inst/scripts/...`) in a neat, integrated and easily
 distributed unit. The structure is easily extended and further customized to
-e.g. include a manuscript when using [`rmarkdown`](https://rmarkdown.rstudio.com)
-and/or [`bookdown`](https://bookdown.org) (e.g. in `inst/mansucript/manuscript.Rmd`).
+e.g. include a manuscript when using [`rmarkdown`](https://cran.r-project.org/web/packages/rmarkdown)
+and/or [`bookdown`](https://cran.r-project.org/web/packages/bookdown)
+(e.g. in `inst/mansucript/manuscript.Rmd`).
 
 Two major challenges when using `R`'s packaging infrastructure in this manner are
 
@@ -53,7 +54,14 @@ Two major challenges when using `R`'s packaging infrastructure in this manner ar
        peer review of analytical methodology and strategies employed. 
 
 
-`datapackageR`
+Building heavily on the toolkit provided by the excellent
+[`devtools`](https://cran.r-project.org/web/packages/devtools) package, `datapackageR`
+aims to aleviate these difficulties and provides a simple toolkit for the management
+of raw data and deriving objects within the packaging infrastructure, emphasizing
+cryptographically strong data integrity assurance (using
+[digest](https://cran.r-project.org/web/packages/digest))and mechanisms for separate
+distribution of data and analyzing code.
+
 ### What is this repository for? ###
 
 * Quick summary
