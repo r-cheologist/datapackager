@@ -72,22 +72,28 @@ procedure should be followed:
 
 ## Example usage
 ### Comprehensive presentation of functionality
+* Green
+
+    Try this code:
+
+        This is an embedded code block.
+
 1. Load the required tools
 
-       library(datapackageR)
-	   library(magrittr)
-	   requireNamespace("devtools")
+        library(datapackageR)
+	    library(magrittr)
+	    requireNamespace("devtools")
 	
 2. Define a temporary working directory & packaging root
 
-       pkg_root <- tempdir() %>% file.path("packagetest")
+        pkg_root <- tempdir() %>% file.path("packagetest")
 	  
 3. Generate a (dummy) data file
 
-       data.frame(x   = 1, y   = 1:10, fac = sample(LETTERS[1:3], 10, replace = TRUE)) %>%
-         write.table(
-           file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
-	       sep       = "\t", col.names = TRUE, row.names = FALSE)
+        data.frame(x   = 1, y   = 1:10, fac = sample(LETTERS[1:3], 10, replace = TRUE)) %>%
+          write.table(
+            file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
+	        sep       = "\t", col.names = TRUE, row.names = FALSE)
 	  
 ### Exemplary use case "seperately distributed data"
 * Summary of set up
