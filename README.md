@@ -62,13 +62,14 @@ cryptographically strong data integrity assurance (using
 [digest](https://cran.r-project.org/web/packages/digest)) and mechanisms for separate
 distribution of data and analyzing code.
 
-### What is this repository for? ###
+## How to get `datapackageR` set up?
+`datapackageR` is targeted to eventually be released on [CRAN](https://cran.r-project.org),
+but until that happens and for the latest features and fixes, the following installation
+procedure should be followed:
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+    install.packages(devtools)
+	devtools::install_bitbucket("graumannlabtools/datapackageR"
 
-### How do I get set up? ###
 
 * Summary of set up
 * Configuration
