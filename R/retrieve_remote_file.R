@@ -72,22 +72,28 @@ retrieve_remote_file <- function(
 
 # Processing --------------------------------------------------------------
   # Make the request
-  if(user %>%
+  if (user %>%
      is.null())
   {
     httr_get <- url %>%
       httr::GET()
+
   } else {
     httr_get <- url %>%
       httr::GET(
         httr::authenticate(
-          user = user,
+          user     = user,
           password = password,
           ...))
   }
 
+  # Deal with redirects
+  httr_get %<>%
+    magrittr::extract2("url") %>%
+    httr::GET()
+
   # Check for errors
-  if( httr_get %>%
+  if ( httr_get %>%
       httr::http_error())
   {
     httr_status <- httr_get %>%
