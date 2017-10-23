@@ -185,6 +185,8 @@ installation procedure should be followed:
 ### Exemplary use case "seperately distributed data"
 1. Create an empty packaging skeleton:
 
+        pkg_root <- tempdir() %>%
+          file.path("packagetest")
         data_catalogue <- init(
           root = pkg_root)
 
