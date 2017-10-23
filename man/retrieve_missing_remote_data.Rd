@@ -59,7 +59,7 @@ pkg_root <- tempdir() \%>\%
   if(requireNamespace("readxl", quietly = TRUE))
   {
     require(readxl)
-    init(
+    data_catalogue <- init(
       root = pkg_root,
       files_to_include = paste0(
         c("http://www.nature.com/article-assets/npg/srep",
@@ -72,12 +72,8 @@ pkg_root <- tempdir() \%>\%
       file_distributable = FALSE)
 
     # Investigate the data catalogue
-    tmp_env <- new.env()
-    pkg_root \%>\%
-      file.path("data","data_catalogue.rda") \%>\%
-      load(envir = tmp_env)
-    tmp_env$data_catalogue \%>\%
-    str()
+    data_catalogue \%>\%
+      str()
 
     # Investigate derived objects in the file system
     (tmp_files <- pkg_root \%>\%

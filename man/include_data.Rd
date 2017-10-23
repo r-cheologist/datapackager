@@ -165,15 +165,11 @@ pkg_root <- tempdir() \%>\%
   file.path("packagetest")
 
 ## Create the infrastructure
-init(
+data_catalogue <- init(
   root = pkg_root)
 
 ## Investigate the data catalogue
-tmp_env <- new.env()
-pkg_root \%>\%
-  file.path("data/data_catalogue.rda") \%>\%
-  load(envir = tmp_env)
-tmp_env$data_catalogue \%>\%
+data_catalogue \%>\%
   str()
 
 # Add a local data file

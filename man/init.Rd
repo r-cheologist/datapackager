@@ -42,7 +42,8 @@ underlying function.}
 there for details}
 }
 \value{
-Returns \code{\link{TRUE}} via \code{\link{invisible}}.
+Returns the resulting \code{\link{data_catalogue}} via
+\code{\link{invisible}}.
 }
 \description{
 Generating the \code{R} package infrastructure used by
@@ -94,7 +95,7 @@ pkg_root <- tempdir() \%>\%
   file.path("packagetest")
 
 ## Create the infrastructure
-init(
+data_catalogue <- init(
   root = pkg_root)
 
 ## (Crudely) investigate the result
@@ -105,11 +106,7 @@ pkg_root \%>\%
     recursive  = TRUE)
 
 ### The data catalogue ...
-tmp_env <- new.env()
-pkg_root \%>\%
-  file.path("data/data_catalogue.rda") \%>\%
-  load(envir = tmp_env)
-tmp_env$data_catalogue \%>\%
+data_catalogue \%>\%
   str()
 
 # A more complex example with immediate data inclusion
@@ -129,7 +126,7 @@ data.frame(
     row.names = FALSE)
 
 ## Create the package infrastructure, including the dummy file
-init(
+data_catalogue <- init(
   root = pkg_root2,
   objects_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
   parsing_function = "read.csv",
@@ -143,11 +140,7 @@ pkg_root2 \%>\%
     recursive  = TRUE)
 
 ### The data catalogue ...
-tmp_env <- new.env()
-pkg_root2 \%>\%
-  file.path("data/data_catalogue.rda") \%>\%
-  load(envir = tmp_env)
-tmp_env$data_catalogue \%>\%
+data_catalogue \%>\%
   str()
 
 # Clean up the package roots - ensure proper example testing by R CMD check
