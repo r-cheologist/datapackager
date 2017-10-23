@@ -98,11 +98,11 @@ procedure should be followed:
           parsing_function   = "read.csv",
           parsing_options    = list(sep = "\t", stringsAsFactors = FALSE)))
 		  
-   1. Investigate the resulting `data_catalogue`
+    1. Investigate the resulting `data_catalogue`
    
         str(data_catalogue)
 		
-   2. (Crudely) investigate the result in the file system
+    2. (Crudely) investigate the result in the file system
    
         list.files(pkg_root, recursive = TRUE)
 	  
