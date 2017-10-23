@@ -31,8 +31,8 @@ package tracking input data and its analysis parallely might
 			- `01_Script_Documenting_Exploratory_Preliminary_Analysis.R`
 			- ...
 
-After building and loading, such a package makes readily available raw data
-(`inst/extdata/raw_data.csv.zip`), its parsed, immediately `R`-accessible
+After building and loading, such a package makes readily available from within `R`
+raw data (`inst/extdata/raw_data.csv.zip`), its parsed, immediately `R`-accessible
 counterpart (`data/raw_data.Rda`, respectively a `raw_data` object),
 generalizable custom `R` functionality (`R/...`), as well as work flow
 documentation (`inst/scripts/...`) in a neat, integrated and easily
@@ -46,11 +46,11 @@ Two major challenges when using `R`'s packaging infrastructure in this manner ar
 
 2. Obstacles in distributing the data at the basis of the documented project, which
    may, among other issues, be rooted in
-   a. Size restrictions of shipped data in a targeted package repository
-      ([CRAN](https://cran.r-project.org), for example, as of 23.10.2017 states "...
-	  As a general rule, neither data nor documentation should exceed 5MB.").
-   b. The need to enforce data onwnership/licensing in the context of freely providing
-      peer review of analytical methodology and strategies employed. 
+    a. Size restrictions of shipped data in a targeted package repository
+       ([CRAN](https://cran.r-project.org), for example, as of 23.10.2017 states "...
+	   As a general rule, neither data nor documentation should exceed 5MB.").
+    b. The need to enforce data onwnership/licensing in the context of freely providing
+       peer review of analytical methodology and strategies employed. 
 
 
 `datapackageR`
