@@ -72,12 +72,6 @@ procedure should be followed:
 
 ## Example usage
 ### Comprehensive presentation of functionality
-* Green
-
-    Try this code:
-
-        This is an embedded code block.
-
 1. Load the required tools
 
         library(datapackageR)
@@ -94,6 +88,23 @@ procedure should be followed:
           write.table(
             file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
 	        sep       = "\t", col.names = TRUE, row.names = FALSE)
+
+4. Create the packaging skeleton, at the same time inserting the dummy data file from above:
+
+        data_catalogue <- init(
+          root               = pkg_root,
+		  objects_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
+          root               = pkg_root,
+          parsing_function   = "read.csv",
+          parsing_options    = list(sep = "\t", stringsAsFactors = FALSE)))
+		  
+   1. Investigate the resulting `data_catalogue`
+   
+        str(data_catalogue)
+		
+   2. (Crudely) investigate the result in the file system
+   
+        list.files(pkg_root, recursive = TRUE)
 	  
 ### Exemplary use case "seperately distributed data"
 * Summary of set up
