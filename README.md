@@ -46,10 +46,10 @@ Two major challenges when using `R`'s packaging infrastructure in this manner ar
 
 2. Obstacles in distributing the data at the basis of the documented project, which
    may, among other issues, be rooted in
-    a. Size restrictions of shipped data in a targeted package repository
+    - Size restrictions of shipped data in a targeted package repository
        ([CRAN](https://cran.r-project.org), for example, as of 23.10.2017 states "...
 	   As a general rule, neither data nor documentation should exceed 5MB.").
-    b. The need to enforce data onwnership/licensing in the context of freely providing
+    - The need to enforce data onwnership/licensing in the context of freely providing
        peer review of analytical methodology and strategies employed. 
 
 
