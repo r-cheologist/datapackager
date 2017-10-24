@@ -44,16 +44,15 @@
 #'   {
 #'     require(readxl)
 #'     data_catalogue <- init(
-#'       root = pkg_root,
-#'       files_to_include = paste0(
+#'       root                 = pkg_root,
+#'       objects_to_include   = paste0(
 #'         c("http://www.nature.com/article-assets/npg/srep",
 #'           "2016/160209/srep21507/extref/srep21507-s4.xls"),
 #'         collapse = "/"),
-#'       file_is_url = TRUE,
-#'       file_reading_function = "read_excel",
-#'       file_reading_options = list(skip = 1),
-#'       file_reading_package_dependencies = "readxl",
-#'       file_distributable = FALSE)
+#'       parsing_function     = "read_excel",
+#'       parsing_options      = list(skip = 1),
+#'       package_dependencies = "readxl",
+#'       distributable        = FALSE)
 #'
 #'     # Investigate the data catalogue
 #'     data_catalogue %>%
