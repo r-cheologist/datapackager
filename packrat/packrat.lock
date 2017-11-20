@@ -1,10 +1,10 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.8.1
 RVersion: 3.4.2
-Repos: BioCsoft=https://bioconductor.org/packages/3.5/bioc,
-    BioCann=https://bioconductor.org/packages/3.5/data/annotation,
-    BioCexp=https://bioconductor.org/packages/3.5/data/experiment,
-    BioCextra=https://bioconductor.org/packages/3.5/extra,
+Repos: BioCextra=https://bioconductor.org/packages/3.5/extra,
+    BioCsoft=https://bioconductor.org/packages/3.6/bioc,
+    BioCann=https://bioconductor.org/packages/3.6/data/annotation,
+    BioCexp=https://bioconductor.org/packages/3.6/data/experiment,
     CRAN=https://cran.rstudio.com/
 
 Package: BH
@@ -124,8 +124,8 @@ Requires: R6, assertthat, crayon, rprojroot
 
 Package: devtools
 Source: CRAN
-Version: 1.13.3
-Hash: 2e91d10786ace8f6258480f576bb91f3
+Version: 1.13.4
+Hash: 80a77b22f641002c7ce0343baeaee300
 Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
     withr
 
@@ -169,8 +169,8 @@ Requires: digest, evaluate, highr, markdown, stringr, yaml
 
 Package: lazyeval
 Source: CRAN
-Version: 0.2.0
-Hash: 3d6e7608e65bbf5cb170dab1e3c9ed8b
+Version: 0.2.1
+Hash: 88926ad9c43581fd0822a37c8ed09f05
 
 Package: magrittr
 Source: CRAN
@@ -196,8 +196,8 @@ Hash: 463550cf44fb6f0a2359368f42eebe62
 
 Package: openssl
 Source: CRAN
-Version: 0.9.7
-Hash: 225d43f64f60e8996d10efe15b381c66
+Version: 0.9.9
+Hash: 3858537ac10388a5db1687450908f257
 
 Package: packrat
 Source: CRAN
@@ -236,8 +236,8 @@ Hash: ad4faf59e7611117ff165817074c50c7
 
 Package: rlang
 Source: CRAN
-Version: 0.1.2
-Hash: c17b638e3282aa222a47112d7a60bc66
+Version: 0.1.4
+Hash: fef2abdadbb8db061b9d37e7ca5cb0b4
 
 Package: roxygen2
 Source: CRAN
@@ -259,8 +259,8 @@ Hash: e2ebaff8160aff3e6b32e6e78a693c2d
 
 Package: stringi
 Source: CRAN
-Version: 1.1.5
-Hash: b6308e49357a0b475f433599e0d8b5eb
+Version: 1.1.6
+Hash: 4430faf2bcbe1b8de0d9be55bcfdcc0b
 
 Package: stringr
 Source: CRAN
@@ -287,8 +287,8 @@ Hash: 803d662762e532705c2c066a82d066e7
 
 Package: withr
 Source: CRAN
-Version: 2.0.0
-Hash: cc7e555b8e249aa5cf391592fcae71a2
+Version: 2.1.0
+Hash: 097f730987c2dc13d421b65bf01ddf08
 
 Package: xml2
 Source: CRAN
