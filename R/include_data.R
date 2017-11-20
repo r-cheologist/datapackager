@@ -454,7 +454,7 @@ include_data <- function(
     # Deal with all possible data provisioning
     if (identical(type, "object"))
     {
-      tmp_object <- object_to_include
+      tmp_object <- get(x = object_to_include)
     } else if (stringi::stri_endswith_fixed(type, "rda"))
     {
       tmp_env <- new.env()
