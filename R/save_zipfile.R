@@ -11,7 +11,7 @@ save_zipfile <- function(uncomp_path,target_dir){
   utils::zip(
     zipfile = target_path,
     files = uncomp_path,
-    flags = "-j9DX")
+    flags = "-j9DXR")
   target_path %>%
     invisible()
 }
