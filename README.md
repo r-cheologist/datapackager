@@ -68,8 +68,8 @@ mechanisms for separate distribution of data and analyzing code.
 but until that happens and for the latest features and fixes, the following
 installation procedure should be followed:
 
-    install.packages(devtools)
-    devtools::install_bitbucket("graumannlabtools/datapackageR")
+    install.packages('devtools')
+    devtools::install_bitbucket('graumannlabtools/datapackageR')
 
 ## Example usage
 ### Comprehensive presentation of functionality
@@ -78,12 +78,12 @@ installation procedure should be followed:
         library(datapackageR)
         library(magrittr)
         library(readxl)
-        requireNamespace("devtools")
+        requireNamespace('devtools')
 	
 2. Define a temporary working directory & packaging root
 
-        pkg_root <- tempdir() %>%
-          file.path("packagetest")
+        pkg_root <- '~' %>%
+          file.path('packagetest')
 	  
 3. Generate a (dummy) data file
 
@@ -92,18 +92,18 @@ installation procedure should be followed:
             y   = 1:10,
             fac = sample(LETTERS[1:3], 10, replace = TRUE)) %>%
           write.table(
-            file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
-            sep       = "\t",
+            file      = file.path(dirname(pkg_root), 'data_dummy.tsv'),
+            sep       = '\t',
             col.names = TRUE,
             row.names = FALSE)
 
 4. Create the packaging skeleton, at the same time inserting the dummy data file from above:
 
         data_catalogue <- init(
-          objects_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
+          objects_to_include = file.path(dirname(pkg_root), 'data_dummy.tsv'),
           root               = pkg_root,
-          parsing_function   = "read.csv",
-          parsing_options    = list(sep = "\t", stringsAsFactors = FALSE))
+          parsing_function   = 'read.csv',
+          parsing_options    = list(sep = '\t', stringsAsFactors = FALSE))
 
     - Investigate the resulting `data_catalogue`
    
@@ -120,32 +120,32 @@ installation procedure should be followed:
    **Note that the file is excluded from built packages (via `.rBuildignore`) and wouldn't be tracked by
    [`git`](https://git-scm.com/) (using `.gitignore`).**
    
-        data_catalogue <- include_data(
-          object_to_include    = "http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls",
-          root                 = pkg_root,
-          parsing_function     = "read_excel",
-          parsing_options      = list(skip = 1),
-          package_dependencies = "readxl",
-          distributable        = FALSE)
+            data_catalogue <- include_data(
+              object_to_include    = 'http://www.nature.com/article-assets/npg/srep/2016/160209/srep21507/extref/srep21507-s4.xls',
+              root                 = pkg_root,
+              parsing_function     = 'read_excel',
+              parsing_options      = list(skip = 1),
+              package_dependencies = 'readxl',
+              distributable        = FALSE)
 
 6. Add a local object
 
-        local_data_object <-list(A = LETTERS, B = letters)
-        data_catalogue <- include_data(
-          object_to_include = "local_data_object",
-          root              = pkg_root)
+            local_data_object <-list(A = LETTERS, B = letters)
+            data_catalogue <- include_data(
+              object_to_include = 'local_data_object',
+              root              = pkg_root)
 
 7. Add a remote *.Rda
 
-        data_catalogue <- include_data(
-          object_to_include = "https://bitbucket.org/graumannlabtools/datapackager/downloads/remote_rda.Rda",
-          root              = pkg_root)
+            data_catalogue <- include_data(
+              object_to_include = 'https://bitbucket.org/graumannlabtools/datapackager/downloads/remote_rda.Rda',
+              root              = pkg_root)
 
 8. Add a remote *.Rds
 
-        data_catalogue <- include_data(
-          object_to_include = "https://bitbucket.org/graumannlabtools/datapackager/downloads/remote_rds.Rds",
-          root              = pkg_root)
+            data_catalogue <- include_data(
+              object_to_include = 'https://bitbucket.org/graumannlabtools/datapackager/downloads/remote_rds.Rds',
+              root              = pkg_root)
 		  
     - Investigate the resulting `data_catalogue`
    
@@ -158,7 +158,7 @@ installation procedure should be followed:
 9. Remove one of the tracked data sets
 
         data_catalogue <- remove_data(
-          object_to_remove = "data_dummy.tsv",
+          object_to_remove = 'data_dummy.tsv',
           root             = pkg_root)
 		  
     - Investigate the resulting `data_catalogue`
@@ -186,31 +186,31 @@ installation procedure should be followed:
 1. Create an empty packaging skeleton:
 
         pkg_root <- tempdir() %>%
-          file.path("packagetest")
+          file.path('packagetest')
         data_catalogue <- init(
           root = pkg_root)
 
 2. Attempt to add (access restricted) remote data
 
         data_catalogue <- include_data(
-          object_to_include = "https://bitbucket.org/graumannlabtools/datapackager-restricted-access/downloads/remote_rda.rda",
+          object_to_include = 'https://bitbucket.org/graumannlabtools/datapackager-restricted-access/downloads/remote_rda.rda',
           root              = pkg_root)
         # --> Can't access URL: Client error: (401) Unauthorized
 
 3. Authenticatedly add remote data
 
         data_catalogue <- include_data(
-          object_to_include = "https://bitbucket.org/graumannlabtools/datapackager-restricted-access/downloads/remote_rda.rda",
+          object_to_include = 'https://bitbucket.org/graumannlabtools/datapackager-restricted-access/downloads/remote_rda.rda',
           root              = pkg_root,
-          user              = "datapackageR_user",
-          password          = "datapackageR_user",
+          user              = 'datapackageR_user',
+          password          = 'datapackageR_user',
           distributable     = FALSE)
 
         data_catalogue <- include_data(
-          object_to_include = "https://bitbucket.org/graumannlabtools/datapackager-restricted-access/downloads/remote_rds.Rds",
+          object_to_include = 'https://bitbucket.org/graumannlabtools/datapackager-restricted-access/downloads/remote_rds.Rds',
           root              = pkg_root,
-          user              = "datapackageR_user",
-          password          = "datapackageR_user",
+          user              = 'datapackageR_user',
+          password          = 'datapackageR_user',
           distributable     = FALSE)
 
     - Investigate the resulting `data_catalogue`
@@ -227,7 +227,7 @@ installation procedure should be followed:
         list.files(
             pkg_root,
             recursive  = TRUE,
-            pattern    = "^data[[:punct:]]remote",
+            pattern    = '^data[[:punct:]]remote',
             full.names = TRUE) %>%
           unlink()
 
@@ -245,8 +245,8 @@ installation procedure should be followed:
    
         retrieve_missing_remote_data(
           pkg_root,
-          user     = "datapackageR_user",
-          password = "datapackageR_user")
+          user     = 'datapackageR_user',
+          password = 'datapackageR_user')
     
     - (Crudely) investigate the result in the file system
    
