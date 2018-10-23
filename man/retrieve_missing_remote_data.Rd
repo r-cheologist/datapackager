@@ -4,8 +4,8 @@
 \alias{retrieve_missing_remote_data}
 \title{retrieve_missing_remote_data}
 \usage{
-retrieve_missing_remote_data(root = getwd(), user = NULL, password = NULL,
-  ...)
+retrieve_missing_remote_data(root = getwd(), user = NULL,
+  password = NULL, ...)
 }
 \arguments{
 \item{root}{Single \code{\link{character}} representing the path of the
