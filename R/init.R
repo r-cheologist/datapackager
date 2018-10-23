@@ -42,7 +42,7 @@
 #' package and must thus conform to \code{R}s package naming conventions.
 #' @param default_compression_algo Single \code{\link{character}} defining the
 #' default method for compression of \code{R} objects stored in the package
-#' infrastructure using \code{\link[devtools]{use_data}} (see there for
+#' infrastructure using \code{\link[usethis]{use_data}} (see there for
 #' details). Defaulting to \code{xz}, which usually gives best (most compact)
 #' results.
 #' @param default_hashing_algo Single \code{\link{character}} naming the
@@ -240,9 +240,9 @@ init <- function(
   }
 
   # Write out the catalogue
-  devtools::use_data(
+  usethis::proj_set(path = root)
+  usethis::use_data(
     data_catalogue,
-    pkg = root,
     internal = FALSE,
     overwrite = FALSE,
     compress = default_compression_algo)

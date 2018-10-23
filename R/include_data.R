@@ -581,12 +581,12 @@ include_data <- function(
 ## If requested: save data_catalogue ----
   if (save_catalogue)
   {
-    devtools::use_data(
+    usethis::proj_set(path = root)
+    usethis::use_data(
       data_catalogue,
-      pkg       = root,
-      internal  = FALSE,
+      internal = FALSE,
       overwrite = TRUE,
-      compress  = compression_algo)
+      compress = compression_algo)
   }
 
 ## (Invisibly) return ----

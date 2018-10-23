@@ -4,10 +4,11 @@
 \alias{init}
 \title{init}
 \usage{
-init(root = getwd(), default_compression_algo = c("xz", "bzip2", "gzip"),
-  default_hashing_algo = match_function_arg(arg = NULL, fun = digest::digest,
-  fun_arg_name = "algo", several.ok = FALSE, default = "sha512"),
-  objects_to_include = NULL, use_rstudio = TRUE, description = NULL, ...)
+init(root = getwd(), default_compression_algo = c("xz", "bzip2",
+  "gzip"), default_hashing_algo = match_function_arg(arg = NULL, fun =
+  digest::digest, fun_arg_name = "algo", several.ok = FALSE, default =
+  "sha512"), objects_to_include = NULL, use_rstudio = TRUE,
+  description = NULL, ...)
 }
 \arguments{
 \item{root}{Single \code{\link{character}} representing the path of the
@@ -17,7 +18,7 @@ package and must thus conform to \code{R}s package naming conventions.}
 
 \item{default_compression_algo}{Single \code{\link{character}} defining the
 default method for compression of \code{R} objects stored in the package
-infrastructure using \code{\link[devtools]{use_data}} (see there for
+infrastructure using \code{\link[usethis]{use_data}} (see there for
 details). Defaulting to \code{xz}, which usually gives best (most compact)
 results.}
 

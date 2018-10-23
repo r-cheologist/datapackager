@@ -184,9 +184,9 @@ remove_data <- function(
 
   # If requested: save data_catalogue
   if (save_catalogue){
-    devtools::use_data(
+    usethis::proj_set(path = root)
+    usethis::use_data(
       data_catalogue,
-      pkg = root,
       internal = FALSE,
       overwrite = TRUE,
       compress = attr(
