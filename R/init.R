@@ -340,20 +340,18 @@ init <- function(
     unique()
   for (pkg in pkg_to_depend_on)
   {
-    devtools::use_package(
+    usethis::use_package(
       package = pkg,
-      type = "Depends",
-      pkg = root)
+      type = "Depends")
   }
 
   pkg_to_import_from %<>%
     unique()
   for (pkg in pkg_to_import_from)
   {
-    devtools::use_package(
+    usethis::use_package(
       package = pkg,
-      type = "Imports",
-      pkg = root)
+      type = "Imports")
   }
 
   pkg_to_recommend <- c(
@@ -361,10 +359,9 @@ init <- function(
     unique()
   for (pk in pkg_to_recommend)
   {
-    devtools::use_package(
+    usethis::use_package(
       package = pkg,
-      type = "Suggests",
-      pkg = root)
+      type = "Suggests")
   }
 
 # Result-package internal processes ---------------------------------------

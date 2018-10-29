@@ -54,7 +54,7 @@
 #'     \code{rbuildignore}, \code{.gitignore} and \code{.Rbuildignore} in
 #'     the top level of the resulting package infrastructure are amended using
 #'     the internal function \code{manage_gitignore} and
-#'     \code{\link[devtools]{use_build_ignore}}, respectively.
+#'     \code{\link[usethis]{use_build_ignore}}, respectively.
 #'   \item Using the information gathered, the \code{\link{data_catalogue}} file
 #'     is updated, saved into the worked-on package infrastructure (if
 #'     \code{save_catalogue == TRUE}) and finally (invisibly) returned.
@@ -295,6 +295,7 @@ include_data <- function(
   }
   data_catalogue %>%
     assert_is_a_valid_data_catalogue()
+  usethis::proj_set(path = root)
 
 ## Determine with which elements to save ----
   choices_saved_elements <- c("all", "data", "extdata")
@@ -499,10 +500,9 @@ include_data <- function(
   {
     for (pk in package_dependencies)
     {
-      devtools::use_package(
+      usethis::use_package(
         package = pk,
-        type    = "Imports",
-        pkg     = root)
+        type    = "Imports")
     }
   }
 
@@ -528,17 +528,15 @@ include_data <- function(
   {
     if ("extdata" %in% saved_elements)
     {
-      devtools::use_build_ignore(
+      usethis::use_build_ignore(
         files  = relative_extdata_path,
-        escape = TRUE,
-        pkg    = root)
+        escape = TRUE)
     }
     if ("data" %in% saved_elements)
     {
-      devtools::use_build_ignore(
+      usethis::use_build_ignore(
         files  = relative_data_path,
-        escape = TRUE,
-        pkg    = root)
+        escape = TRUE)
     }
   }
 
@@ -581,7 +579,6 @@ include_data <- function(
 ## If requested: save data_catalogue ----
   if (save_catalogue)
   {
-    usethis::proj_set(path = root)
     usethis::use_data(
       data_catalogue,
       internal = FALSE,
