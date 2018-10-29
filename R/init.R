@@ -198,12 +198,14 @@ init <- function(
   {
     usethis::create_package(
       path = root,
-      rstudio = use_rstudio)
+      rstudio = use_rstudio,
+      open = FALSE)
   } else {
     usethis::create_package(
       path = root,
       rstudio = use_rstudio,
-      description = description)
+      fields = description,
+      open = FALSE)
   }
   usethis::proj_set(path = root)
 
