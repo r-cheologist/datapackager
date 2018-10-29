@@ -191,6 +191,7 @@ init <- function(
   }
 
 # Processing --------------------------------------------------------------
+  usethis::proj_set(path = root)
   # Create infrastructure
   if (
     description %>%
@@ -205,7 +206,7 @@ init <- function(
       rstudio = use_rstudio,
       description = description)
   }
-  devtools::use_testthat(pkg = root)
+  usethis::use_testthat()
   root %>%
     file.path("inst", "extdata") %>%
     dir.create(recursive = TRUE)
