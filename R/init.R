@@ -191,7 +191,6 @@ init <- function(
   }
 
 # Processing --------------------------------------------------------------
-  usethis::proj_set(path = root)
   # Create infrastructure
   if (
     description %>%
@@ -206,6 +205,8 @@ init <- function(
       rstudio = use_rstudio,
       description = description)
   }
+  usethis::proj_set(path = root)
+
   usethis::use_testthat()
   root %>%
     file.path("inst", "extdata") %>%
@@ -241,7 +242,6 @@ init <- function(
   }
 
   # Write out the catalogue
-  usethis::proj_set(path = root)
   usethis::use_data(
     data_catalogue,
     internal = FALSE,
