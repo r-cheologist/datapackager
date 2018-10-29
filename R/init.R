@@ -9,11 +9,11 @@
 #' In detail the function proceeds as follows:
 #' \enumerate{
 #'   \item The package \code{root} directory is created (and partially populated)
-#'     using \code{\link[devtools]{create}}, and the \code{use_rstudio}
+#'     using\code{\link[usethis]{create_package}}, and the \code{use_rstudio}
 #'     paramter as appropriate.
 #'   \item As \pkg{testthat}-dependent components are included, the
 #'      corresponding infrastructure is initialized using
-#'      \code{\link[devtools]{use_testthat}}.
+#'      \code{\link[usethis]{use_testthat}}.
 #'   \item Following the standard packaging structure, directories \code{data},
 #'     \code{inst/extdata} & \code{inst/scripts} are created for downstream use.
 #'   \item Next, a \code{\link{list}}-based object named
@@ -52,10 +52,10 @@
 #' @param objects_to_include \code{\link{character}} representing paths to data
 #' files included using \code{\link{include_data}} (may also be URLs).
 #' @param use_rstudio Single \code{\link{logical}} handed to
-#' \code{\link[devtools]{create}} and indicating whether infrastructure used by
+#' \code{\link[usethis]{create_package}} and indicating whether infrastructure used by
 #' \code{RStudio} is to be generated in the resulting data-wrapping package.
 #' @param description \code{\link{list}} of descriptions values to override
-#' default values or add additional values (see \code{\link[devtools]{create}}
+#' default values or add additional values (see \code{\link[usethis]{create_package}}
 #' for details). Setting this to \code{\link{NULL}} implies the defaults of the
 #' underlying function.
 #' @param ... Paramters handed through to \code{\link{include_data}}. See
@@ -64,7 +64,7 @@
 #' \code{\link{invisible}}.
 #' @author Johannes Graumann
 #' @seealso \code{\link{save}}, \code{\link[digest]{digest}},
-#' \code{\link{include_data}}, \code{\link[devtools]{create}}
+#' \code{\link{include_data}}, \code{\link[usethis]{create_package}}
 #' @examples
 #' # Load tools
 #' library(magrittr)
@@ -196,11 +196,11 @@ init <- function(
     description %>%
     is.null())
   {
-    devtools::create(
+    usethis::create_package(
       path = root,
       rstudio = use_rstudio)
   } else {
-    devtools::create(
+    usethis::create_package(
       path = root,
       rstudio = use_rstudio,
       description = description)

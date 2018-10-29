@@ -31,11 +31,11 @@ strong \code{sha512} option.}
 files included using \code{\link{include_data}} (may also be URLs).}
 
 \item{use_rstudio}{Single \code{\link{logical}} handed to
-\code{\link[devtools]{create}} and indicating whether infrastructure used by
+\code{\link[usethis]{create_package}} and indicating whether infrastructure used by
 \code{RStudio} is to be generated in the resulting data-wrapping package.}
 
 \item{description}{\code{\link{list}} of descriptions values to override
-default values or add additional values (see \code{\link[devtools]{create}}
+default values or add additional values (see \code{\link[usethis]{create_package}}
 for details). Setting this to \code{\link{NULL}} implies the defaults of the
 underlying function.}
 
@@ -58,11 +58,11 @@ package build around (raw) data to be analyzed.
 In detail the function proceeds as follows:
 \enumerate{
   \item The package \code{root} directory is created (and partially populated)
-    using \code{\link[devtools]{create}}, and the \code{use_rstudio}
+    using\code{\link[usethis]{create_package}}, and the \code{use_rstudio}
     paramter as appropriate.
   \item As \pkg{testthat}-dependent components are included, the
      corresponding infrastructure is initialized using
-     \code{\link[devtools]{use_testthat}}.
+     \code{\link[usethis]{use_testthat}}.
   \item Following the standard packaging structure, directories \code{data},
     \code{inst/extdata} & \code{inst/scripts} are created for downstream use.
   \item Next, a \code{\link{list}}-based object named
@@ -150,7 +150,7 @@ unlink(pkg_root2, recursive = TRUE)
 }
 \seealso{
 \code{\link{save}}, \code{\link[digest]{digest}},
-\code{\link{include_data}}, \code{\link[devtools]{create}}
+\code{\link{include_data}}, \code{\link[usethis]{create_package}}
 }
 \author{
 Johannes Graumann
