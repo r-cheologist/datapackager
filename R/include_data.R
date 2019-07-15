@@ -517,7 +517,7 @@ include_data <- function(
         file.path(
           "R",
           template_name %>%
-            pathological::replace_extension("R") %>%
+            fs::path_ext_set("R") %>%
             stringi::stri_replace_all_fixed(
               pattern = "data_documentation_stub",
               replacement = object_to_include

@@ -261,7 +261,7 @@ init <- function(
   #       file.path(
   #         "R",
   #         template_name %>%
-  #           pathological::replace_extension("R")))
+  #           fs::path_ext_set("R")))
 
   template_name <- "testthat.brew"
   system.file(
@@ -273,7 +273,7 @@ init <- function(
         file.path(
           "tests",
           template_name %>%
-            pathological::replace_extension("R")))
+            fs::path_ext_set("R")))
 
   template_name <- "test-data_catalogue.brew"
   system.file(
@@ -286,7 +286,7 @@ init <- function(
           "tests",
           "testthat",
           template_name %>%
-            pathological::replace_extension("R")))
+            fs::path_ext_set("R")))
 
   pkg_to_import_from <- c(
     "assertive.base",

@@ -1,7 +1,7 @@
 Package: datapackageR
 Type: Package
 Title: Tools to build packaging infrastructure for R around data sets
-Version: 0.6.5
+Version: 0.6.6
 Author: Johannes Graumann [cre, aut]
 Maintainer: Johannes Graumann <johannes.graumann@mpi-bn.mpg.de>
 Authors@R: c(person("Johannes", "Graumann", email =
@@ -24,17 +24,17 @@ Imports:
     assertive.sets (>= 0.0-3),
     assertive.types (>= 0.0-3),
     brew (>= 1.0-6),
-    devtools (>= 1.13.6),
-    digest (>= 0.6.17),
-    httr (>= 1.3.1),
+    devtools (>= 2.1.0),
+    digest (>= 0.6.20),
+    fs (>= 1.3.1),
+    httr (>= 1.4.0),
     magrittr (>= 1.5),
     methods,
-    pathological (>= 0.1-2),
-    stringi (>= 1.2.4),
-    testthat (>= 2.0.1),
-    tibble (>= 1.4.2),
-    usethis (>= 1.4.0)
+    stringi (>= 1.4.3),
+    testthat (>= 2.1.1),
+    tibble (>= 2.1.3),
+    usethis (>= 1.5.1)
 Suggests:
-    readxl (>= 1.1.0),
-    roxygen2 (>= 6.0.1)
-RoxygenNote: 6.1.0
+    readxl (>= 1.3.1),
+    roxygen2 (>= 6.1.1)
+RoxygenNote: 6.1.1
