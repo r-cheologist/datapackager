@@ -244,11 +244,13 @@ init <- function(
   }
 
   # Write out the catalogue
-  usethis::use_data(
-    data_catalogue,
-    internal = FALSE,
-    overwrite = FALSE,
-    compress = default_compression_algo)
+  withr::with_dir(
+      root,
+      usethis::use_data(
+          data_catalogue,
+          internal = FALSE,
+          overwrite = FALSE,
+          compress = default_compression_algo))
 
   # Install the testthat tests that check the catalogue and the functions they need
   # template_name <- "test_data_integrity.brew"

@@ -579,11 +579,13 @@ include_data <- function(
 ## If requested: save data_catalogue ----
   if (save_catalogue)
   {
-    usethis::use_data(
-      data_catalogue,
-      internal = FALSE,
-      overwrite = TRUE,
-      compress = compression_algo)
+    withr::with_dir(
+      root,
+      usethis::use_data(
+        data_catalogue,
+        internal = FALSE,
+        overwrite = TRUE,
+        compress = compression_algo))
   }
 
 ## (Invisibly) return ----
