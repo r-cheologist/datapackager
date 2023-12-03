@@ -4,7 +4,8 @@
 \name{data_catalogue}
 \alias{data_catalogue}
 \title{data_catalogue}
-\format{\code{\link{list}} with entries named according to data set names.
+\format{
+\code{\link{list}} with entries named according to data set names.
 \code{default_compression_algo} and \code{default_hashing_algo} are set as
 \code{\link{attributes}} and represent default values for the corresponding
 per-entry values below.
@@ -45,7 +46,8 @@ Each entry is a \code{\link{list}} with the following fields:
   \item{\code{R.Buildgnore}:}{\code{\link{logical}}, indicating whether
     files are to be listed in \file{.Rbuildignore} of the top package
     directory. This option is intended for tracking analysis of
-    non-distibutable data sets.}}}
+    non-distibutable data sets.}}
+}
 \description{
 \code{\link{list}} representing a collection of metadata
 for stored or othwhise used files/objects as a reference for data

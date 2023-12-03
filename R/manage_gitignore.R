@@ -6,14 +6,12 @@ manage_gitignore <- function(
 {
 
 # Check prerequisites -----------------------------------------------------
-  gitignore_file %>%
-    assertive.types::assert_is_a_string()
+  gitignore_file %>% assert_is_a_string()
 
-  relative_path %>%
-    assertive.types::assert_is_character()
+  relative_path %>% assert_is_character()
 
   state %>%
-    assertive.types::assert_is_character() %>%
+    assert_is_character() %>%
     match.arg(
       choices = c("absent", "present"),
       several.ok = FALSE)

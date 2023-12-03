@@ -6,16 +6,14 @@ analyse_extension <- function(
 {
 
 # Check prerequisites -----------------------------------------------------
-  x %>%
-    assertive.types::assert_is_a_string()
+  x %>% assert_is_a_string()
 
   extensions %>%
-    assertive.types::assert_is_list() %>%
-    assertive.properties::assert_has_names() %>%
-    sapply(assertive.types::assert_is_character)
+    assert_is_list() %>%
+    assert_has_names() %>%
+    sapply(assert_is_character)
 
-  default %>%
-    assertive.types::assert_is_a_string()
+  default %>% assert_is_a_string()
 
 # Processing --------------------------------------------------------------
   # Extract extensions

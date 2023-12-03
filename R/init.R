@@ -157,7 +157,7 @@ init <- function(
   }
 
   default_compression_algo %<>%
-    assertive.types::assert_is_character() %>%
+    assert_is_character() %>%
     match.arg(
       choices = c("xz", "bzip2", "gzip"),
       several.ok = FALSE)
@@ -174,20 +174,17 @@ init <- function(
       is.null() %>%
       magrittr::not())
   {
-    objects_to_include %>%
-      assertive.types::assert_is_character()
+    objects_to_include %>% assert_is_character()
   }
 
-  use_rstudio %>%
-    assertive.types::assert_is_a_bool()
+  use_rstudio %>% assert_is_a_bool()
 
   if (
     description %>%
       is.null() %>%
       magrittr::not())
   {
-    description %>%
-      assertive.types::assert_is_list()
+    description %>% assert_is_list()
   }
 
 # Processing --------------------------------------------------------------
@@ -293,9 +290,9 @@ init <- function(
   pkg_to_import_from <- c(
     "assertive.base",
     "assertive.files",
-    "assertive.properties",
+#    "assertive.properties",
     "assertive.sets",
-    "assertive.types",
+#    "assertive.types",
     "digest",
     "httr",
     "magrittr",

@@ -84,8 +84,7 @@ remove_data <- function(
   save_catalogue = TRUE)
 {
 # Check prerequisites -----------------------------------------------------
-  object_to_remove %>%
-    assertive.types::assert_is_a_string()
+  object_to_remove %>% assert_is_a_string()
 
   root %>%
     assert_is_a_valid_package_root()
@@ -101,11 +100,9 @@ remove_data <- function(
   data_catalogue %>%
     assert_is_a_valid_data_catalogue()
 
-  keep_meta_data %>%
-    assertive.types::assert_is_a_bool()
+  keep_meta_data %>% assert_is_a_bool()
 
-  save_catalogue %>%
-    assertive.types::assert_is_a_bool()
+  save_catalogue %>% assert_is_a_bool()
 
 # Processing --------------------------------------------------------------
   # Generate paths

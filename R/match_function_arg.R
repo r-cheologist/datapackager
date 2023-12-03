@@ -53,17 +53,14 @@ match_function_arg <- function(
   default = NULL)
 {
 # Check prerequisites -----------------------------------------------------
-  fun %>%
-    assertive.types::assert_is_function()
+  fun %>% assert_is_function()
 
-  fun_arg_name %>%
-    assertive.types::assert_is_a_string()
+  fun_arg_name %>% assert_is_a_string()
   fun %>%
     methods::formalArgs() %>%
     assertive.sets::assert_is_superset(fun_arg_name)
 
-  several.ok %>%
-    assertive.types::assert_is_a_bool()
+  several.ok %>% assert_is_a_bool()
 
   arg %>%
     is.null() %>%

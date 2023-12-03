@@ -199,26 +199,28 @@
 #'   root = pkg_root)
 #'
 #' # Add a remote *.Rda (pasted to make CRAN line length requirements)
-#' data_catalogue <- include_data(
-#'   object_to_include = paste(
-#'     "https://bitbucket.org",
-#'     "graumannlabtools",
-#'     "datapackager",
-#'     "downloads",
-#'     "remote_rda.Rda",
-#'      sep = "/"),
-#'   root = pkg_root)
+#' \donttest{
+#'   data_catalogue <- include_data(
+#'     object_to_include = paste(
+#'       "https://bitbucket.org",
+#'       "graumannlabtools",
+#'       "datapackager",
+#'       "downloads",
+#'       "remote_rda.Rda",
+#'        sep = "/"),
+#'    root = pkg_root)
 #'
 #' # Add a remote *.Rds (pasted to make CRAN line length requirements)
-#' data_catalogue <- include_data(
-#'   object_to_include = paste(
-#'     "https://bitbucket.org",
-#'     "graumannlabtools",
-#'     "datapackager",
-#'     "downloads",
-#'     "remote_rds.Rds",
-#'     sep = "/"),
-#'   root = pkg_root)
+#'   data_catalogue <- include_data(
+#'     object_to_include = paste(
+#'       "https://bitbucket.org",
+#'       "graumannlabtools",
+#'       "datapackager",
+#'       "downloads",
+#'       "remote_rds.Rds",
+#'       sep = "/"),
+#'     root = pkg_root)
+#' }
 #'
 #' # Investigate the data catalogue
 #' data_catalogue %>%
@@ -251,8 +253,7 @@ include_data <- function(
 {
 # Check prerequisites -----------------------------------------------------
 ## Only accepting string ----
-  object_to_include %>%
-    assertive.types::assert_is_a_string()
+  object_to_include %>% assert_is_a_string()
 
 ## Deal with input type ----
   type %<>%
@@ -314,25 +315,22 @@ include_data <- function(
 ## Deal with variables related to sharing/distribution ----
   if (!is.null(distributable))
   {
-    distributable %>%
-      assertive.types::assert_is_a_bool()
+    distributable %>% assert_is_a_bool()
   }
   if (!is.null(gitignore))
   {
-    gitignore %>%
-      assertive.types::assert_is_a_bool()
+    gitignore %>% assert_is_a_bool()
   }
   if (!is.null(rbuildignore))
   {
-    rbuildignore %>%
-      assertive.types::assert_is_a_bool()
+    rbuildignore %>% assert_is_a_bool()
   }
 
 ## Check package dependencies needed for reading/parsing ----
   if (!is.null(package_dependencies))
   {
     package_dependencies %>%
-      assertive.types::assert_is_character() %>%
+      assert_is_character() %>%
       assertive.sets::assert_is_subset(
         utils::installed.packages())
   }
@@ -349,25 +347,22 @@ include_data <- function(
   if (!is.null(parsing_function))
   {
     parsing_function %>%
-    assertive.types::assert_is_a_string() %>%
+    assert_is_a_string() %>%
     assert_all_are_function_names()
   }
   if (!is.null(parsing_options))
   {
-    parsing_options %>%
-      assertive.types::assert_is_list()
+    parsing_options %>% assert_is_list()
   }
 
 ## Check needs for authenticated retrieval of remate data ----
   if (!is.null(user))
   {
-    user %>%
-      assertive.types::assert_is_a_string()
+    user %>% assert_is_a_string()
   }
   if (!is.null(password))
   {
-    password %>%
-      assertive.types::assert_is_a_string()
+    password %>% assert_is_a_string()
   }
   c(user, password) %>%
     length() %>%
@@ -381,7 +376,7 @@ include_data <- function(
       "default_compression_algo")
   } else {
     compression_algo %<>%
-      assertive.types::assert_is_character() %>%
+      assert_is_character() %>%
       match.arg(
         choices = c("xz", "bzip2", "gzip"),
         several.ok = FALSE)
@@ -397,8 +392,7 @@ include_data <- function(
         "default_hashing_algo"))
 
 ## Indicating whether to only return the modified catalogue or also save it ... ----
-  save_catalogue %>%
-    assertive.types::assert_is_a_bool()
+  save_catalogue %>% assert_is_a_bool()
 
 # Processing --------------------------------------------------------------
 ## Build paths ----

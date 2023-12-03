@@ -62,7 +62,7 @@ unpack_raw_data <- function(
 {
 # Check prerequisites -----------------------------------------------------
   package_name %>%
-    assertive.types::assert_is_a_string() %>%
+    assert_is_a_string() %>%
     assertive.sets::assert_is_subset(utils::installed.packages())
 
   if (file_names %>%
@@ -72,14 +72,14 @@ unpack_raw_data <- function(
       names()
   } else {
     file_names %>%
-      assertive.types::assert_is_character() %>%
+      assert_is_character() %>%
       assertive.sets::assert_is_subset(
         data_catalogue %>%
           names())
   }
 
   target_dir %>%
-    assertive.types::assert_is_a_string() %>%
+    assert_is_a_string() %>%
     assertive.files::assert_all_are_dirs()
 
 # Processing --------------------------------------------------------------

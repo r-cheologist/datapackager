@@ -4,8 +4,13 @@
 \alias{remove_data}
 \title{remove_data}
 \usage{
-remove_data(object_to_remove, root, data_catalogue = NULL,
-  keep_meta_data = FALSE, save_catalogue = TRUE)
+remove_data(
+  object_to_remove,
+  root,
+  data_catalogue = NULL,
+  keep_meta_data = FALSE,
+  save_catalogue = TRUE
+)
 }
 \arguments{
 \item{object_to_remove}{Single \code{\link{character}} representing the name
@@ -66,7 +71,7 @@ data.frame(
   fac = sample(LETTERS[1:3], 10, replace = TRUE)) \%>\%
   write.table(
     file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
-    sep       = "\\t",
+    sep       = "\t",
     col.names = TRUE,
     row.names = FALSE)
 
@@ -75,7 +80,7 @@ data_catalogue <- include_data(
   object_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
   root = pkg_root,
   parsing_function = "read.csv",
-  parsing_options = list(sep = "\\t", stringsAsFactors = FALSE))
+  parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 
 ## Investigate the data catalogue
 data_catalogue \%>\%

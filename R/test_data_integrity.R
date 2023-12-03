@@ -18,7 +18,7 @@ test_data_integrity <- function(
 
 # Check prerequisites -----------------------------------------------------
   package_name %>%
-    assertive.types::assert_is_a_string() %>%
+    assert_is_a_string() %>%
     assertive.sets::assert_is_subset(
       utils::installed.packages())
 

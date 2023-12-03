@@ -22,12 +22,14 @@
 #' # Licensed under the Creative Commons Attribution 4.0 International License.
 #' # http://creativecommons.org/licenses/by/4.0/
 #' ## Complicated URL generation to circumvent line length restrictions
-#' tmp_url <- paste0(
-#'   c("http://www.nature.com/article-assets/npg/srep",
-#'   "2016/160209/srep21507/extref/srep21507-s4.xls"),
-#'   collapse = "/")
-#' (tmp_path <- tmp_url %>%
-#'   retrieve_remote_file())
+#' \donttest{
+#'   tmp_url <- paste0(
+#'     c("http://www.nature.com/article-assets/npg/srep",
+#'     "2016/160209/srep21507/extref/srep21507-s4.xls"),
+#'     collapse = "/")
+#'   (tmp_path <- tmp_url %>%
+#'     retrieve_remote_file())
+#' }
 #'
 #' # Explore the file
 #' \donttest{
@@ -49,22 +51,19 @@ retrieve_remote_file <- function(
 {
 
 # Check prerequisites -----------------------------------------------------
-  url %>%
-    assertive.types::assert_is_a_string()
+  url %>% assert_is_a_string()
 
     if(user %>%
      is.null() %>%
      magrittr::not())
   {
-    user %>%
-      assertive.types::assert_is_a_string()
+    user %>% assert_is_a_string()
   }
   if(password %>%
      is.null() %>%
      magrittr::not())
   {
-    password %>%
-      assertive.types::assert_is_a_string()
+    password %>% assert_is_a_string()
   }
   c(user, password) %>%
     length() %>%

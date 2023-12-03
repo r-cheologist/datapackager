@@ -37,12 +37,14 @@ require(magrittr)
 # Licensed under the Creative Commons Attribution 4.0 International License.
 # http://creativecommons.org/licenses/by/4.0/
 ## Complicated URL generation to circumvent line length restrictions
-tmp_url <- paste0(
-  c("http://www.nature.com/article-assets/npg/srep",
-  "2016/160209/srep21507/extref/srep21507-s4.xls"),
-  collapse = "/")
-(tmp_path <- tmp_url \%>\%
-  retrieve_remote_file())
+\donttest{
+  tmp_url <- paste0(
+    c("http://www.nature.com/article-assets/npg/srep",
+    "2016/160209/srep21507/extref/srep21507-s4.xls"),
+    collapse = "/")
+  (tmp_path <- tmp_url \%>\%
+    retrieve_remote_file())
+}
 
 # Explore the file
 \donttest{

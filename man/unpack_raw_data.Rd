@@ -4,8 +4,7 @@
 \alias{unpack_raw_data}
 \title{unpack_raw_data}
 \usage{
-unpack_raw_data(package_name = NULL, file_names = NULL,
-  target_dir = tempdir())
+unpack_raw_data(package_name = NULL, file_names = NULL, target_dir = tempdir())
 }
 \arguments{
 \item{package_name}{Single \code{\link{character}} naming the
@@ -47,7 +46,7 @@ data.frame(
   fac = sample(LETTERS[1:3], 10, replace = TRUE)) \%>\%
 write.table(
   file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
-  sep       = "\\t",
+  sep       = "\t",
   col.names = TRUE,
   row.names = FALSE)
 ## Create the package infrastructure, including the dummy file
@@ -55,7 +54,7 @@ init(
   root = pkg_root,
   objects_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
   parsing_function = "read.csv",
-  parsing_options = list(sep = "\\t", stringsAsFactors = FALSE))
+  parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 
 # Install the resulting package
 devtools::install(pkg_root)

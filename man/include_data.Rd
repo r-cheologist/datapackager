@@ -4,14 +4,24 @@
 \alias{include_data}
 \title{include_data}
 \usage{
-include_data(object_to_include, type = c("auto", "object", "file",
-  "file_rda", "file_rds", "url", "url_rda", "url_rds"), root = getwd(),
-  data_catalogue = NULL, saved_elements = c("all", "data", "extdata"),
-  distributable = TRUE, gitignore = !distributable,
-  rbuildignore = !distributable, package_dependencies = NULL,
-  parsing_function = NULL, parsing_options = NULL, user = NULL,
-  password = NULL, save_catalogue = TRUE, compression_algo = NULL,
-  hashing_algo = NULL)
+include_data(
+  object_to_include,
+  type = c("auto", "object", "file", "file_rda", "file_rds", "url", "url_rda", "url_rds"),
+  root = getwd(),
+  data_catalogue = NULL,
+  saved_elements = c("all", "data", "extdata"),
+  distributable = TRUE,
+  gitignore = !distributable,
+  rbuildignore = !distributable,
+  package_dependencies = NULL,
+  parsing_function = NULL,
+  parsing_options = NULL,
+  user = NULL,
+  password = NULL,
+  save_catalogue = TRUE,
+  compression_algo = NULL,
+  hashing_algo = NULL
+)
 }
 \arguments{
 \item{object_to_include}{Single \code{\link{character}} representing a path
@@ -180,7 +190,7 @@ data.frame(
     fac = sample(LETTERS[1:3], 10, replace = TRUE)) \%>\%
   write.table(
     file      = file.path(dirname(pkg_root), "data_dummy.tsv"),
-    sep       = "\\t",
+    sep       = "\t",
     col.names = TRUE,
     row.names = FALSE)
 
@@ -189,7 +199,7 @@ data_catalogue <- include_data(
   object_to_include = file.path(dirname(pkg_root), "data_dummy.tsv"),
   root = pkg_root,
   parsing_function = "read.csv",
-  parsing_options = list(sep = "\\t", stringsAsFactors = FALSE))
+  parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 
 ## Investigate the data catalogue
 data_catalogue \%>\%
@@ -231,26 +241,28 @@ data_catalogue <- include_data(
   root = pkg_root)
 
 # Add a remote *.Rda (pasted to make CRAN line length requirements)
-data_catalogue <- include_data(
-  object_to_include = paste(
-    "https://bitbucket.org",
-    "graumannlabtools",
-    "datapackager",
-    "downloads",
-    "remote_rda.Rda",
-     sep = "/"),
-  root = pkg_root)
+\donttest{
+  data_catalogue <- include_data(
+    object_to_include = paste(
+      "https://bitbucket.org",
+      "graumannlabtools",
+      "datapackager",
+      "downloads",
+      "remote_rda.Rda",
+       sep = "/"),
+   root = pkg_root)
 
 # Add a remote *.Rds (pasted to make CRAN line length requirements)
-data_catalogue <- include_data(
-  object_to_include = paste(
-    "https://bitbucket.org",
-    "graumannlabtools",
-    "datapackager",
-    "downloads",
-    "remote_rds.Rds",
-    sep = "/"),
-  root = pkg_root)
+  data_catalogue <- include_data(
+    object_to_include = paste(
+      "https://bitbucket.org",
+      "graumannlabtools",
+      "datapackager",
+      "downloads",
+      "remote_rds.Rds",
+      sep = "/"),
+    root = pkg_root)
+}
 
 # Investigate the data catalogue
 data_catalogue \%>\%

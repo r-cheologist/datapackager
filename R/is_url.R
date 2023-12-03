@@ -5,11 +5,10 @@ is_url <- function(
 {
 
 # Check prerequisites -----------------------------------------------------
-  x %>%
-    assertive.types::assert_is_a_string()
+  x %>% assert_is_a_string()
 
   protocols %<>%
-    assertive.types::assert_is_character() %>%
+    assert_is_character() %>%
     paste0("://")
 
 # Process -----------------------------------------------------------------

@@ -18,11 +18,8 @@ Depends:
     R (>= 3.5.0)
 Imports:
     assertive.base (>= 0.0-7),
-    assertive.code (>= 0.0-3),
     assertive.files (>= 0.0-2),
-    assertive.properties (>= 0.0-4),
     assertive.sets (>= 0.0-3),
-    assertive.types (>= 0.0-3),
     brew (>= 1.0-6),
     devtools (>= 2.1.0),
     digest (>= 0.6.20),
@@ -32,10 +29,48 @@ Imports:
     methods,
     stringi (>= 1.4.3),
     testthat (>= 2.1.1),
-    tibble (>= 2.1.3),
     usethis (>= 1.5.1),
     withr
 Suggests:
     readxl (>= 1.3.1),
     roxygen2 (>= 6.1.1)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.3
+Collate: 
+    'analyse_extensions.R'
+    'assertion-assert_all_are_function_names.R'
+    'assertion-assert_is_a_valid_data_catalogue.R'
+    'assertion-assert_is_a_valid_package_root.R'
+    'assertive.code_imports.R'
+    'assertive.code_assert-is-code.R'
+    'assertive.code_is-code.R'
+    'assertive.properties_assert-has-attributes.R'
+    'assertive.properties_assert-has-names.R'
+    'assertive.properties_has-attributes.R'
+    'assertive.properties_has-dims.R'
+    'assertive.properties_has-names.R'
+    'assertive.properties_is-empty-scalar.R'
+    'assertive.properties_is-null.R'
+    'assertive.properties_utils.R'
+    'assertive.types_assert-is-a-type.R'
+    'assertive.types_assert-is-type-base.R'
+    'assertive.types_is-a-type.R'
+    'assertive.types_is-type-base.R'
+    'data-data_catalogue.R'
+    'data_rename_and_writeout.R'
+    'globalvariables.R'
+    'include_data.R'
+    'init.R'
+    'is_url.R'
+    'load_data_file_as_object.R'
+    'make_data_path.R'
+    'make_extdata_path.R'
+    'manage_gitignore.R'
+    'match_function_arg.R'
+    'parse_data.R'
+    'reexport.R'
+    'remove_data.R'
+    'retrieve_missing_remote_data.R'
+    'retrieve_remote_file.R'
+    'save_zipfile.R'
+    'test_data_integrity.R'
+    'unpack_raw_data.R'

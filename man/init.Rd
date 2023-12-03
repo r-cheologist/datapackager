@@ -4,11 +4,16 @@
 \alias{init}
 \title{init}
 \usage{
-init(root = getwd(), default_compression_algo = c("xz", "bzip2",
-  "gzip"), default_hashing_algo = match_function_arg(arg = NULL, fun =
-  digest::digest, fun_arg_name = "algo", several.ok = FALSE, default =
-  "sha512"), objects_to_include = NULL, use_rstudio = TRUE,
-  description = NULL, ...)
+init(
+  root = getwd(),
+  default_compression_algo = c("xz", "bzip2", "gzip"),
+  default_hashing_algo = match_function_arg(arg = NULL, fun = digest::digest,
+    fun_arg_name = "algo", several.ok = FALSE, default = "sha512"),
+  objects_to_include = NULL,
+  use_rstudio = TRUE,
+  description = NULL,
+  ...
+)
 }
 \arguments{
 \item{root}{Single \code{\link{character}} representing the path of the
@@ -122,7 +127,7 @@ data.frame(
   fac = sample(LETTERS[1:3], 10, replace = TRUE)) \%>\%
   write.table(
     file      = file.path(dirname(pkg_root2), "data_dummy.tsv"),
-    sep       = "\\t",
+    sep       = "\t",
     col.names = TRUE,
     row.names = FALSE)
 
@@ -131,7 +136,7 @@ data_catalogue <- init(
   root = pkg_root2,
   objects_to_include = file.path(dirname(pkg_root2), "data_dummy.tsv"),
   parsing_function = "read.csv",
-  parsing_options = list(sep = "\\t", stringsAsFactors = FALSE))
+  parsing_options = list(sep = "\t", stringsAsFactors = FALSE))
 
 ## (Crudely) investigate the result
 ### In the file system ...

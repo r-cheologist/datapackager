@@ -95,14 +95,12 @@ retrieve_missing_remote_data <- function(
 
   if (!is.null(user))
   {
-    user %>%
-      assertive.types::assert_is_a_string()
+    user %>% assert_is_a_string()
   }
 
   if (!is.null(password))
   {
-    password %>%
-      assertive.types::assert_is_a_string()
+    password %>% assert_is_a_string()
   }
 
 # Processing --------------------------------------------------------------

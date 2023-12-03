@@ -4,8 +4,7 @@
 \alias{match_function_arg}
 \title{match_function_arg}
 \usage{
-match_function_arg(arg, fun, fun_arg_name, several.ok = FALSE,
-  default = NULL)
+match_function_arg(arg, fun, fun_arg_name, several.ok = FALSE, default = NULL)
 }
 \arguments{
 \item{arg}{An \code{R} object to be checked.}
